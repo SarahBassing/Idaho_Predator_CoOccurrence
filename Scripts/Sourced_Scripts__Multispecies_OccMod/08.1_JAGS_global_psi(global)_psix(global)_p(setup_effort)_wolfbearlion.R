@@ -126,8 +126,8 @@
           psiSpp2[i] <- betaSpp2[1]*psi_cov[i,1] + betaSpp2[2]*psi_cov[i,2] + betaSpp2[3]*psi_cov[i,5] + betaSpp2[4]*psi_cov[i,3] + betaSpp2[5]*psi_cov[i,4] + betaSpp2[6]*psi_cov[i,7] + betaSpp2[7]*psi_cov[i,9]
           
           #'  ...for state Spp12
-          #'  Covariate order: Spp12 = Intercept[1] + Setup[2] + Elk[7] + Moose[8] + White-tailed deer[10]  + SppDiversity[6]
-          psiSpp12[i] <- psiSpp1[i] + psiSpp2[i] + betaSpp12[1]*psi_inxs_cov[i,1] + betaSpp12[2]*psi_inxs_cov[i,2] + betaSpp12[3]*psi_inxs_cov[i,7] + betaSpp12[4]*psi_inxs_cov[i,8] + betaSpp12[5]*psi_inxs_cov[i,10] + betaSpp12[6]*psi_inxs_cov[i,6] 
+          #'  Covariate order: Spp12 = Intercept[1] + Setup[2] + Elk[7] + Moose[8] + White-tailed deer[9]  + SppDiversity[6]
+          psiSpp12[i] <- psiSpp1[i] + psiSpp2[i] + betaSpp12[1]*psi_inxs_cov[i,1] + betaSpp12[2]*psi_inxs_cov[i,2] + betaSpp12[3]*psi_inxs_cov[i,7] + betaSpp12[4]*psi_inxs_cov[i,8] + betaSpp12[5]*psi_inxs_cov[i,9] + betaSpp12[6]*psi_inxs_cov[i,6] 
               
           #'  Baseline linear predictors for detection
           #'  Covariate indices: Intercept[1] + Setup[2] + Sampling Effort[3]
