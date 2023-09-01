@@ -1,17 +1,21 @@
   #'  ------------------------------------
-  #'  Habitat model with interaction on detection
-  #'  
+  #'  Prey diversity model with interaction on detection
   #'  
   #'  Bassing et al. "Mammalian predator co-occurrence affected by prey and habitat 
   #'  more than competitor presence at multiple time scales"
   #'  ------------------------------------
-  #'  Includes basic habitat variables (elevation and percent forest cover), year,
-  #'  and camera setup on first-order psi. Setup and sampling effort on first-order 
-  #'  rho. Assumes species occur independently of one another but co-detection is
-  #'  non-independent. Code for interaction on detection probability based on https://masonfidino.com/interpret_rota_model/
+  #'  Includes prey diversity index (Shannon's index), in addition to basic habitat 
+  #'  variables (elevation and percent forest cover), year, and camera setup on 
+  #'  first-order psi. Setup and sampling effort on first-order rho.
+  #'  Shannon's diversity index (H) accounts for species diversity and evenness 
+  #'  (proportional abundance of each species in community) and includes observations
+  #'  of elk, moose, white-tailed deer, as well as mule deer, cattle, & lagomorphs.
+  #'  Assumes species occur and are detected independently of one another but
+  #'  allows species co-detection to be non-independent.
+  #'  Code for interaction on detection probability based on https://masonfidino.com/interpret_rota_model/
   #'  ------------------------------------
   
-  cat(file = './Outputs/02_px_JAGS_hab_px_psi(setup_habitat_yr)_p(setup_effort)_px(.).txt', "
+  cat(file = './Outputs/04_px_JAGS_preydiv_psi(setup_preydiversity_yr)_p(setup_effort)_px(.).txt', "
       model{
           
         #### Define Priors  ####
@@ -23,7 +27,7 @@
         mean.psiSpp2 ~ dunif(0, 1)
             
         #'  First order occupancy slopes (psi)
-        for(fo_psi in 2:5){                         
+        for(fo_psi in 2:6){                         
           betaSpp1[fo_psi] ~ dnorm(0, 0.1)
           betaSpp2[fo_psi] ~ dnorm(0, 0.1)
         }
@@ -44,10 +48,9 @@
           alphaSpp2[fo_rho] ~ dnorm(0, 0.1)
         }
       
-        #'  Second order detection priors (rhox)
+        #'  Second order detection priors (rho)
         alphaSpp12[1] ~ dnorm(0, 0.1)
         alphaSpp21[1] <- 0
-        #alphaSpp21[1] ~ dnorm(0, 0.1)
                 
             
         ####  Define Likelihood  ####
@@ -75,7 +78,6 @@
         }
           
         #'  2. Define arrays containing cell probabilities for categorical distributions
-              
         #'  Probabilities for each latent state (z), held in latent state vector (lsv)
         for(i in 1:nsites) {
           lsv[i, 1] <- 1                   # Unoccupied
@@ -83,6 +85,7 @@
           lsv[i, 3] <- exp(psiSpp2[i])     # Pr(Spp2 present)
           lsv[i, 4] <- exp(psiSpp12[i])    # Pr(Spp1 & Spp2 present)
          
+          
           #'  Probabilities for each detection array, held in rho detection matrix (rdm) 
           #'  where OS = observed state, TS = true state and each row sums to 1. 
           #'  Exponentiating log odds so rdm holds estimates on probability scale.
@@ -102,12 +105,6 @@
             rdm[i, j, 2, 3] <- 0 # ------------------------------------ OS = Spp1 present
             rdm[i, j, 3, 3] <- exp(rhoSpp2[i, j]) # ------------------- OS = Spp2 present
             rdm[i, j, 4, 3] <- 0 # ------------------------------------ OS = Spp12 present
-            #' #'  Probability that presence of one species affects detection of the other
-            #' #'  True state = Spp1 & Spp2 present (z = 4 --> 11)
-            #' rdm[i, j, 1, 4] <- 1 # ------------------------------------ OS = unoccupied
-            #' rdm[i, j, 2, 4] <- exp(rhoSpp12[i, j]) # ------------------ OS = Spp1 present
-            #' rdm[i, j, 3, 4] <- exp(rhoSpp21[i, j]) # ------------------ OS = Spp2 present
-            #' rdm[i, j, 4, 4] <- exp(rhoSpp12[i, j] + rhoSpp21[i, j]) # - OS = Spp12 present
             #'  Probability of detecting both species together (non-independent detection)
             #'  True state = Spp1 & Spp2 present (z = 4 --> 11)
             rdm[i, j, 1, 4] <- 1 # ------------------------------------ OS = unoccupied
@@ -121,10 +118,10 @@
           #'  Linear models for the occupancy parameters on the logit scale
               
           #'  ...for states Spp1, Spp2
-          #'  Covariate order: Intercept[1] + Setup[2] + Year[5] + Elevation[3] + Forest[4]
-          psiSpp1[i] <- betaSpp1[1]*psi_cov[i,1] + betaSpp1[2]*psi_cov[i,2] + betaSpp1[3]*psi_cov[i,5] + betaSpp1[4]*psi_cov[i,3] + betaSpp1[5]*psi_cov[i,4] 
-          psiSpp2[i] <- betaSpp2[1]*psi_cov[i,1] + betaSpp2[2]*psi_cov[i,2] + betaSpp2[3]*psi_cov[i,5] + betaSpp2[4]*psi_cov[i,3] + betaSpp2[5]*psi_cov[i,4] 
-          
+          #'  Covariate order: Spp1 & Spp2 = Intercept[1] + Setup[2] + Year[5] + Elevation[3] + Forest[4] + SppDiversity[6] 
+          psiSpp1[i] <- betaSpp1[1]*psi_cov[i,1] + betaSpp1[2]*psi_cov[i,2] + betaSpp1[3]*psi_cov[i,5] + betaSpp1[4]*psi_cov[i,3] + betaSpp1[5]*psi_cov[i,4] + betaSpp1[6]*psi_cov[i,6]
+          psiSpp2[i] <- betaSpp2[1]*psi_cov[i,1] + betaSpp2[2]*psi_cov[i,2] + betaSpp2[3]*psi_cov[i,5] + betaSpp2[4]*psi_cov[i,3] + betaSpp2[5]*psi_cov[i,4] + betaSpp2[6]*psi_cov[i,6]
+        
           #'  ...for state Spp12
           #'  Don't forget - second order parameter set to 0 so no interaction
           psiSpp12[i] <- psiSpp1[i] + psiSpp2[i] + betaSpp12*psi_inxs_cov[i,1]
@@ -133,7 +130,7 @@
           #'  Covariate indices: Intercept[1] + Setup[2] + Sampling Effort[3]
           for(j in 1:nsurveys) {
             rhoSpp1[i, j] <- alphaSpp1[1]*rho_cov[i,j,1] + alphaSpp1[2]*rho_cov[i,j,2] + alphaSpp1[3]*rho_cov[i,j,3] 
-            rhoSpp2[i, j] <- alphaSpp2[1]*rho_cov[i,j,1] + alphaSpp2[2]*rho_cov[i,j,2] + alphaSpp2[3]*rho_cov[i,j,3]  
+            rhoSpp2[i, j] <- alphaSpp2[1]*rho_cov[i,j,1] + alphaSpp2[2]*rho_cov[i,j,2] + alphaSpp2[3]*rho_cov[i,j,3] 
           
             #'  Second-order interaction on detection (test for non-independence of detections)
             #'  rhoSpp21 not used but need as place holder based on how model is called in 01_Run_multispp_occupancy_models.R
