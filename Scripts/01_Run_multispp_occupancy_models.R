@@ -384,8 +384,7 @@
   which(wolf.bear.preydiv.px$summary[,"Rhat"] > 1.1)
   mcmcplot(wolf.bear.preydiv.px$samples)
   save(wolf.bear.preydiv.px, file = "./Outputs/wolfbear_preydiv_px.RData")
-  
-  
+
   
   #'  ----------------------
   ####  Wolf-Coyote Models  ####
@@ -436,7 +435,8 @@
   save(wolf.coy.preyabund, file = "./Outputs/wolfcoy_preyabund.RData")
   
   #####  Prey diversity model  #### 
-  #'  psi = setup, year, elevation, forest, spp diversity; _JAGS_preydiv_psi(setup_preydiversity_yr)_p(setup_effort).R")
+  #'  psi = setup, year, elevation, forest, spp diversity; p = setup, effort 
+  source("./Scripts/Sourced_Scripts__Multispecies_OccMod/04_JAGS_preydiv_psi(setup_preydiversity_yr)_p(setup_effort).R")
   start.time = Sys.time()
   wolf.coy.preydiv <- jags(bundled_data_list[[2]], inits = inits.wolf.coy, params,
                             "./Outputs/04_JAGS_preydiv_psi(setup_preydiversity_yr)_p(setup_effort).txt",
