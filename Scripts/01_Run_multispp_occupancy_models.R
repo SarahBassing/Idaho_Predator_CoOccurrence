@@ -1,22 +1,35 @@
-  #'  ---------------------------------------
-  #'  Bayesian multi-species occupancy model
-  #'  ID CRU - Predator Interactions
-  #'  Sarah Bassing
-  #'  February 2023
-  #'  ---------------------------------------
-  #'  Script sources data formatting scripts and JAGS code to run single-season
-  #'  multispecies occupancy models. Code adapted from Kery & Royle AHM2 book 
-  #'  (Ch. 8.2.3). Code runs 2-spp models using detection/non-detection data for 
-  #'  5 predator species: black bears, bobcats, coyotes, mountain lions, and wolves
-  #'  detected during summers 2020 & 2021 (July - mid Sept) via camera traps in 
-  #'  northern Idaho. Co-occurrence models include 11 7-day sampling occasions.
-  #'  Competing models test whether co-occurrence is non-independent and whether
-  #'  predator occurrence and co-occurrence are influenced by habitat, prey, and/or
-  #'  anthropogenic factors.
+  #'  ---------------------------------------------
+  #'  Fit Bayesian multispecies occupancy models
   #'  
-  #'  Detection histories are generated with Detection_histories_for_occmod.R. 
-  #'  Covariate data are formatted with Format_data_2spp_occmod_for_JAGS.R
-  #'  ---------------------------------------
+  #'  Bassing et al. "Mammalian predator co-occurrence affected by prey and habitat 
+  #'  more than competitor presence at multiple time scales"
+  #'  ---------------------------------------------
+  #'  Script sources Format_data_multispp_occupancy.R, which loads and formats data 
+  #'  for 5 predator species (black bear, bobcat, coyote, mountain lion, and wolf) 
+  #'  collected Summer 2020 and 2021 by the Northern Idaho Predator-Prey Project. 
+  #'  Script bundles data, defines MCMC settings, and calls JAGS to fit a set of 
+  #'  multispecies occupancy models to data for each predator pairing of interest. 
+  #'  JAGS code for each model is sourced from a series of scripts in a folder 
+  #'  named Sourced_Scripts__Multispecies_OccMod. Eight models are fit to data for
+  #'  each predator dyad including:
+  #'    1. Null
+  #'    2. Habitat
+  #'    3. Prey abundance
+  #'    4. Prey diversity
+  #'    5. Habitat with interaction on co-occupancy
+  #'    6. Prey abundance with interaction on co-occupancy
+  #'    7. Prey diversity with interaction on co-occupancy
+  #'    8. Global model
+  #'  Prey abundance, prey abundance with interaction, and global models have unique
+  #'  scripts for the different predator dyads depending on each predator's primary
+  #'  prey. e.g., script number follows 3.1, 3.2, 3.3, etc. for the different prey 
+  #'  abundance models. 
+  #'  The top model (selected using DIC with the 02_DIC_model_selection.R script) 
+  #'  for each predator dyad was then refit with an additional interaction term 
+  #'  on detection probability, resulting in 9 total models fit for each 
+  #'  predator pairing. Scripts with the co-detection interaction are labeled 
+  #'  with "px" following the model's number (e.g., 1_px_JAGS_null)
+  #'  --------------------------------------------
   
   #'  Clean work space and load libraries
   rm(list = ls())
@@ -232,12 +245,11 @@
   ####  RUN JAGS MODELS  ####
   #'  -------------------
   #'  For each predator pairing:
-  #'    1. set initial values with correct detection data,
+  #'    1. set initial values with correct detection data
   #'    2. source and run each model in JAGS
   #'    3. visually inspect trace plots
-  #'    4. review model summary and any parameters that didn't converge well
-  #'    5. save results
-  #'    6. model selection (with 02_Model_selection.R script)
+  #'    4. save results
+  #'    5. model selection (with 02_DIC_model_selection.R script)
   
   
   ####  Wolf-Bear Models  ####
@@ -257,7 +269,7 @@
   print(wolf.bear.null$DIC)
   which(wolf.bear.null$summary[,"Rhat"] > 1.1)
   mcmcplot(wolf.bear.null$samples)
-  save(wolf.bear.null, file = paste0("./Outputs/wolfbear_null_", Sys.Date(), ".RData"))
+  save(wolf.bear.null, file = "./Outputs/wolfbear_null.RData")
   
   #####  Habitat model  #### 
   #'  psi = setup, year, elevation, forest; p = setup, effort  
@@ -271,7 +283,7 @@
   print(wolf.bear.hab$DIC)
   which(wolf.bear.hab$summary[,"Rhat"] > 1.1)
   mcmcplot(wolf.bear.hab$samples)
-  save(wolf.bear.hab, file = paste0("./Outputs/wolfbear_hab_", Sys.Date(), ".RData"))
+  save(wolf.bear.hab, file = "./Outputs/wolfbear_hab.RData")
   
   #####  Prey abundance model  #### 
   #'  psi = setup, year, elevation, forest, elk, moose, wtd; p = setup, effort  
@@ -285,7 +297,7 @@
   print(wolf.bear.preyabund$DIC)
   which(wolf.bear.preyabund$summary[,"Rhat"] > 1.1)
   mcmcplot(wolf.bear.preyabund$samples)
-  save(wolf.bear.preyabund, file = paste0("./Outputs/wolfbear_preyabund_", Sys.Date(), ".RData"))
+  save(wolf.bear.preyabund, file = "./Outputs/wolfbear_preyabund.RData")
   
   #####  Prey diversity model  #### 
   #'  psi = setup, year, elevation, forest, spp diversity; p = setup, effort
@@ -299,9 +311,9 @@
   print(wolf.bear.preydiv$DIC)
   which(wolf.bear.preydiv$summary[,"Rhat"] > 1.1)
   mcmcplot(wolf.bear.preydiv$samples)
-  save(wolf.bear.preydiv, file = paste0("./Outputs/wolfbear_preydiversity_", Sys.Date(), ".RData"))
+  save(wolf.bear.preydiv, file = "./Outputs/wolfbear_preydiv.RData")
   
-  #####  Habitat w/ inx model  #### 
+  #####  Habitat w/ interaction model  #### 
   #'  psi = setup, year, elevation, forest; psix(.); p = setup, effort 
   source("./Scripts/Sourced_Scripts__Multispecies_OccMod/05_JAGS_habX_psi(setup_habitat_yr)_psix(.)_p(setup_effort).R")
   start.time = Sys.time()
@@ -313,7 +325,7 @@
   print(wolf.bear.habx$DIC)
   which(wolf.bear.habx$summary[,"Rhat"] > 1.1)
   mcmcplot(wolf.bear.habx$samples)
-  save(wolf.bear.habx, file = paste0("./Outputs/wolfbear_habX_", Sys.Date(), ".RData"))
+  save(wolf.bear.habx, file = "./Outputs/wolfbear_habX.RData")
   
   #####  Prey abundance w/ interaction model  #### 
   #'  psi = setup, year, elevation, forest, elk, moose, wtd; psix(elk, moose, wtd); p = setup, effort  
@@ -327,7 +339,7 @@
   print(wolf.bear.preyabundx$DIC)
   which(wolf.bear.preyabundx$summary[,"Rhat"] > 1.1)
   mcmcplot(wolf.bear.preyabundx$samples)
-  save(wolf.bear.preyabundx, file = paste0("./Outputs/wolfbear_preyabundX_", Sys.Date(), ".RData"))
+  save(wolf.bear.preyabundx, file = "./Outputs/wolfbear_preyabundX.RData")
   
   #####  Prey diversity w/ interaction model  #### 
   #'  psi = setup, year, elevation, forest, spp diversity; psix(spp diversity); p = setup, effort  
@@ -341,7 +353,7 @@
   print(wolf.bear.preydivx$DIC)
   which(wolf.bear.preydivx$summary[,"Rhat"] > 1.1)
   mcmcplot(wolf.bear.preydivx$samples)
-  save(wolf.bear.preydivx, file = paste0("./Outputs/wolfbear_preydiveristyX_", Sys.Date(), ".RData"))
+  save(wolf.bear.preydivx, file = "./Outputs/wolfbear_preydivX.RData")
   
   #####  Global model  #### 
   #'  psi = setup, year, elevation, forest, elk, moose, wtd, spp diversity; psix(elk, moose, wtd, spp diversity); p = setup, effort  
@@ -355,23 +367,23 @@
   print(wolf.bear.global$DIC)
   which(wolf.bear.global$summary[,"Rhat"] > 1.1)
   mcmcplot(wolf.bear.global$samples)
-  save(wolf.bear.global, file = paste0("./Outputs/wolfbear_global_", Sys.Date(), ".RData"))
+  save(wolf.bear.global, file = "./Outputs/wolfbear_global.RData")
   
   #####  Top model w/ interaction on detection model  #### 
   #'  Parameterization tests whether detection of one predator affects detection of the other
   #'  Top model:  Prey diversity, no intx on psi
   #'  psi = setup, year, elevation, forest, spp diversity; p = setup, effort; px(.) 
-  source("./Scripts/Sourced_Scripts__Multispecies_OccMod/04_px_JAGS_preydiv_px_psi(setup_preydiversity_yr)_p(setup_effort)_px(.).R")
+  source("./Scripts/Sourced_Scripts__Multispecies_OccMod/04_px_JAGS_preydiv_psi(setup_preydiversity_yr)_p(setup_effort)_px(.).R")
   start.time = Sys.time()
   wolf.bear.preydiv.px <- jags(bundled_data_list[[1]], inits = inits.wolf.bear, params,
-                          "./Outputs/04_px_JAGS_preydiv_px_psi(setup_preydiversity_yr)_p(setup_effort)_px(.).txt",
+                          "./Outputs/04_px_JAGS_preydiv_psi(setup_preydiversity_yr)_p(setup_effort)_px(.).txt",
                           n.chains = nc, n.iter = ni, n.burnin = nb, n.thin = nt, n.adapt = na, DIC = TRUE, parallel = TRUE)
   end.time <- Sys.time(); (run.time <- end.time - start.time)
   print(wolf.bear.preydiv.px$summary)
   print(wolf.bear.preydiv.px$DIC)
   which(wolf.bear.preydiv.px$summary[,"Rhat"] > 1.1)
   mcmcplot(wolf.bear.preydiv.px$samples)
-  save(wolf.bear.preydiv.px, file = paste0("./Outputs/wolfbear_preydiversity_px_", Sys.Date(), ".RData"))
+  save(wolf.bear.preydiv.px, file = "./Outputs/wolfbear_preydiv_px.RData")
   
   
   
@@ -393,7 +405,7 @@
   print(wolf.coy.null$DIC)
   which(wolf.coy.null$summary[,"Rhat"] > 1.1)
   mcmcplot(wolf.coy.null$samples)
-  save(wolf.coy.null, file = paste0("./Outputs/wolfcoy_null_", Sys.Date(), ".RData"))
+  save(wolf.coy.null, file = "./Outputs/wolfcoy_null.RData")
   
   #####  Habitat model  #### 
   #'  psi = setup, year, elevation, forest; p = setup, effort  
@@ -407,7 +419,7 @@
   print(wolf.coy.hab$DIC)
   which(wolf.coy.hab$summary[,"Rhat"] > 1.1)
   mcmcplot(wolf.coy.hab$samples)
-  save(wolf.coy.hab, file = paste0("./Outputs/wolfcoy_hab_", Sys.Date(), ".RData"))
+  save(wolf.coy.hab, file = "./Outputs/wolfcoy_hab.RData")
   
   #####  Prey abundance model  #### 
   #'  psi = setup, year, elevation, forest, elk, moose, wtd, lago; p = setup, effort  
@@ -421,7 +433,7 @@
   print(wolf.coy.preyabund$DIC)
   which(wolf.coy.preyabund$summary[,"Rhat"] > 1.1)
   mcmcplot(wolf.coy.preyabund$samples)
-  save(wolf.coy.preyabund, file = paste0("./Outputs/wolfcoy_preyabund_", Sys.Date(), ".RData"))
+  save(wolf.coy.preyabund, file = "./Outputs/wolfcoy_preyabund.RData")
   
   #####  Prey diversity model  #### 
   #'  psi = setup, year, elevation, forest, spp diversity; _JAGS_preydiv_psi(setup_preydiversity_yr)_p(setup_effort).R")
@@ -434,7 +446,7 @@
   print(wolf.coy.preydiv$DIC)
   which(wolf.coy.preydiv$summary[,"Rhat"] > 1.1)
   mcmcplot(wolf.coy.preydiv$samples)
-  save(wolf.coy.preydiv, file = paste0("./Outputs/wolfcoy_preydiv_", Sys.Date(), ".RData"))
+  save(wolf.coy.preydiv, file = "./Outputs/wolfcoy_preydiv.RData")
   
   #####  Habitat w/ interaction model  #### 
   #'  psi = setup, year, elevation, forest; psix(.); p = setup, effort
@@ -448,7 +460,7 @@
   print(wolf.coy.habx$DIC)
   which(wolf.coy.habx$summary[,"Rhat"] > 1.1)
   mcmcplot(wolf.coy.habx$samples)
-  save(wolf.coy.habx, file = paste0("./Outputs/wolfcoy_habX_", Sys.Date(), ".RData"))
+  save(wolf.coy.habx, file = "./Outputs/wolfcoy_habX.RData")
   
   #####  Prey abundance w/ interaction model  #### 
   #'  psi = setup, year, elevation, forest, elk, moose, wtd, lagomorph; psix(elk, moose, wtd, lagomorph); p = setup, effort  
@@ -462,7 +474,7 @@
   print(wolf.coy.preyabundx$DIC)
   which(wolf.coy.preyabundx$summary[,"Rhat"] > 1.1)
   mcmcplot(wolf.coy.preyabundx$samples)
-  save(wolf.coy.preyabundx, file = paste0("./Outputs/wolfcoy_preyabundX_", Sys.Date(), ".RData"))
+  save(wolf.coy.preyabundx, file = "./Outputs/wolfcoy_preyabundX.RData")
   
   #####  Prey diversity w/ interaction model  #### 
   #'  psi = setup, year, elevation, forest, spp diversity; psix(spp diversity); p = setup, effort
@@ -476,7 +488,7 @@
   print(wolf.coy.preydivx$DIC)
   which(wolf.coy.preydivx$summary[,"Rhat"] > 1.1)
   mcmcplot(wolf.coy.preydivx$samples)
-  save(wolf.coy.preydivx, file = paste0("./Outputs/wolfcoy_preydiversityX_", Sys.Date(), ".RData"))
+  save(wolf.coy.preydivx, file = "./Outputs/wolfcoy_preydivX.RData")
 
   #####  Global model  #### 
   #'  psi = setup, year, elevation, forest, elk, moose, wtd, lagomorph, spp diversity; psix(elk, moose, wtd, lagomorph, spp diversity); p = setup, effort 
@@ -490,23 +502,23 @@
   print(wolf.coy.global$DIC)
   which(wolf.coy.global$summary[,"Rhat"] > 1.1)
   mcmcplot(wolf.coy.global$samples)
-  save(wolf.coy.global, file = paste0("./Outputs/wolfcoy_global_", Sys.Date(), ".RData"))
+  save(wolf.coy.global, file = "./Outputs/wolfcoy_global.RData")
   
   #####  Top model w/ interaction on detection model  #### 
   #'  Parameterization tests whether detection of one predator affects detection of the other
   #'  Top model:  Habitat, no intx on psi
   #'  psi = setup, year, elevation, forest; p = setup, effort; px(.) 
-  source("./Scripts/Sourced_Scripts__Multispecies_OccMod/02_px_JAGS_hab_px_psi(setup_habitat_yr)_p(setup_effort)_px(.).R")
+  source("./Scripts/Sourced_Scripts__Multispecies_OccMod/02_px_JAGS_hab_psi(setup_habitat_yr)_p(setup_effort)_px(.).R")
   start.time = Sys.time()
   wolf.coy.hab.px <- jags(bundled_data_list[[2]], inits = inits.wolf.coy, params,
-                           "./Outputs/02_px1_JAGS_hab_px_psi(setup_habitat_yr)_p(setup_effort)_px(.).txt",
+                           "./Outputs/02_px_JAGS_hab_psi(setup_habitat_yr)_p(setup_effort)_px(.).txt",
                            n.chains = nc, n.iter = ni, n.burnin = nb, n.thin = nt, n.adapt = na, DIC = TRUE, parallel = TRUE)
   end.time <- Sys.time(); (run.time <- end.time - start.time)
   print(wolf.coy.hab.px$summary)
   print(wolf.coy.hab.px$DIC)
   which(wolf.coy.hab.px$summary[,"Rhat"] > 1.1)
   mcmcplot(wolf.coy.hab.px$samples)
-  save(wolf.coy.hab.px, file = paste0("./Outputs/wolfcoy_hab_px_", Sys.Date(), ".RData"))
+  save(wolf.coy.hab.px, file = "./Outputs/wolfcoy_hab_px.RData")
   
   
   #'  ---------------------
@@ -529,7 +541,7 @@
   print(wolf.lion.null$DIC)
   which(wolf.lion.null$summary[,"Rhat"] > 1.1)
   mcmcplot(wolf.lion.null$samples)
-  save(wolf.lion.null, file = paste0("./Outputs/wolflion_null_", Sys.Date(), ".RData"))
+  save(wolf.lion.null, file = "./Outputs/wolflion_null.RData")
   
   #####  Habitat model  #### 
   #'  psi = setup, year, elevation, forest; p = setup, effort
@@ -543,7 +555,7 @@
   print(wolf.lion.hab$DIC)
   which(wolf.lion.hab$summary[,"Rhat"] > 1.1)
   mcmcplot(wolf.lion.hab$samples)
-  save(wolf.lion.hab, file = paste0("./Outputs/wolflion_hab_", Sys.Date(), ".RData"))
+  save(wolf.lion.hab, file = "./Outputs/wolflion_hab.RData")
   
   #####  Prey abundance model  #### 
   #'  psi = setup, year, elevation, forest, elk, moose, wtd; p = setup, effort
@@ -557,7 +569,7 @@
   print(wolf.lion.preyabund$DIC)
   which(wolf.lion.preyabund$summary[,"Rhat"] > 1.1)
   mcmcplot(wolf.lion.preyabund$samples)
-  save(wolf.lion.preyabund, file = paste0("./Outputs/wolflion_preyabund_", Sys.Date(), ".RData"))
+  save(wolf.lion.preyabund, file = "./Outputs/wolflion_preyabund.RData")
   
   #####  Prey diversity model  #### 
   #'  psi = setup, year, elevation, forest, spp diversity; p = setup, effort
@@ -571,7 +583,7 @@
   print(wolf.lion.preydiv$DIC)
   which(wolf.lion.preydiv$summary[,"Rhat"] > 1.1)
   mcmcplot(wolf.lion.preydiv$samples)
-  save(wolf.lion.preydiv, file = paste0("./Outputs/wolflion_preydiversity_", Sys.Date(), ".RData"))
+  save(wolf.lion.preydiv, file = "./Outputs/wolflion_preydiv.RData")
   
   #####  Habitat w/ interaction model  #### 
   #'  psi = setup, year, elevation, forest; psix(.); p = setup, effort
@@ -585,7 +597,7 @@
   print(wolf.lion.habx$DIC)
   which(wolf.lion.habx$summary[,"Rhat"] > 1.1)
   mcmcplot(wolf.lion.habx$samples)
-  save(wolf.lion.habx, file = paste0("./Outputs/wolflion_habX_", Sys.Date(), ".RData"))
+  save(wolf.lion.habx, file = "./Outputs/wolflion_habX.RData")
   
   #####  Prey abundance w/ interaction model  #### 
   #'  psi = setup, year, elevation, forest, elk, moose, wtd; psix(elk, moose, wtd); p = setup, effort
@@ -599,7 +611,7 @@
   print(wolf.lion.preyabundx$DIC)
   which(wolf.lion.preyabundx$summary[,"Rhat"] > 1.1)
   mcmcplot(wolf.lion.preyabundx$samples)
-  save(wolf.lion.preyabundx, file = paste0("./Outputs/wolflion_preyabundX_", Sys.Date(), ".RData"))
+  save(wolf.lion.preyabundx, file = "./Outputs/wolflion_preyabundX.RData")
   
   #####  Prey diversity inx model  #### 
   #'  psi = setup, year, elevation, forest, spp diversity; psix(spp diversity); p = setup, effort
@@ -613,7 +625,7 @@
   print(wolf.lion.preydivx$DIC)
   which(wolf.lion.preydivx$summary[,"Rhat"] > 1.1)
   mcmcplot(wolf.lion.preydivx$samples)
-  save(wolf.lion.preydivx, file = paste0("./Outputs/wolflion_preydiversityX_", Sys.Date(), ".RData"))
+  save(wolf.lion.preydivx, file = "./Outputs/wolflion_preydivX.RData")
  
   #####  Global model  #### 
   #'  psi = setup, year, elevation, forest, elk, moose, wtd, spp diversity; psix(elk, moose, wtd, spp diversity); p = setup, effort
@@ -627,7 +639,7 @@
   print(wolf.lion.global$DIC)
   which(wolf.lion.global$summary[,"Rhat"] > 1.1)
   mcmcplot(wolf.lion.global$samples)
-  save(wolf.lion.global, file = paste0("./Outputs/wolflion_global_", Sys.Date(), ".RData"))
+  save(wolf.lion.global, file = "./Outputs/wolflion_global.RData")
   
   #####  Top model w/ interaction on detection model  #### 
   #'  Parameterization tests whether detection of one predator affects detection of the other
@@ -643,7 +655,7 @@
   print(wolf.lion.null.px$DIC)
   which(wolf.lion.null.px$summary[,"Rhat"] > 1.1)
   mcmcplot(wolf.lion.null.px$samples)
-  save(wolf.lion.null.px, file = paste0("./Outputs/wolflion_null_px_", Sys.Date(), ".RData"))
+  save(wolf.lion.null.px, file = "./Outputs/wolflion_null_px.RData")
   
   #####  Top model w/ intx on detection model v2  #### 
   #'  Parameterization tests whether presence of one predator affects detection of the other
@@ -659,7 +671,7 @@
   print(wolf.lion.null.px2$DIC)
   which(wolf.lion.null.px2$summary[,"Rhat"] > 1.1)
   mcmcplot(wolf.lion.null.px2$samples)
-  save(wolf.lion.null.px2, file = paste0("./Outputs/wolflion_null_px_", Sys.Date(), ".RData"))
+  save(wolf.lion.null.px2, file = "./Outputs/wolflion_null_px.RData")
   
   
   
@@ -683,7 +695,7 @@
   print(lion.bear.null$DIC)
   which(lion.bear.null$summary[,"Rhat"] > 1.1)
   mcmcplot(lion.bear.null$samples)
-  save(lion.bear.null, file = paste0("./Outputs/lionbear_null_", Sys.Date(), ".RData"))
+  save(lion.bear.null, file = "./Outputs/lionbear_null.RData")
   
   #####  Habitat model  #### 
   #'  psi = setup, year, elevation, forest; p = setup, effort
@@ -697,7 +709,7 @@
   print(lion.bear.hab$DIC)
   which(lion.bear.hab$summary[,"Rhat"] > 1.1)
   mcmcplot(lion.bear.hab$samples)
-  save(lion.bear.hab, file = paste0("./Outputs/lionbear_hab_", Sys.Date(), ".RData"))
+  save(lion.bear.hab, file = "./Outputs/lionbear_hab.RData")
   
   #####  Prey abundance model  #### 
   #'  psi = setup, year, elevation, forest, elk, wtd; p = setup, effort  
@@ -711,7 +723,7 @@
   print(lion.bear.preyabund$DIC)
   which(lion.bear.preyabund$summary[,"Rhat"] > 1.1)
   mcmcplot(lion.bear.preyabund$samples)
-  save(lion.bear.preyabund, file = paste0("./Outputs/lionbear_preyabund_", Sys.Date(), ".RData"))
+  save(lion.bear.preyabund, file = "./Outputs/lionbear_preyabund.RData")
   
   #####  Prey diversity model  #### 
   #'  psi = setup, year, elevation, forest, spp diversity; p = setup, effort
@@ -725,7 +737,7 @@
   print(lion.bear.preydiv$DIC)
   which(lion.bear.preydiv$summary[,"Rhat"] > 1.1)
   mcmcplot(lion.bear.preydiv$samples)
-  save(lion.bear.preydiv, file = paste0("./Outputs/lionbear_preydiversity_", Sys.Date(), ".RData"))
+  save(lion.bear.preydiv, file = "./Outputs/lionbear_preydiv.RData")
   
   #####  Habitat w/ interaction model  #### 
   #'  psi = setup, year, elevation, forest; psix(.); p = setup, effort
@@ -739,7 +751,7 @@
   print(lion.bear.habx$DIC)
   which(lion.bear.habx$summary[,"Rhat"] > 1.1)
   mcmcplot(lion.bear.habx$samples)
-  save(lion.bear.habx, file = paste0("./Outputs/lionbear_habX_", Sys.Date(), ".RData"))
+  save(lion.bear.habx, file = "./Outputs/lionbear_habX.RData")
   
   #####  Prey abundance w/ interaction model  #### 
   #'  psi = setup, year, elevation, forest, elk, wtd; psix(elk, wtd); p = setup, effort
@@ -753,7 +765,7 @@
   print(lion.bear.preyabundx$DIC)
   which(lion.bear.preyabundx$summary[,"Rhat"] > 1.1)
   mcmcplot(lion.bear.preyabundx$samples)
-  save(lion.bear.preyabundx, file = paste0("./Outputs/lionbear_preyabundX_", Sys.Date(), ".RData"))
+  save(lion.bear.preyabundx, file = "./Outputs/lionbear_preyabundX.RData")
   
   #####  Prey diversity w/ interaction model  #### 
   #'  psi = setup, year, elevation, forest, spp diversity; psix(spp diversity); p = setup, effort  
@@ -767,7 +779,7 @@
   print(lion.bear.preydivx$DIC)
   which(lion.bear.preydivx$summary[,"Rhat"] > 1.1)
   mcmcplot(lion.bear.preydivx$samples)
-  save(lion.bear.preydivx, file = paste0("./Outputs/lionbear_preydiversityX_", Sys.Date(), ".RData"))
+  save(lion.bear.preydivx, file = "./Outputs/lionbear_preydivX.RData")
   
   #####  Global model  ####
   #'  psi = setup, year, elevation, forest, elk, wtd, spp diversity; psix(elk, wtd, spp diversity); p = setup, effort
@@ -781,7 +793,7 @@
   print(lion.bear.global$DIC)
   which(lion.bear.global$summary[,"Rhat"] > 1.1)
   mcmcplot(lion.bear.global$samples)
-  save(lion.bear.global, file = paste0("./Outputs/lionbear_global_", Sys.Date(), ".RData"))
+  save(lion.bear.global, file = "./Outputs/lionbear_global.RData")
   
   #####  Top model w/ interaction on detection model  #### 
   #'  Parameterization tests whether detection of one predator affects detection of the other
@@ -797,7 +809,7 @@
   print(lion.bear.null.px$DIC)
   which(lion.bear.null.px$summary[,"Rhat"] > 1.1)
   mcmcplot(lion.bear.null.px$samples)
-  save(lion.bear.null.px, file = paste0("./Outputs/lionbear_null_px_", Sys.Date(), ".RData"))
+  save(lion.bear.null.px, file = "./Outputs/lionbear_null_px.RData")
   
   
   #'  ----------------------
@@ -820,7 +832,7 @@
   print(lion.bob.null$DIC)
   which(lion.bob.null$summary[,"Rhat"] > 1.1)
   mcmcplot(lion.bob.null$samples)
-  save(lion.bob.null, file = paste0("./Outputs/lionbob_null_", Sys.Date(), ".RData"))
+  save(lion.bob.null, file = "./Outputs/lionbob_null.RData")
   
   #####  Habitat no inxs model  #### 
   #'  psi = setup, year, elevation, forest; p = setup, effort
@@ -834,7 +846,7 @@
   print(lion.bob.hab$DIC)
   which(lion.bob.hab$summary[,"Rhat"] > 1.1)
   mcmcplot(lion.bob.hab$samples)
-  save(lion.bob.hab, file = paste0("./Outputs/lionbob_hab_", Sys.Date(), ".RData"))
+  save(lion.bob.hab, file = "./Outputs/lionbob_hab.RData")
   
   #####  Prey abundance model  #### 
   #'  psi = setup, year, elevation, forest, elk, wtd, lagomorphs; p = setup, effort 
@@ -848,7 +860,7 @@
   print(lion.bob.preyabund$DIC)
   which(lion.bob.preyabund$summary[,"Rhat"] > 1.1)
   mcmcplot(lion.bob.preyabund$samples)
-  save(lion.bob.preyabund, file = paste0("./Outputs/lionbob_preyabund_", Sys.Date(), ".RData"))
+  save(lion.bob.preyabund, file = "./Outputs/lionbob_preyabund.RData")
   
   #####  Prey diversity model  #### 
   #'  psi = setup, year, elevation, forest, spp diversity; p = setup, effort
@@ -862,7 +874,7 @@
   print(lion.bob.preydiv$DIC)
   which(lion.bob.preydiv$summary[,"Rhat"] > 1.1)
   mcmcplot(lion.bob.preydiv$samples)
-  save(lion.bob.preydiv, file = paste0("./Outputs/lionbob_preydiv_", Sys.Date(), ".RData"))
+  save(lion.bob.preydiv, file = "./Outputs/lionbob_preydiv.RData")
   
   #####  Habitat w/ interaction model  #### 
   #'  psi = setup, year, elevation, forest; psix(.); p = setup, effort
@@ -876,7 +888,7 @@
   print(lion.bob.habx$DIC)
   which(lion.bob.habx$summary[,"Rhat"] > 1.1)
   mcmcplot(lion.bob.habx$samples)
-  save(lion.bob.habx, file = paste0("./Outputs/lionbob_habX_", Sys.Date(), ".RData"))
+  save(lion.bob.habx, file = "./Outputs/lionbob_habX.RData")
   
   #####  Prey abundance w/ interaction model  #### 
   #'  psi = setup, year, elevation, forest, elk, wtd, lagomorphs; psix(elk, wtd, lagomorphs); p = setup, effort 
@@ -890,7 +902,7 @@
   print(lion.bob.preyabundx$DIC)
   which(lion.bob.preyabundx$summary[,"Rhat"] > 1.1)
   mcmcplot(lion.bob.preyabundx$samples)
-  save(lion.bob.preyabundx, file = paste0("./Outputs/lionbob_abundX_", Sys.Date(), ".RData"))
+  save(lion.bob.preyabundx, file = "./Outputs/lionbob_abundX.RData")
   
   #####  Prey diversity w/ interaction model  #### 
   #'  psi = setup, year, elevation, forest, spp diversity; psix(spp diversity); p = setup, effort
@@ -904,7 +916,7 @@
   print(lion.bob.preydivx$DIC)
   which(lion.bob.preydivx$summary[,"Rhat"] > 1.1)
   mcmcplot(lion.bob.preydivx$samples)
-  save(lion.bob.preydivx, file = paste0("./Outputs/lionbob_preydiversityX_", Sys.Date(), ".RData"))
+  save(lion.bob.preydivx, file = "./Outputs/lionbob_preydivX.RData")
   
   #####  Global model  #### 
   #'  psi = setup, year, elevation, forest, elk, wtd, lagomorphs, spp diversity; psix(elk, wtd, lagomorphs, spp diversity); p = setup, effort
@@ -918,7 +930,7 @@
   print(lion.bob.global$DIC)
   which(lion.bob.global$summary[,"Rhat"] > 1.1)
   mcmcplot(lion.bob.global$samples)
-  save(lion.bob.global, file = paste0("./Outputs/lionbob_global_", Sys.Date(), ".RData"))
+  save(lion.bob.global, file = "./Outputs/lionbob_global.RData")
   
   #####  Top model w/ interaction on detection model  #### 
   #'  Parameterization tests whether detection of one predator affects detection of the other
@@ -934,7 +946,7 @@
   print(lion.bob.null.px$DIC)
   which(lion.bob.null.px$summary[,"Rhat"] > 1.1)
   mcmcplot(lion.bob.null.px$samples)
-  save(lion.bob.null.px, file = paste0("./Outputs/lionbob_null_px_", Sys.Date(), ".RData"))
+  save(lion.bob.null.px, file = "./Outputs/lionbob_null_px.RData")
   
   
   
@@ -958,7 +970,7 @@
   print(coy.bob.null$DIC)
   which(coy.bob.null$summary[,"Rhat"] > 1.1)
   mcmcplot(coy.bob.null$samples)
-  save(coy.bob.null, file = paste0("./Outputs/coybob_null_", Sys.Date(), ".RData"))
+  save(coy.bob.null, file = "./Outputs/coybob_null.RData")
   
   #####  Habitat model  #### 
   #'  psi = setup, year, elevation, forest; p = setup, effort 
@@ -972,7 +984,7 @@
   print(coy.bob.hab$DIC)
   which(coy.bob.hab$summary[,"Rhat"] > 1.1)
   mcmcplot(coy.bob.hab$samples)
-  save(coy.bob.hab, file = paste0("./Outputs/coybob_hab_", Sys.Date(), ".RData"))
+  save(coy.bob.hab, file = "./Outputs/coybob_hab.RData")
   
   #####  Prey abundance model  #### 
   #'  psi = setup, year, elevation, forest, wtd, lagomorphs; p = setup, effort
@@ -986,7 +998,7 @@
   print(coy.bob.preyabund$DIC)
   which(coy.bob.preyabund$summary[,"Rhat"] > 1.1)
   mcmcplot(coy.bob.preyabund$samples)
-  save(coy.bob.preyabund, file = paste0("./Outputs/coybob_preyabund_", Sys.Date(), ".RData"))
+  save(coy.bob.preyabund, file = "./Outputs/coybob_preyabund.RData")
   
   #####  Prey diversity model  #### 
   #'  psi = setup, year, elevation, forest, spp diversity; p = setup, effort
@@ -1000,7 +1012,7 @@
   print(coy.bob.preydiv$DIC)
   which(coy.bob.preydiv$summary[,"Rhat"] > 1.1)
   mcmcplot(coy.bob.preydiv$samples)
-  save(coy.bob.preydiv, file = paste0("./Outputs/coybob_preydiversity_", Sys.Date(), ".RData"))
+  save(coy.bob.preydiv, file = "./Outputs/coybob_preydiv.RData")
   
   #####  Habitat w/ interaction model  #### 
   #'  psi = setup, year, elevation, forest; psix(.); p = setup, effort
@@ -1014,7 +1026,7 @@
   print(coy.bob.habx$DIC)
   which(coy.bob.habx$summary[,"Rhat"] > 1.1)
   mcmcplot(coy.bob.habx$samples)
-  save(coy.bob.habx, file = paste0("./Outputs/coybob_habX_", Sys.Date(), ".RData"))
+  save(coy.bob.habx, file = "./Outputs/coybob_habX.RData")
   
   #####  Prey abundance w/ interaction model  #### 
   #'  psi = setup, year, elevation, forest, wtd, lagomorphs; psix(wtd, lagomorphs); p = setup, effort
@@ -1028,7 +1040,7 @@
   print(coy.bob.preyabundx$DIC)
   which(coy.bob.preyabundx$summary[,"Rhat"] > 1.1)
   mcmcplot(coy.bob.preyabundx$samples)
-  save(coy.bob.preyabundx, file = paste0("./Outputs/coybob_preyabundX_", Sys.Date(), ".RData"))
+  save(coy.bob.preyabundx, file = "./Outputs/coybob_preyabundX.RData")
   
   #####  Prey diversity w/ interaction model  #### 
   #'  psi = setup, year, elevation, forest; psix(spp diversity); p = setup, effort
@@ -1042,7 +1054,7 @@
   print(coy.bob.preydivx$DIC)
   which(coy.bob.preydivx$summary[,"Rhat"] > 1.1)
   mcmcplot(coy.bob.preydivx$samples)
-  save(coy.bob.preydivx, file = paste0("./Outputs/coybob_preydiversityX_", Sys.Date(), ".RData"))
+  save(coy.bob.preydivx, file = "./Outputs/coybob_preydivX.RData")
   
   #####  Global model  #### 
   #'  psi = setup, year, elevation, forest, wtd, lagomorphs, spp diversity; psix(wtd, lagomorphs, spp diversity); p = setup, effort
@@ -1056,7 +1068,7 @@
   print(coy.bob.global$DIC)
   which(coy.bob.global$summary[,"Rhat"] > 1.1)
   mcmcplot(coy.bob.global$samples)
-  save(coy.bob.global, file = paste0("./Outputs/coybob_global_", Sys.Date(), ".RData"))
+  save(coy.bob.global, file = "./Outputs/coybob_global.RData")
   
   
   #####  Top model w/ interaction on detection model  #### 
@@ -1073,7 +1085,7 @@
   print(coy.bob.global.px$DIC)
   which(coy.bob.global.px$summary[,"Rhat"] > 1.1)
   mcmcplot(coy.bob.global.px$samples)
-  save(coy.bob.global.px, file = paste0("./Outputs/coybob_global_px_", Sys.Date(), ".RData"))
+  save(coy.bob.global.px, file = "./Outputs/coybob_global_px.RData")
   
   
   
