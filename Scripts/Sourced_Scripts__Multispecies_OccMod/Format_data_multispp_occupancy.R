@@ -12,10 +12,22 @@
   #'  JAGS. 
   #'  
   #'  Required data:
-  #'    1. DetectionHist_Smr20 and DetectionHist_Smr21: each containing a list 
-  #'       comprising 5 matrices. Each matrix contains the detection history of 
-  #'       1 species during an 11-week sampling period (July 1 - Sept. 15, 2020 or 2021)
-  #'    2. 
+  #'    1. DetectionHist_Smr20.RData and DetectionHist_Smr21.RData: each containing 
+  #'       a list comprising 5 matrices. Each matrix contains the detection history of 
+  #'       1 species during an 11-week sampling period (July 1 - Sept. 15, 2020/2021)
+  #'       
+  #'    2. Camera_Deployment_Data.csv: contains unique camera location name, GMU,
+  #'       Season (summer 2020 or 2021) of deployment, height of camera from ground, 
+  #'       and type of linear feature camera was facing (or a random location)
+  #'       
+  #'    3. Camera_Operable_Smr20.csv and Camera_Operable_Smr21.csv: each containing
+  #'       the unique camera location, setup and retrieval dates, and any date
+  #'       ranges when a camera was not operational
+  #'       
+  #'    4. Covariates_Smr20.csv and Covariates_Smr21.csv: contains site-level
+  #'       covariate data including percent forest cover within 500m of each site,
+  #'       elevation (m), species diversity index (H), and relative abundance 
+  #'       indices (RAI) for elk, lagomorphs, moose, and white-tailed deer.
   #'  --------------------------------------------
   
   #'  Load libraries
@@ -191,8 +203,8 @@
       return(cam_covs)
   }
   covs <- unscaled_covs(cams_yr1 = cams_smr20, cams_yr2 = cams_smr21, 
-                                             covs_yr1 = covs_smr20, covs_yr2 = covs_smr21, 
-                                             rm_rows_yr1 = rm_rows_smr20, rm_rows_yr2 = rm_rows_smr21)
+                        covs_yr1 = covs_smr20, covs_yr2 = covs_smr21, 
+                        rm_rows_yr1 = rm_rows_smr20, rm_rows_yr2 = rm_rows_smr21)
   #'  Save for later use
   save(covs, file = "./Data/covs.RData")
   
