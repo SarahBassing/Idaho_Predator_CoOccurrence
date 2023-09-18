@@ -21,8 +21,8 @@
   library(tidyverse)
   
   #'  Load covariate data
-  load("./Data/Covariates_extracted/Covariate_skinny_EoE20s21s.RData")
-  load("./Data/MultiSpp_OccMod_Outputs/Format_data_2spp_occmod_for_JAGS_img.RData")
+  # load("./Data/covs.RData")
+  source("./Scripts/Sourced_Scripts__Multispecies_OccMod/Format_data_multispp_occupancy.R")
   
   #'  -------------------------------------------------
   ####  Predict Pr(detection) across covariate values  ####
@@ -139,7 +139,7 @@
   }
   #####  Wolf-Black bear predictions  ####
   #'  Top model
-  load("./Outputs/MultiSpp_OccMod_Outputs/JAGS_output/wolfbear_psi(setup_preydiversity_yr)_p(setup_effort)_px(.)_2023-04-20.RData")
+  load("./Outputs/wolfbear_preydiv_px.RData")
   wolf.bear.eff.ung.yr1 <- predict_detection(mod = wolf.bear.preydiv.px, ncat = 4, npoints = 500,
                                             focal_cov = effort_eoe20s21s,
                                             rho_cov = c(1, 0, 0), rho_cov_index = 3,
@@ -150,7 +150,7 @@
                                              rho_inxs_cov = 0, rho_inxs_cov_index = 0)
   
   #####  Wolf-Coyote predictions  ####
-  load("./Outputs/MultiSpp_OccMod_Outputs/JAGS_output/wolfcoy_psi(setup_habitat_yr)_p(setup_effort)_px(.)_2023-04-21.RData") 
+  load("./Outputs/wolfcoy_hab_px.RData") 
   wolf.coy.eff.ung.yr1 <- predict_detection(mod = wolf.coy.hab.px, ncat = 4, npoints = 500,
                                             focal_cov = effort_eoe20s21s,
                                             rho_cov = c(1, 0, 0), rho_cov_index = 3,
@@ -169,15 +169,15 @@
                                          rho_inxs_cov = c(1), rho_inxs_cov_index = 0)
   
   #####  Wolf-Lion predictions  ####
-  load("./Outputs/MultiSpp_OccMod_Outputs/JAGS_output/wolflion_psi(yr)_p(.)_px(.)_2023-04-21.RData")
+  load("./Outputs/wolflion_null_px.RData")
   
   
   #####  Lion-Bear predictions  ####
-  load("./Outputs/MultiSpp_OccMod_Outputs/JAGS_output/lionbear_psi(yr)_p(.)_px(.)_2023-04-21.RData")
+  load("./Outputs/lionbear_null_px.RData")
   
   
   #####  Lion-Bobcat predictions  ####
-  load("./Outputs/MultiSpp_OccMod_Outputs/JAGS_output/lionbob_psi(yr)_p(.)_px(.)_2023-04-21.RData")
+  load("./Outputs/lionbob_null_px.RData")
   lion.bob.ung.yr1 <- predict_detection(mod = lion.bob.null.px, ncat = 4, npoints = 500,
                                             focal_cov = effort_eoe20s21s,
                                             rho_cov = c(1), rho_cov_index = 0,
@@ -188,7 +188,7 @@
                                              rho_inxs_cov = c(1), rho_inxs_cov_index = 0)
   
   #####  Coyote-Bobcat predictions  ####
-  load("./Outputs/MultiSpp_OccMod_Outputs/JAGS_output/coybob_psi(global)_psix(global)_p(setup_effort)_px(.)_coybob_2023-04-25.RData")
+  load("./Outputs/coybob_global_px.RData")
   coy.bob.eff.ung.yr1 <- predict_detection(mod = coy.bob.global.px, ncat = 4, npoints = 500,
                                             focal_cov = effort_eoe20s21s,
                                             rho_cov = c(1, 0, 0), rho_cov_index = 3,
@@ -206,13 +206,9 @@
                                         rho_cov = c(1, 1, 0), rho_cov_index = 0,
                                         rho_inxs_cov = c(1), rho_inxs_cov_index = 0)
   
-  save.image(file = paste0("./Outputs/MultiSpp_OccMod_Outputs/Co-Occ_Plots/Predicted_rho-cov_relationships_", Sys.Date(), ".RData"))
-  
   #'  --------------------------------
   ####  Plot marginal Pr(detection)  ####
   #'  --------------------------------
-  load("./Outputs/MultiSpp_OccMod_Outputs/Co-Occ_Plots/Predicted_rho-cov_relationships_2023-06-29.RData")
-  
   #'  Color-blind friendly color palette from Khroma
   plot_scheme(colour("sunset")(11))
   colour("sunset")(11)
@@ -482,62 +478,6 @@
   condish_plot <- plot_all_condish_det(predicted = conditional_det, x = "Whether competitor was detected at same site", 
                                        ncolor = wolf.lion.coy.bob_colors)
   
-  #'  Plot each species separately while keeping pairings together
-  cond_coybob_plot <- ggplot(conditional_det[conditional_det$Species_pair == "Coyote - Bobcat",], aes(x = Detection, y = conditional_det, group = Species)) + 
-    geom_errorbar(aes(ymin = lowerCRI, ymax = upperCRI, color = Species), width = 0, position = position_dodge(width = 0.4)) +
-    scale_color_manual(values = wolf.lion.coy.bob_colors) + 
-    geom_point(stat = 'identity', aes(col = Species), size = 2.5, position = position_dodge(width = 0.4)) +   
-    #'  Get rid of lines and gray background
-    theme_bw() +
-    theme(panel.border = element_blank()) +
-    theme(axis.line = element_line(color = 'black')) +
-    #'  Force y-axis from 0 to 1
-    ylim(0,1.0) +
-    #'  Use list name as X-axis title
-    xlab("") +
-    ylab("Conditional detection probability (trail sites)") +
-    facet_wrap(~Species, ncol = 1, scales = "free_y") +
-    coord_cartesian(ylim = c(0, 0.70)) +
-    #theme(strip.text = element_text(face = "bold", color = "black", hjust = 0, size = 12)) +
-    theme(legend.position="none")
-  cond_coybob_plot
-  
-  cond_apexmeso_plot <- ggplot(conditional_det[conditional_det$Species_pair != "Coyote - Bobcat",], aes(x = Detection, y = conditional_det, group = Species)) + 
-      geom_errorbar(aes(ymin = lowerCRI, ymax = upperCRI, color = Species), width = 0, position = position_dodge(width = 0.4)) +
-      scale_color_manual(values = four_colors) + 
-      geom_point(stat = 'identity', aes(col = Species), size = 2.5, position = position_dodge(width = 0.4)) +   
-      #'  Get rid of lines and gray background
-      theme_bw() +
-      theme(panel.border = element_blank()) +
-      theme(axis.line = element_line(color = 'black')) +
-      theme(axis.title.y = element_blank()) +
-      #'  Force y-axis from 0 to 1
-      ylim(0,1.0) +
-      #'  Use list name as X-axis title
-      xlab("") +
-      labs(fill = "Focal species in predator dyad", color = "Focal species in predator dyad") +
-      facet_wrap(~Species, ncol = 2, scales = "free_y") +
-      coord_cartesian(ylim = c(0, 0.70)) +
-      #theme(strip.text = element_text(face = "bold", color = "black", hjust = 0, size = 12)) +
-      theme(legend.position = "bottom") 
-  cond_apexmeso_plot
-  
-  #'  remove legend from coy-bob plot
-  coybob_guide <- cond_coybob_plot + guides(colour = "none")
-  
-  #'  Merge coybob and apexmeso plots into single figure
-  condish_det_patchwork <- coybob_guide + cond_apexmeso_plot +
-    plot_layout(widths = c(1,2)) + plot_annotation(title = 'Co-detection probabilities for predator dyads') +
-    plot_layout(guides = "collect") & theme(legend.position = "bottom")
-
-  #'  Add a single unifying xaxis title to bottom of plot
-  condish_det_patchwork <- wrap_elements(panel = condish_det_patchwork) +
-    labs(tag = "Whether competitor was detected at same site") +
-    theme(
-      plot.tag = element_text(size = rel(1)),
-      plot.tag.position = c(0.5, 0.10) #"bottom" # note: providing coordinates for tag position makes things a bit complicated when saving
-    )
-  condish_det_patchwork
   
   #'  -----------------------------
   ####  Save all the pretty plots  ####
@@ -583,10 +523,5 @@
          units = "in", width = 7, height = 5, dpi = 600, device = 'tiff', compression = 'lzw')
   ggsave("./Outputs/MultiSpp_OccMod_Outputs/Co-Occ_Plots/all_signif_pairs_mean_pred_conditional_det_plots.tiff", condish_plot, 
          units = "in", width = 8, height = 5, dpi = 600, device = 'tiff', compression = 'lzw')
-  ggsave("./Outputs/MultiSpp_OccMod_Outputs/Co-Occ_Plots/all_signif_pairs_mean_pred_conditional_det_plots_v2.tiff", condish_det_patchwork, 
-         units = "in", width = 8, height = 7, dpi = 600, device = 'tiff', compression = 'lzw')
-  
-  
-  
   
   
