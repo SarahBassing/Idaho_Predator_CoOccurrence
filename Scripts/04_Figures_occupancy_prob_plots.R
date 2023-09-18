@@ -23,7 +23,6 @@
   
   #'  Load covariate data
   load("./Data/covs.RData")
-  # zcovs <- read.csv("./Data/Camera_Stations.csv")
   
   #'  Identify top models
   load("./Outputs/DIC_top_models.RData")
