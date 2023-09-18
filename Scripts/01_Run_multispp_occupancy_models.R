@@ -657,22 +657,6 @@
   mcmcplot(wolf.lion.null.px$samples)
   save(wolf.lion.null.px, file = "./Outputs/wolflion_null_px.RData")
   
-  #####  Top model w/ intx on detection model v2  #### 
-  #'  Parameterization tests whether presence of one predator affects detection of the other
-  #'  Top model:  Habitat, no intx on psi
-  #'  psi = year; p(.); px(psi)
-  source("./Scripts/Sourced_Scripts__Multispecies_OccMod/01_px_JAGS_null_psi(yr)_p(.)_px(.).R")
-  start.time = Sys.time()
-  wolf.lion.null.px2 <- jags(bundled_data_list[[3]], inits = inits.wolf.lion, params,
-                           "./Outputs/01_px_JAGS_null_psi(yr)_p(.)_px(.).txt",
-                           n.chains = nc, n.iter = ni, n.burnin = nb, n.thin = nt, n.adapt = na, DIC = TRUE, parallel = TRUE)
-  end.time <- Sys.time(); (run.time <- end.time - start.time)
-  print(wolf.lion.null.px2$summary)
-  print(wolf.lion.null.px2$DIC)
-  which(wolf.lion.null.px2$summary[,"Rhat"] > 1.1)
-  mcmcplot(wolf.lion.null.px2$samples)
-  save(wolf.lion.null.px2, file = "./Outputs/wolflion_null_px.RData")
-  
   
   
   #'  --------------------
