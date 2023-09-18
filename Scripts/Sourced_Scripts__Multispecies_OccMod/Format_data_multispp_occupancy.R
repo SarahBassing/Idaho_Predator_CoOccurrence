@@ -95,7 +95,6 @@
                            GMU = as.factor(GMU),
                            CameraFacing = as.factor(CameraFacing),
                            Setup = as.factor(Setup),
-                           Target = as.factor(Target),
                            Height = scale(CameraHeight_M),
                            PercForest = scale(perc_forest), 
                            Elev = scale(Elevation__10m2),
@@ -129,7 +128,7 @@
     print(corr_all)
     return(corr_all)
   }
-  cov_corr_matrix <- corr_matrix(zcovs, firstcol = 7, lastcol = 14)
+  cov_corr_matrix <- corr_matrix(zcovs, firstcol = 7, lastcol = 13)
   
   #'  ---------------------------
   ####  Survey-level covariates  ####
@@ -191,7 +190,6 @@
                           GMU = as.factor(GMU),
                           CameraFacing = as.factor(CameraFacing),
                           Setup = as.factor(Setup),
-                          Target = as.factor(Target),
                           Height = CameraHeight_M,
                           PercForest = perc_forest, 
                           Elev = Elevation__10m2,
