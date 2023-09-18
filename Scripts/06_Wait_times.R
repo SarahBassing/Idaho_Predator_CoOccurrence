@@ -13,7 +13,7 @@
   #'    1. dets_smr20.RData & dets_smr21.RData: contains camera ID, date, time, 
   #'    species, and other relevant detection data for each image.
   #'    
-  #'    2. prob_dets_smr20 & prob_dets_smr21: contains detections where camera
+  #'    2. prob_dets_smr20 & prob_dets_smr21: contains camera triggers where camera
   #'    was obscured or otherwise inoperable
   #'  ---------------------------------------
   
@@ -333,22 +333,4 @@
     xlab("Predator pairings") + ylab("Hours between sequential detections") +
     labs(fill = "First - Second Predator"))
   
-  #'  Table of mean prey - predator tbd
-  lago <- filter(avg_tbd, grepl("rabbit_hare", Species_pair))
-  elk <- filter(avg_tbd, grepl("elk", Species_pair))
-  moose <- filter(avg_tbd, grepl("moose", Species_pair))
-  wtd <- filter(avg_tbd, grepl("whitetaileddeer", Species_pair))
-  nt_pairs <- rbind(lago, elk, moose, wtd) %>%
-    mutate(Species_pair = gsub("_", " ", Species_pair)) %>%
-    arrange(Species_pair)
-  
-  #'  Visualize an example of tbd prey - predator data 
-  lagowtdcoy <- filter(tbd_spp_pairs_all, Species_pair == "rabbit_hare-coyote" | Species_pair == "whitetaileddeer-coyote")
-  elkwtdlion <- filter(tbd_spp_pairs_all, Species_pair == "elk-mountain_lion" | Species_pair == "whitetaileddeer-mountain_lion")
-  (prey_coy_his <- ggplot(lagowtdcoy, aes(x=HoursSinceLastDet, fill=Species_pair)) +
-      geom_histogram(color="#e9ecef", alpha=0.6, position = 'identity', binwidth = 5) +
-      scale_fill_manual(values=c("#69b3a2", "#404080"))) 
-  (prey_lion_his <- ggplot(elkwtdlion, aes(x=HoursSinceLastDet, fill=Species_pair)) +
-      geom_histogram(color="#e9ecef", alpha=0.6, position = 'identity', binwidth = 5) +
-      scale_fill_manual(values=c("#69b3a2", "#404080")))
   
