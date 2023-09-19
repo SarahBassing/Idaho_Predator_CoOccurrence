@@ -52,6 +52,7 @@
   load("./Outputs/tbd_nontarget_wolf_sppID.RData")
   
   #'  Load bundled data, including new covariate data
+  #'  Generated in 07_Run_exponential_models.R script
   load("./Data/bear_bundled.RData")
   load("./Data/bob_bundled.RData")
   load("./Data/coy_bundled.RData")
@@ -68,32 +69,7 @@
   ####  Species silhouettes  ####
   #'  ------------------------
   #'  Silhouettes for each species from PhyloPic in two different formats (PNG & rastergrob)
-  #'  Cougar, mule deer, and white-tailed deer silhouettes created by the talented 
-  #'  Gabriela Palomo-Munoz and uploaded to http://phylopic.org/
-  cougurlGB <- "https://images.phylopic.org/images/cbe2a3c9-2c11-4f36-a51f-8a6c8de6a420/raster/1024x489.png?v=17cfd978c92.png"
-  cougimgGB <- readPNG(getURLContent(cougurlGB), native = T)
-  couggrid <- rasterGrob(cougimgGB, interpolate = TRUE)
-  wolfurl <- "https://images.phylopic.org/images/8cad2b22-30d3-4cbd-86a3-a6d2d004b201/raster/1024x797.png?v=16ff245cc7c.png"
-  wolfimg <- readPNG(getURLContent(wolfurl), native = T)
-  wolfgrid <- rasterGrob(wolfimg, interpolate = TRUE)
-  boburl <- "https://images.phylopic.org/images/ab6cfd4f-aef7-40fa-b5a5-1b79b7d112aa/raster/1024x740.png?v=17a30c18af1.png"
-  bobimg <- readPNG(getURLContent(boburl), native = T)
-  bobgrid <- rasterGrob(bobimg, interpolate = TRUE)
-  coyurl <- "https://images.phylopic.org/images/5a0398e3-a455-4ca6-ba86-cf3f1b25977a/raster/1024x894.png?v=16fe8749858.png"
-  coyimg <- readPNG(getURLContent(coyurl), native = T) 
-  coygrid <- rasterGrob(coyimg, interpolate = TRUE)
-  coyurlGB <- "https://images.phylopic.org/images/e6a2fa4b-85df-43b4-989c-34a65ba7eee3/raster/1024x911.png?v=17f2638df97.png"
-  coyimgGB <- readPNG(getURLContent(coyurlGB), native = T)
-  coygridGB <- rasterGrob(coyimg, interpolate = TRUE)
-  bearurl <- "https://images.phylopic.org/images/369a7880-4798-41bf-851a-ec5da17fafa3/raster/1024x753.png?v=178afd80706.png"
-  bearimg <- readPNG(getURLContent(bearurl), native = T)
-  beargrid <- rasterGrob(bearimg, interpolate = TRUE)
-  elkfurl <- "https://images.phylopic.org/images/97f83f5e-9afe-4ce8-812e-337f506ca841/raster/1024x1005.png?v=1402ea30c27.png"
-  elkfimg <- readPNG(getURLContent(elkfurl), native = T)
-  elkgrid <- rasterGrob(elkfimg, interpolate = TRUE)
-  elkmurl <- "https://images.phylopic.org/images/72f2f997-e474-4caf-bbd5-72fc8dbcc40d/raster/866x1024.png?v=1356f9ea6de.png"
-  elkmimg <- readPNG(getURLContent(elkmurl), native = T)
-  elkmgrid <- rasterGrob(elkmimg, interpolate = TRUE)
+  #'  White-tailed deer silhouettes created by the talented Gabriela Palomo-Munoz and uploaded to http://phylopic.org/
   wtdurlGB1 <- "https://images.phylopic.org/images/8569838c-c725-4772-b0a3-b5eb04baaada/raster/1024x850.png?v=17cfdbaf920.png"
   wtdimgGB1 <- readPNG(getURLContent(wtdurlGB1), native = T)
   wtdgrid <- rasterGrob(wtdimgGB1, interpolate = TRUE)
