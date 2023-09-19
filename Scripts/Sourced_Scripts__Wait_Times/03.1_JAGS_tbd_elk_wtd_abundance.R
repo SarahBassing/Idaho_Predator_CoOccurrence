@@ -1,0 +1,49 @@
+  #'  ----------------------------------------
+  #'  Wait time prey RIA (elk & wtd) model
+  #'  
+  #'  Bassing et al. "Mammalian predator co-occurrence affected by prey and habitat 
+  #'  more than competitor presence at multiple time scales"
+  #'  ----------------------------------------
+  #'  Estimate effect of relative abundance of elk/wtd on the time that elapses 
+  #'  before detecting a focal predator species.
+  #'  -----------------------------------------
+  
+  cat(file = "./Outputs/tbd_elk_wtd_abundance.txt", "
+      model{
+      
+      #'  Priors
+      #'  ------
+      alpha0 ~ dnorm(0, 0.01)
+      
+      for(pp in 1:npp) {
+        beta.prey[pp] ~ dnorm(0, 0.01)
+      }
+      
+    
+      #'  Define likelihood
+      #'  -----------------
+      for(i in 1:ntbd){
+        y[i] ~ dexp(tbd_lambda[i])
+        
+        tbd_lambda[i] <- 1/tbd_mu[i]
+      
+        log(tbd_mu[i]) <- alpha0 + beta.prey[1]*covs[i,5] + beta.prey[2]*covs[i,7]
+      }
+      
+      
+      #'  Derived parameters
+      #'  ------------------
+      #'  Mean TBD at average prey RAI
+      mu.tbd <- exp(alpha0 + beta.prey[1]*0 + beta.prey[2]*0)
+      
+      #'  Mean TBD across range of elk relative abundance values
+      for(i in 1:100){
+        spp.tbd.elk[i] <- exp(alpha0 + beta.prey[1]*newcovs[i,1] + beta.prey[2]*0)
+      }
+      
+      #'  Mean TBD across range of wtd relative abundance values 
+      for(i in 1:100){
+        spp.tbd.wtd[i] <- exp(alpha0 + beta.prey[1]*0 + beta.prey[2]*newcovs[i,3])
+      }
+      
+      } ")
