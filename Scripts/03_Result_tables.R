@@ -85,9 +85,6 @@
   #'  New names for covariates
   Covariate <- c("Elevation (m)", "Forest cover (%)", "Elk RAI", "Lagomorph RAI", 
                  "Moose RAI", "White-tailed deer RAI", "Shannon's diversity index (H)")
-  # covs <- rbind(covs_smr20, covs_smr21) %>% #covs ????
-  #   dplyr::select(c(NewLocationID, Elevation__10m2, perc_forest, elk_perday, 
-  #                   lagomorphs_perday, moose_perday, whitetaileddeer_perday, H))
   #'  Calculate mean, SE, min & max of untransformed covariates
   nobs <- nrow(covs)
   cov_means <- covs %>% summarise(across(where(is.numeric), ~ mean(.x, na.rm = TRUE))) %>%
@@ -139,7 +136,6 @@
   cam_deployment_summary <- as.data.frame(table(covs)) %>%
     arrange(Year)
   colnames(cam_deployment_summary) <- c("Year", "Camera setup", "Operable cameras (n)")
-  
   
   
   #'  --------------------------------
@@ -539,5 +535,6 @@
   ### NOTE: mean.psi and mean.p for null models are mean occ/det (averaged across random & trail cameras)
   ### NOTE: but don't account for any heterogeneity in occ/det. 
   
-  write.csv(mean_occ_det, "./Outputs/Summary_mean_psi&p.csv")
+  #' #'  Save
+  #' write.csv(mean_occ_det, "./Outputs/Summary_mean_psi&p.csv")
   
