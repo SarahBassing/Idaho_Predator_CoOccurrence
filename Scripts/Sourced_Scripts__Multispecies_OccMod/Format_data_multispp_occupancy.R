@@ -30,9 +30,9 @@
   #'       ranges when a camera was not operational
   #'       
   #'    5. Covariates_Smr20.csv and Covariates_Smr21.csv: contains site-level
-  #'       covariate data including percent forest cover within 500m of each site,
-  #'       elevation (m), species diversity index (H), and relative abundance 
-  #'       indices (RAI) for elk, lagomorphs, moose, and white-tailed deer.
+  #'       covariate data including percent forest cover within 100m of each site,
+  #'       elevation (m), and relative abundance indices (RAI) for elk, lagomorphs, 
+  #'       moose, and white-tailed deer.
   #'  --------------------------------------------
   
   #'  Load libraries
@@ -103,7 +103,7 @@
                            Height = scale(CameraHeight_M),
                            PercForest = scale(perc_forest), 
                            Elev = scale(Elevation__10m2),
-                           SppDiversity = scale(H),
+                           TRI = scale(TRI),
                            Nelk = scale(elk_perday),  
                            Nlagomorph = scale(lagomorphs_perday),
                            Nmoose = scale(moose_perday),
@@ -116,7 +116,7 @@
     
     return(formatted)
   }
-  rm_rows_smr20 <- c(61, 79, 82, 98, 125, 157, 171, 177, 178, 181, 186, 192, 200, 214, 228, 235, 236, 259, 311, 334, 346, 361, 371, 379, 380, 385, 433, 437, 439, 458, 493)
+  rm_rows_smr20 <- c(61, 79, 82, 98, 125, 157, 171, 177, 178, 181, 186, 192, 200, 214, 228, 235, 236, 259, 311, 334, 346, 361, 371, 379, 380, 385, 419, 433, 437, 439, 458, 493)
   rm_rows_smr21 <- c(6, 106, 112, 116, 127, 145, 147, 178, 194, 195, 260, 267, 296, 343, 355, 365, 409, 417, 419, 423, 430, 450, 510, 530, 577, 578, 580, 588, 621, 627, 647, 652, 682)
   zcovs <- format_covs(cams_yr1 = cams_smr20, cams_yr2 = cams_smr21, 
                        covs_yr1 = covs_smr20, covs_yr2 = covs_smr21, 
@@ -133,16 +133,15 @@
     print(corr_all)
     return(corr_all)
   }
-  cov_corr_matrix <- corr_matrix(zcovs, firstcol = 7, lastcol = 13)
+  cov_corr_matrix <- corr_matrix(zcovs, firstcol = 7, lastcol = 12)
   
   #'  ---------------------------
   ####  Survey-level covariates  ####
   #'  ---------------------------
   #'  Bind annual sampling effort (must have matching column names)
-  newcols <- c("NewLocationID", "occ1", "occ2", "occ3", "occ4", "occ5", "occ6", "occ7", "occ8", "occ9", "occ10", "occ11", "total_days", "total_hrs")
+  newcols <- c("occ1", "occ2", "occ3", "occ4", "occ5", "occ6", "occ7", "occ8", "occ9", "occ10", "occ11")
   colnames(SamplingEffort_Smr20) <- newcols; colnames(SamplingEffort_Smr21) <- newcols
-  SamplingEffort <- rbind(SamplingEffort_Smr20, SamplingEffort_Smr21) %>%
-    dplyr::select(-c(total_days, total_hrs))
+  SamplingEffort <- rbind(SamplingEffort_Smr20, SamplingEffort_Smr21) 
   
   #'  Replace NAs in sampling effort with 0 - these sites truly were not surveyed
   #'  during those sampling occasions so survey effort = 0
@@ -153,9 +152,6 @@
   
   #'  Scale survey-level covariates
   scale_srvy_cov <- function(srvy_covs) {
-    #'  Remove first column of camera names
-    srvy_covs <- srvy_covs[,-1]
-    
     #'  Find mean & standard deviation of covariates across all sites & occasions
     mu <- mean(as.matrix(srvy_covs), na.rm = TRUE)
     sd <- sd(as.matrix(srvy_covs), na.rm = TRUE)
@@ -198,7 +194,7 @@
                           Height = CameraHeight_M,
                           PercForest = perc_forest, 
                           Elev = Elevation__10m2,
-                          SppDiversity = H,
+                          TRI = TRI,
                           Nelk = elk_perday,    
                           Nlagomorph = lagomorphs_perday,
                           Nmoose = moose_perday,
