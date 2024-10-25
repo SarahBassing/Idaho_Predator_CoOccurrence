@@ -10,7 +10,7 @@
   #'  non-independent.
   #'  ---------------------------------
   
-  cat(file = './Outputs/01_px_JAGS_null_psi(yr)_p(.)_px(.).txt', "
+  cat(file = './Outputs/01.1.1_JAGS_null_psi(yr)_px(.).txt', "
       model{
           
         #### Define Priors  ####
@@ -127,3 +127,4 @@
         }
       }
       ")
+  
