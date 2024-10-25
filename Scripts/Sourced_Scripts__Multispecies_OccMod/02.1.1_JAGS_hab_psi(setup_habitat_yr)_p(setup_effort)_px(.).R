@@ -5,13 +5,14 @@
   #'  Bassing et al. "Mammalian predator co-occurrence affected by prey and habitat 
   #'  more than competitor presence at multiple time scales"
   #'  ------------------------------------
-  #'  Includes basic habitat variables (elevation and percent forest cover), year,
-  #'  and camera setup on first-order psi. Setup and sampling effort on first-order 
-  #'  rho. Assumes species occur independently of one another but co-detection is
-  #'  non-independent. Code for interaction on detection probability based on https://masonfidino.com/interpret_rota_model/
+  #'  Includes basic habitat variables (elevation, percent forest cover, terrain
+  #'  ruggedness), year, and camera setup on first-order psi. Setup and sampling 
+  #'  effort on first-order rho. Assumes species occur independently of one another 
+  #'  but co-detection is non-independent. Code for interaction on detection 
+  #'  probability based on https://masonfidino.com/interpret_rota_model/
   #'  ------------------------------------
   
-  cat(file = './Outputs/02_px_JAGS_hab_psi(setup_habitat_yr)_p(setup_effort)_px(.).txt', "
+  cat(file = './Outputs/02.1.1_JAGS_hab_psi(setup_habitat_yr)_p(setup_effort)_px(.).txt', "
       model{
           
         #### Define Priors  ####
