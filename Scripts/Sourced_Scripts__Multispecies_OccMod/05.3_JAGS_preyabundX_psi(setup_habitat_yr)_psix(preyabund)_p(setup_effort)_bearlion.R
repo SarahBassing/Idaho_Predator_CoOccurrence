@@ -12,7 +12,7 @@
   #'  first-order rho. Allows species co-occurrence to be non-independent.
   #'  ------------------------------------
   
-  cat(file = './Outputs/06.3_JAGS_preyabundX_psi(setup_habitat_yr)_psix(preyabund)_p(setup_effort)_bearlion.txt', "
+  cat(file = './Outputs/05.3_JAGS_preyabundX_psi(setup_habitat_yr)_psix(preyabund)_p(setup_effort)_bearlion.txt', "
       model{
           
         #### Define Priors  ####
@@ -24,7 +24,7 @@
         mean.psiSpp2 ~ dunif(0, 1)
             
         #'  First order occupancy slopes (psi)
-        for(fo_psi in 2:7){                         
+        for(fo_psi in 2:8){                         
           betaSpp1[fo_psi] ~ dnorm(0, 0.1)
           betaSpp2[fo_psi] ~ dnorm(0, 0.1)
         }
@@ -115,13 +115,13 @@
           #'  Linear models for the occupancy parameters on the logit scale
               
           #'  ...for states Spp1, Spp2
-          #'  Covariate indices: Intercept[1] + Setup[2] + Year[5] + Elevation[3] + Forest[4] + Elk[7] + White-tailed deer[9]
-          psiSpp1[i] <- betaSpp1[1]*psi_cov[i,1] + betaSpp1[2]*psi_cov[i,2] + betaSpp1[3]*psi_cov[i,5] + betaSpp1[4]*psi_cov[i,3] + betaSpp1[5]*psi_cov[i,4] + betaSpp1[6]*psi_cov[i,7] + betaSpp1[7]*psi_cov[i,9] 
-          psiSpp2[i] <- betaSpp2[1]*psi_cov[i,1] + betaSpp2[2]*psi_cov[i,2] + betaSpp2[3]*psi_cov[i,5] + betaSpp2[4]*psi_cov[i,3] + betaSpp2[5]*psi_cov[i,4] + betaSpp2[6]*psi_cov[i,7] + betaSpp2[7]*psi_cov[i,9] 
+          #'  Covariate order: Intercept[1] + Setup[2] + Year[3] + Forest[4] + Elevation[5] + TRI[10] + Elk[6] + White-tailed deer[8] 
+          psiSpp1[i] <- betaSpp1[1]*psi_cov[i,1] + betaSpp1[2]*psi_cov[i,2] + betaSpp1[3]*psi_cov[i,3] + betaSpp1[4]*psi_cov[i,4] + betaSpp1[5]*psi_cov[i,5] + betaSpp1[6]*psi_cov[i,10] + betaSpp1[7]*psi_cov[i,6] + betaSpp1[8]*psi_cov[i,8 
+          psiSpp2[i] <- betaSpp2[1]*psi_cov[i,1] + betaSpp2[2]*psi_cov[i,2] + betaSpp2[3]*psi_cov[i,3] + betaSpp2[4]*psi_cov[i,4] + betaSpp2[5]*psi_cov[i,5] + betaSpp2[6]*psi_cov[i,10] + betaSpp2[7]*psi_cov[i,6] + betaSpp2[8]*psi_cov[i,8] 
           
           #'  ...for state Spp12
-          #'  Covariate indices: Spp12 = Intercept[1] + Setup[2] + Elk[7] + White-tailed deer[9] 
-          psiSpp12[i] <- psiSpp1[i] + psiSpp2[i] + betaSpp12[1]*psi_inxs_cov[i,1] + betaSpp12[2]*psi_inxs_cov[i,2] + betaSpp12[3]*psi_inxs_cov[i,7] + betaSpp12[4]*psi_inxs_cov[i,9]    
+          #'  Covariate order: Spp12 = Intercept[1] + Setup[2] + Elk[6] + White-tailed deer[8] 
+          psiSpp12[i] <- psiSpp1[i] + psiSpp2[i] + betaSpp12[1]*psi_inxs_cov[i,1] + betaSpp12[2]*psi_inxs_cov[i,2] + betaSpp12[3]*psi_inxs_cov[i,6] + betaSpp12[4]*psi_inxs_cov[i,8]    
         
           #'  Baseline linear predictors for detection
           #'  Covariate indices: Intercept[1] + Setup[2] + Sampling Effort[3]
