@@ -9,7 +9,7 @@
   #'  Allows species co-occurrence to be non-independent.
   #'  ------------------------------------
   
-  cat(file = './Outputs/04_JAGS_habX_psi(setup_habitat_yr)_psix(.)_p(setup_effort).txt', "
+  cat(file = './Outputs/04.1_JAGS_habX_psi(setup_habitat_yr)_psix(.)_p(setup_effort).txt', "
       model{
           
         #### Define Priors  ####
