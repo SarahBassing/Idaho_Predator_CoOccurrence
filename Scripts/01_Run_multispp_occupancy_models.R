@@ -10,23 +10,34 @@
   #'  Script bundles data, defines MCMC settings, and calls JAGS to fit a set of 
   #'  multispecies occupancy models to data for each predator pairing of interest. 
   #'  JAGS code for each model is sourced from a series of scripts in a folder 
-  #'  named Sourced_Scripts__Multispecies_OccMod. Eight models are fit to data for
+  #'  named Sourced_Scripts__Multispecies_OccMod. Five models are fit to data for
   #'  each predator dyad including:
   #'    1. Null
   #'    2. Habitat
   #'    3. Prey abundance
   #'    4. Habitat with interaction on co-occupancy
   #'    5. Prey abundance with interaction on co-occupancy
-  #'    6. Global model
-  #'  Prey abundance, prey abundance with interaction, and global models have unique
+  #'  
+  #'  Additional notes:
+  #'  The prey abundance and prey abundance with interaction models have unique
   #'  scripts for the different predator dyads depending on each predator's primary
   #'  prey. e.g., script number follows 3.1, 3.2, 3.3, etc. for the different prey 
-  #'  abundance models. 
+  #'  abundance models. The wolf-lion and wolf-bear dyads have the same set of primary 
+  #'  prey and the same code is used for both (scripts ending in _wolfbearlion.R).
+  #'  The lion-bobcat and bear-coyote dyads also have the same set of primary prey 
+  #'  and the same code is used for both (scripts ending in _lionbob_bearcoy.R)
+  #'  
   #'  The top model (selected using DIC with the 02_DIC_model_selection.R script) 
   #'  for each predator dyad was then refit with an additional interaction term 
-  #'  on detection probability, resulting in 7 total models fit for each 
-  #'  predator pairing. Scripts with the co-detection interaction are labeled 
-  #'  with "px" following the model's number (e.g., 1_px_JAGS_null)
+  #'  on detection probability (px(.)). Goodness-of-Fit tests were conducted on the 
+  #'  top model and the top model with the interaction on detection prob., resulting 
+  #'  in 8 total models fit for each predator pairing. Scripts with the co-detection 
+  #'  interaction are labeled w/ "px(.)" at the end of the script name. Scripts
+  #'  with the Goodness-of-Fit code are labeled w/ "GoF" at the end of the script 
+  #'  name. Script numbering for these added parameterizations are:
+  #'    1.0 = GoF for top model
+  #'    1.1 = top model with px(.)
+  #'    1.2 = top model with px(.) and GoF
   #'  --------------------------------------------
   
   #'  Clean work space and load libraries
