@@ -9,7 +9,7 @@
   #'  Assumes species occur and are detected independently of one another.
   #'  ---------------------------------
   
-  cat(file = './Outputs/01_JAGS_null_psi(yr)_p(.).txt', "
+  cat(file = './Outputs/01.1_JAGS_null_psi(yr)_p(.).txt', "
       model{
           
         #### Define Priors  ####
