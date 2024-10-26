@@ -23,73 +23,64 @@
   load("./Outputs/wolfbear_null.RData") 
   load("./Outputs/wolfbear_hab.RData") 
   load("./Outputs/wolfbear_preyabund.RData")
-  load("./Outputs/wolfbear_preydiv.RData")
   load("./Outputs/wolfbear_habx.RData") 
   load("./Outputs/wolfbear_preyabundx.RData")
-  load("./Outputs/wolfbear_preydivx.RData") 
-  load("./Outputs/wolfbear_global.RData")  
-  wolfbear_list <- list(wolf.bear.null, wolf.bear.hab, wolf.bear.preyabund, wolf.bear.preydiv, wolf.bear.habx, wolf.bear.preyabundx, wolf.bear.preydivx, wolf.bear.global) 
-  wolfbear_name <- c("wolf.bear.null", "wolf.bear.hab", "wolf.bear.preyabund", "wolf.bear.preydiv", "wolf.bear.habx", "wolf.bear.preyabundx", "wolf.bear.preydivx", "wolf.bear.global") 
+  wolfbear_list <- list(wolf.bear.null, wolf.bear.hab, wolf.bear.preyabund, wolf.bear.habx, wolf.bear.preyabundx) 
+  wolfbear_name <- c("wolf.bear.null", "wolf.bear.hab", "wolf.bear.preyabund", "wolf.bear.habx", "wolf.bear.preyabundx") 
   
   #####  Wolf-Coyote  #####                     
   load("./Outputs/wolfcoy_null.RData")  
   load("./Outputs/wolfcoy_hab.RData") 
   load("./Outputs/wolfcoy_preyabund.RData") 
-  load("./Outputs/wolfcoy_preydiv.RData") 
   load("./Outputs/wolfcoy_habx.RData") 
   load("./Outputs/wolfcoy_preyabundx.RData") 
-  load("./Outputs/wolfcoy_preydivx.RData") 
-  load("./Outputs/wolfcoy_global.RData")  
-  wolfcoy_list <- list(wolf.coy.null, wolf.coy.hab, wolf.coy.preyabund, wolf.coy.preydiv, wolf.coy.habx, wolf.coy.preyabundx, wolf.coy.preydivx, wolf.coy.global) 
-  wolfcoy_name <- c("wolf.coy.null", "wolf.coy.hab", "wolf.coy.preyabund", "wolf.coy.preydiv", "wolf.coy.habx", "wolf.coy.preyabundx", "wolf.coy.preydivx", "wolf.coy.global")
+  wolfcoy_list <- list(wolf.coy.null, wolf.coy.hab, wolf.coy.preyabund, wolf.coy.habx, wolf.coy.preyabundx) 
+  wolfcoy_name <- c("wolf.coy.null", "wolf.coy.hab", "wolf.coy.preyabund", "wolf.coy.habx", "wolf.coy.preyabundx")
   
   #####  Wolf-Lion  #####                           
   load("./Outputs/wolflion_null.RData")  
   load("./Outputs/wolflion_hab.RData")
   load("./Outputs/wolflion_preyabund.RData")
-  load("./Outputs/wolflion_preydiv.RData")
   load("./Outputs/wolflion_habx.RData")
   load("./Outputs/wolflion_preyabundx.RData")
-  load("./Outputs/wolflion_preydivx.RData") 
-  load("./Outputs/wolflion_global.RData") 
-  wolflion_list <- list(wolf.lion.null, wolf.lion.hab, wolf.lion.preyabund, wolf.lion.preydiv, wolf.lion.habx, wolf.lion.preyabundx, wolf.lion.preydivx, wolf.lion.global) 
-  wolflion_name <- c("wolf.lion.null", "wolf.lion.hab", "wolf.lion.preyabund", "wolf.lion.preydiv", "wolf.lion.habx", "wolf.lion.preyabundx", "wolf.lion.preydivx", "wolf.lion.global") 
+  wolflion_list <- list(wolf.lion.null, wolf.lion.hab, wolf.lion.preyabund, wolf.lion.habx, wolf.lion.preyabundx) 
+  wolflion_name <- c("wolf.lion.null", "wolf.lion.hab", "wolf.lion.preyabund", "wolf.lion.habx", "wolf.lion.preyabundx") 
   
   #####  Lion-Bear  #####                           
   load("./Outputs/lionbear_null.RData") 
   load("./Outputs/lionbear_hab.RData")
   load("./Outputs/lionbear_preyabund.RData")
-  load("./Outputs/lionbear_preydiv.RData") 
   load("./Outputs/lionbear_habx.RData")
   load("./Outputs/lionbear_preyabundx.RData")
-  load("./Outputs/lionbear_preydivx.RData")
-  load("./Outputs/lionbear_global.RData") 
-  lionbear_list <- list(lion.bear.null, lion.bear.hab, lion.bear.preyabund, lion.bear.preydiv, lion.bear.habx, lion.bear.preyabundx, lion.bear.preydivx, lion.bear.global)
-  lionbear_name <- c("lion.bear.null", "lion.bear.hab", "lion.bear.preyabund", "lion.bear.preydiv", "lion.bear.habx", "lion.bear.preyabundx", "lion.bear.preydivx", "lion.bear.global")
+  lionbear_list <- list(lion.bear.null, lion.bear.hab, lion.bear.preyabund, lion.bear.habx, lion.bear.preyabundx)
+  lionbear_name <- c("lion.bear.null", "lion.bear.hab", "lion.bear.preyabund", "lion.bear.habx", "lion.bear.preyabundx")
   
   #####  Lion-Bobcat  #####                         
   load("./Outputs/lionbob_null.RData") 
   load("./Outputs/lionbob_hab.RData")
   load("./Outputs/lionbob_preyabund.RData") 
-  load("./Outputs/lionbob_preydiv.RData") 
   load("./Outputs/lionbob_habx.RData")
   load("./Outputs/lionbob_preyabundx.RData")
-  load("./Outputs/lionbob_preydivx.RData")
-  load("./Outputs/lionbob_global.RData") 
-  lionbob_list <- list(lion.bob.null, lion.bob.hab, lion.bob.preyabund, lion.bob.preydiv, lion.bob.habx, lion.bob.preyabundx, lion.bob.preydivx, lion.bob.global)
-  lionbob_name <- c("lion.bob.null", "lion.bob.hab", "lion.bob.preyabund", "lion.bob.preydiv", "lion.bob.habx", "lion.bob.preyabundx", "lion.bob.preydivx", "lion.bob.global")
+  lionbob_list <- list(lion.bob.null, lion.bob.hab, lion.bob.preyabund, lion.bob.habx, lion.bob.preyabundx)
+  lionbob_name <- c("lion.bob.null", "lion.bob.hab", "lion.bob.preyabund", "lion.bob.habx", "lion.bob.preyabundx")
   
   #####  Coyote-Bobcat  #####                 
   load("./Outputs/coybob_null.RData") 
   load("./Outputs/coybob_hab.RData")
   load("./Outputs/coybob_preyabund.RData")
-  load("./Outputs/coybob_preydiv.RData") 
   load("./Outputs/coybob_habx.RData")
   load("./Outputs/coybob_preyabundx.RData") 
-  load("./Outputs/coybob_preydivx.RData")
-  load("./Outputs/coybob_global.RData") 
-  coybob_list <- list(coy.bob.null, coy.bob.hab, coy.bob.preyabund, coy.bob.preydiv, coy.bob.habx, coy.bob.preyabundx, coy.bob.preydivx, coy.bob.global) 
-  coybob_name <- c("coy.bob.null", "coy.bob.hab", "coy.bob.preyabund", "coy.bob.preydiv", "coy.bob.habx", "coy.bob.preyabundx", "coy.bob.preydivx", "coy.bob.global") 
+  coybob_list <- list(coy.bob.null, coy.bob.hab, coy.bob.preyabund, coy.bob.habx, coy.bob.preyabundx) 
+  coybob_name <- c("coy.bob.null", "coy.bob.hab", "coy.bob.preyabund", "coy.bob.habx", "coy.bob.preyabundx") 
+  
+  #####  Black bear-Coyote  #####                 
+  load("./Outputs/bearcoy_null.RData") 
+  load("./Outputs/bearcoy_hab.RData")
+  load("./Outputs/bearcoy_preyabund.RData")
+  load("./Outputs/bearcoy_habx.RData")
+  load("./Outputs/bearcoy_preyabundx.RData") 
+  coybob_list <- list(bear.coy.null, bear.coy.hab, bear.coy.preyabund, bear.coy.habx, bear.coy.preyabundx) 
+  coybob_name <- c("bear.coy.null", "bear.coy.hab", "bear.coy.preyabund", "bear.coy.habx", "bear.coy.preyabundx") 
   
   #'  -------------------
   ####  Model selection  ####
@@ -101,12 +92,14 @@
   (topmod_lionbear <- dictab(cand.set = lionbear_list, modnames = lionbear_name, sort = TRUE)) 
   (topmod_lionbob <- dictab(cand.set = lionbob_list, modnames = lionbob_name, sort = TRUE)) 
   (topmod_coybob <- dictab(cand.set = coybob_list, modnames = coybob_name, sort = TRUE)) 
+  (topmod_bearcoy <- dictab(cand.set = bearcoy_list, modnames = bearcoy_name, sort = TRUE)) 
   
   #'  Table of best supported model per species-pair
-  (topmodels <- rbind(topmod_wolfbear[1,], topmod_wolfcoy[1,], topmod_wolflion[1,], topmod_lionbear[1,], topmod_lionbob[1,], topmod_coybob[1,]))
+  #'  Using second best model for wolf-bear analysis b/c detlaDIC very close to top model
+  (topmodels <- rbind(topmod_wolfbear[2,], topmod_wolfcoy[1,], topmod_wolflion[1,], topmod_lionbear[1,], topmod_lionbob[1,], topmod_coybob[1,], topmod_bearcoy[1,]))
   
   #'  Full table of models ranked by DIC for all species-pairs
-  model_list_DIC <- rbind(topmod_wolfbear, topmod_wolfcoy, topmod_coybob, topmod_wolflion, topmod_lionbear, topmod_lionbob) %>%
+  model_list_DIC <- rbind(topmod_wolfbear, topmod_wolfcoy, topmod_coybob, topmod_wolflion, topmod_lionbear, topmod_lionbob, topmod_bearcoy) %>%
     mutate_if(is.numeric, round, digits = 2) %>%
     dplyr::select(c(Modnames, DIC, Delta_DIC, DICWt)) %>%
     #'  Rename model and species pairing
@@ -130,11 +123,8 @@
            Model_name = gsub(".*null", "Null", Modnames),
            Model_name = gsub(".*habx", "Habitat with interaction", Model_name),
            Model_name = gsub(".*preyabundx", "Prey abundance with interaction", Model_name),
-           Model_name = gsub(".*preydivx", "Prey diversity with interaction", Model_name),
            Model_name = gsub(".*hab", "Habitat, no interaction", Model_name),
-           Model_name = gsub(".*preyabund", "Prey abundance, no interaction", Model_name),
-           Model_name = gsub(".*preydiv", "Prey diversity, no interaction", Model_name),
-           Model_name = gsub(".*global", "Global", Model_name)) %>%
+           Model_name = gsub(".*preyabund", "Prey abundance, no interaction", Model_name)) %>%
     relocate(Species_pair, .before = DIC) %>%
     relocate(Model, .after = Species_pair) %>%
     relocate(Model_name, .after = Model) %>%
