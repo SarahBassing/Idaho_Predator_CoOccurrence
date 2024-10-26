@@ -83,8 +83,8 @@
   #####  Summarize covariate data  ####
   #'  -----------------------------
   #'  New names for covariates
-  Covariate <- c("Elevation (m)", "Forest cover (%)", "Elk RAI", "Lagomorph RAI", 
-                 "Moose RAI", "White-tailed deer RAI", "Shannon's diversity index (H)")
+  Covariate <- c("Forest cover (%)", "Elevation (m)", "Terrain ruggedness index (TRI)", 
+                 "Elk RAI", "Lagomorph RAI", "Moose RAI", "White-tailed deer RAI")
   #'  Calculate mean, SE, min & max of untransformed covariates
   nobs <- nrow(covs)
   cov_means <- covs %>% summarise(across(where(is.numeric), ~ mean(.x, na.rm = TRUE))) %>%
@@ -107,18 +107,28 @@
            Min = round(Min, 2),
            Max = round(Max, 2))
   
-  #'  Sampling effort
-  (mean_effort <- mean(as.matrix(effort[,2:12]), na.rm = TRUE))
-  nobs_effort <- dim(effort[,2:12])[1] * dim(effort[,2:12])[2]
-  (se_effort <- sd(as.matrix(effort[,2:12]), na.rm = TRUE) / sqrt(nobs_effort))
-  (min_effort <- min(as.matrix(effort[,2:12]), na.rm = TRUE))
-  (max_effort <- max(as.matrix(effort[,2:12]), na.rm = TRUE))
-  srvyeffort <- c(mean_effort, se_effort, min_effort, max_effort) 
-  srvyeffort <- format(round(srvyeffort, 2), nsmall = 2)
-  srvyeffort <- c("Sampling effort (n days/week)", srvyeffort) 
-
+  #'  Avg number of days each site was operational (generally until camera failure)
+  nobs <- nrow(effort)
+  (avg_op_days <- as.data.frame(effort) %>% 
+      `rownames<-`( NULL ) %>%
+      replace(is.na(.), 0) %>%
+      mutate(sum = rowSums(.)) %>%
+      summarise(avg_days = mean(sum),
+                sd_days = sd(sum),
+                se_days = sd(sum)/sqrt(nobs),
+                max_days = max(sum)))
+  #'  Avg number of days per sampling occasion camera was operational
+  (mean_effort <- mean(as.matrix(effort), na.rm = TRUE))
+  nobs_effort <- dim(effort)[1] * dim(effort)[2]
+  (se_effort <- sd(as.matrix(effort), na.rm = TRUE) / sqrt(nobs_effort))
+  (min_effort <- min(as.matrix(effort), na.rm = TRUE))
+  (max_effort <- max(as.matrix(effort), na.rm = TRUE))
+  effort_summary <- c(mean_effort, se_effort, min_effort, max_effort) 
+  effort_summary <- format(round(effort_summary, 2), nsmall = 2)
+  effort_summary <- c("Sampling effort (n days/week)", effort_summary) 
+  
   #'  Append to covariate summary table
-  cov_summary <- rbind(cov_summary, srvyeffort) %>%
+  cov_summary <- rbind(cov_summary, effort_summary) %>%
     mutate(Mean = as.numeric(Mean),
            SE = as.numeric(SE),
            Min = as.numeric(Min),
@@ -128,12 +138,11 @@
   #' write.csv(cov_summary, "./Outputs/Summary_table_covariates.csv")
 
   #'  Table number of cameras per setup and year
-  covs_smr20$Year <- "2020"
-  covs_smr21$Year <- "2021"
-  covs <- rbind(covs_smr20, covs_smr21) %>%
-    mutate(Setup = ifelse(grepl("P", NewLocationID), "Predator", "Ungulate")) %>%
+  covs_yr_setup <- covs %>%
+    mutate(Setup = ifelse(grepl("P", NewLocationID), "Predator", "Ungulate"),
+           Year = ifelse(Season == "Smr20", 2020, 2021)) %>%
     dplyr::select(c(Year, Setup))
-  cam_deployment_summary <- as.data.frame(table(covs)) %>%
+  cam_deployment_summary <- as.data.frame(table(covs_yr_setup)) %>%
     arrange(Year)
   colnames(cam_deployment_summary) <- c("Year", "Camera setup", "Operable cameras (n)")
   
@@ -147,25 +156,28 @@
   print(topmodels)
   
   #'  Load top models 
-  load("./Outputs/wolfbear_preydiv.RData")
+  load("./Outputs/wolfbear_hab.RData")
   load("./Outputs/wolfcoy_hab.RData") 
   load("./Outputs/wolflion_null.RData")
   load("./Outputs/lionbear_null.RData")
   load("./Outputs/lionbob_null.RData")
-  load("./Outputs/coybob_global.RData")
+  load("./Outputs/coybob_habX.RData")
+  load("./Outputs/bearcoy_habX.RData")
   
   #'  Additional null models to snag mean psi and p from
   load("./Outputs/wolfbear_null.RData")
   load("./Outputs/wolfcoy_null.RData")
   load("./Outputs/coybob_null.RData")
+  load("./Outputs/bearcoy_null.RData")
   
   #'  Co-detection model based on each top model
-  load("./Outputs/wolfbear_preydiv_px.RData")
+  load("./Outputs/wolfbear_hab_px.RData")
   load("./Outputs/wolfcoy_hab_px.RData")
   load("./Outputs/wolflion_null_px.RData")
   load("./Outputs/lionbear_null_px.RData")
   load("./Outputs/lionbob_null_px.RData")
-  load("./Outputs/coybob_global_px.RData")
+  load("./Outputs/coybob_habX_px.RData")
+  load("./Outputs/bearcoy_habX_px.RData")
   
   #'  ----------------------------------
   #####  Result table of model outputs  ####
@@ -208,29 +220,32 @@
     
     return(split_out)
   }
-  out_wolf.bear <- mod_out(wolf.bear.preydiv, "Wolf", "Black bear")
+  out_wolf.bear <- mod_out(wolf.bear.hab, "Wolf", "Black bear")
   out_wolf.coy <- mod_out(wolf.coy.hab, "Wolf", "Coyote")
   out_wolf.lion <- mod_out(wolf.lion.null, "Wolf", "Mountain lion")
   out_lion.bear <- mod_out(lion.bear.null, "Mountain lion", "Black bear")
   out_lion.bob <- mod_out(lion.bob.null, "Mountain lion", "Bobcat")
-  out_coy.bob <- mod_out(coy.bob.global, "Coyote", "Bobcat")
+  out_coy.bob <- mod_out(coy.bob.habX, "Coyote", "Bobcat")
+  out_bear.coy <- mod_out(bear.coy.habX, "Black bear", "Coyote")
   
   out_wolf.bear_null <- mod_out(wolf.bear.null, "Wolf", "Black bear")
   out_wolf.coy_null <- mod_out(wolf.coy.null, "Wolf", "Coyote")
   out_coy.bob_null <- mod_out(coy.bob.null, "Coyote", "Bobcat")
+  out_bear.coy_null <- mod_out(bear.coy.null, "Black bear", "Coyote")
   
-  out_wolf.bear.px <- mod_out(wolf.bear.preydiv.px, "Wolf", "Black bear")
+  out_wolf.bear.px <- mod_out(wolf.bear.hab.px, "Wolf", "Black bear")
   out_wolf.coy.px <- mod_out(wolf.coy.hab.px, "Wolf", "Coyote")
   out_wolf.lion.px <- mod_out(wolf.lion.null.px, "Wolf", "Mountain lion")
   out_lion.bear.px <- mod_out(lion.bear.null.px, "Mountain lion", "Black bear")
   out_lion.bob.px <- mod_out(lion.bob.null.px, "Mountain lion", "Bobcat")
-  out_coy.bob.px <- mod_out(coy.bob.global.px, "Coyote", "Bobcat")
+  out_coy.bob.px <- mod_out(coy.bob.habX.px, "Coyote", "Bobcat")
+  out_bear.coy.px <- mod_out(bear.coy.habX.px, "Bear black", "Coyote")
   
   #'  ----------------------
   #####  Occupancy results  ####
   #'  ----------------------
   #'  Switch place-holder parameter names with useful ones for occupancy submodel
-  rename_occ_params <- function(out, intx3, intx4, intx5, cov2, cov3, cov4, cov5, cov6, cov7, cov8) {
+  rename_occ_params <- function(out, intx3, intx4, intx5, cov2, cov3, cov4, cov5, cov6) {
     renamed_out <- out %>%
       #'  Add species names to appropriate parameters
       mutate(Lower_CRI = format(Lower_CRI, nsmall = 2),
@@ -248,48 +263,43 @@
              Parameter = str_replace(Parameter, "\\[3]", paste(":", cov3)),
              Parameter = str_replace(Parameter, "\\[4]", paste(":", cov4)),
              Parameter = str_replace(Parameter, "\\[5]", paste(":", cov5)),
-             Parameter = str_replace(Parameter, "\\[6]", paste(":", cov6)),
-             Parameter = str_replace(Parameter, "\\[7]", paste(":", cov7)),
-             Parameter = str_replace(Parameter, "\\[8]", paste(":", cov8)))
+             Parameter = str_replace(Parameter, "\\[6]", paste(":", cov6)))
     return(renamed_out)
   }
   occ_wolf.bear <- rename_occ_params(out_wolf.bear[[1]], intx3 = NA, intx4 = NA, intx5 = NA, 
-                                     cov2 = "Trail setup", cov3 = "Year 2", cov4 = "Elevation", cov5 = "Forest cover", 
-                                     cov6 = "Shannon's H", cov7 = NA, cov8 = NA) %>%
-    mutate(Parameter = ifelse(Parameter == "Interaction", paste0(Parameter, ": Intercept"), Parameter),
-           Parameter = str_replace(Parameter, "Wolf", "Species 1"),
+                                     cov2 = "Trail setup", cov3 = "Year 2", cov4 = "Forest cover", cov5 = "Elevation",  cov6 = "TRI") %>%
+    mutate(Parameter = str_replace(Parameter, "Wolf", "Species 1"),
            Parameter = str_replace(Parameter, "Black bear", "Species 2"))
   occ_wolf.coy <- rename_occ_params(out_wolf.coy[[1]], intx3 = NA, intx4 = NA, intx5 = NA, 
-                                    cov2 = "Trail setup", cov3 = "Year 2", cov4 = "Elevation", cov5 = "Forest cover", 
-                                    cov6 = NA, cov7 = NA, cov8 = NA) %>%
+                                    cov2 = "Trail setup", cov3 = "Year 2", cov4 = "Forest cover", cov5 = "Elevation",  cov6 = "TRI") %>%
     mutate(Parameter = ifelse(Parameter == "Interaction", paste0(Parameter, ": Intercept"), Parameter),
            Parameter = str_replace(Parameter, "Wolf", "Species 1"),
            Parameter = str_replace(Parameter, "Coyote", "Species 2"))
   occ_wolf.lion <- rename_occ_params(out_wolf.lion[[1]], intx3 = NA, intx4 = NA, intx5 = NA, 
-                                    cov2 = "Year 2", cov3 = NA, cov4 = NA, cov5 = NA, 
-                                    cov6 = NA, cov7 = NA, cov8 = NA) %>%
+                                     cov2 = "Year 2", cov3 = NA, cov4 = NA, cov5 = NA, cov6 = NA) %>%
     mutate(Parameter = str_replace(Parameter, "Wolf", "Species 1"),
            Parameter = str_replace(Parameter, "Mountain lion", "Species 2"))
   occ_lion.bear <- rename_occ_params(out_lion.bear[[1]], intx3 = NA, intx4 = NA, intx5 = NA, 
-                                     cov2 = "Year 2", cov3 = NA, cov4 = NA, cov5 = NA, 
-                                    cov6 = NA, cov7 = NA, cov8 = NA) %>%
+                                     cov2 = "Year 2", cov3 = NA, cov4 = NA, cov5 = NA, cov6 = NA) %>%
     mutate(Parameter = str_replace(Parameter, "Mountain lion", "Species 1"),
            Parameter = str_replace(Parameter, "Black bear", "Species 2"))
   occ_lion.bob <- rename_occ_params(out_lion.bob[[1]], intx3 = NA, intx4 = NA, intx5 = NA, 
-                                    cov2 = "Year 2", cov3 = NA, cov4 = NA, cov5 = NA, 
-                                    cov6 = NA, cov7 = NA, cov8 = NA) %>%
+                                    cov2 = "Year 2", cov3 = NA, cov4 = NA, cov5 = NA, cov6 = NA) %>%
     mutate(Parameter = str_replace(Parameter, "Mountain lion", "Species 1"),
            Parameter = str_replace(Parameter, "Bobcat", "Species 2"))
-  occ_coy.bob <- rename_occ_params(out_coy.bob[[1]], intx3 = "N white-tailed deer", intx4 = "N lagomorph", intx5 = "Shannon's H", 
-                                   cov2 = "Trail setup", cov3 = "Year 2", cov4 = "Elevation", cov5 = "Forest cover", 
-                                   cov6 = "N white-tailed deer", cov7 = "N lagomorph", cov8 = "Shannon's H") %>%
+  occ_coy.bob <- rename_occ_params(out_coy.bob[[1]], intx3 = NA, intx4 = NA, intx5 = NA, 
+                                   cov2 = "Trail setup", cov3 = "Year 2", cov4 = "Forest cover", cov5 = "Elevation", cov6 = "TRI") %>%
     mutate(Parameter = str_replace(Parameter, "Coyote", "Species 1"),
            Parameter = str_replace(Parameter, "Bobcat", "Species 2"))
+  occ_bear.coy <- rename_occ_params(out_bear.coy[[1]], intx3 = NA, intx4 = NA, intx5 = NA, 
+                                    cov2 = "Trail setup", cov3 = "Year 2", cov4 = "Forest cover", cov5 = "Elevation", cov6 = "TRI") %>%
+    mutate(Parameter = str_replace(Parameter, "Black bear", "Species 1"),
+           Parameter = str_replace(Parameter, "Coyote", "Species 2"))
   
   #'  Combine all occupancy results (long table)
   top_null_results <- rbind(occ_wolf.lion, occ_lion.bear, occ_lion.bob)
-  top_non_null_results <- rbind(occ_wolf.bear, occ_wolf.coy, occ_coy.bob) 
-  top_occmod_table_long <- rbind(occ_wolf.bear, occ_wolf.coy, occ_wolf.lion, occ_lion.bear, occ_lion.bob, occ_coy.bob) 
+  top_non_null_results <- rbind(occ_wolf.bear, occ_wolf.coy, occ_bear.coy, occ_coy.bob) 
+  top_occmod_table_long <- rbind(occ_wolf.bear, occ_wolf.lion, occ_wolf.coy, occ_lion.bear, occ_lion.bob, occ_bear.coy, occ_coy.bob) 
   
   #'  Reformat into a wide table
   top_occmod_table_wide <- top_occmod_table_long %>%
@@ -304,24 +314,17 @@
     relocate("Species 1: Intercept", .after = "Species2") %>%
     relocate("Species 1: Trail setup", .after = "Species 1: Intercept") %>%
     relocate("Species 1: Year 2", .after = "Species 1: Trail setup") %>%
-    relocate("Species 1: Elevation", .after = "Species 1: Year 2") %>%
-    relocate("Species 1: Forest cover", .after = "Species 1: Elevation") %>%
-    relocate("Species 1: N white-tailed deer", .after = "Species 1: Forest cover") %>%
-    relocate("Species 1: N lagomorph", .after = "Species 1: N white-tailed deer") %>%
-    relocate("Species 1: Shannon's H", .after = "Species 1: N lagomorph") %>%
-    relocate("Species 2: Intercept", .after = "Species 1: Shannon's H") %>%
+    relocate("Species 1: Forest cover", .after = "Species 1: Year 2") %>%
+    relocate("Species 1: Elevation", .after = "Species 1: Forest cover") %>%
+    relocate("Species 1: TRI", .after = "Species 1: Elevation") %>%
+    relocate("Species 2: Intercept", .after = "Species 1: TRI") %>%
     relocate("Species 2: Trail setup", .after = "Species 2: Intercept") %>%
     relocate("Species 2: Year 2", .after = "Species 2: Trail setup") %>%
-    relocate("Species 2: Elevation", .after = "Species 2: Year 2") %>%
-    relocate("Species 2: Forest cover", .after = "Species 2: Elevation") %>%
-    relocate("Species 2: N white-tailed deer", .after = "Species 2: Forest cover") %>%
-    relocate("Species 2: N lagomorph", .after = "Species 2: N white-tailed deer") %>%
-    relocate("Species 2: Shannon's H", .after = "Species 2: N lagomorph") %>%
-    relocate("Interaction: Intercept", .after = "Species 2: Shannon's H") %>%
-    relocate("Interaction: Trail setup", .after = "Species 2: Intercept") %>%
-    relocate("Interaction: N white-tailed deer", .after = "Species 2: Trail setup") %>%
-    relocate("Interaction: N lagomorph", .after = "Species 2: N white-tailed deer") %>%
-    relocate("Interaction: Shannon's H", .after = "Species 2: N lagomorph")
+    relocate("Species 2: Forest cover", .after = "Species 2: Year 2") %>%
+    relocate("Species 2: Elevation", .after = "Species 2: Forest cover") %>%
+    relocate("Species 2: TRI", .after = "Species 2: Elevation") %>%
+    relocate("Interaction", .after = "Species 2: TRI") %>%
+    rename("Interaction: Intercept" = "Interaction")
   
   #'  Alternate approach to tabling results
   spp1_out <- filter(top_occmod_table_long, grepl("Species 1", Parameter)) %>%
@@ -387,8 +390,9 @@
   }
   #'  Top model detection results
   det_wolf.bear <- rename_det_params(out_wolf.bear[[2]], cov2 = "Trail setup", cov3 = "Sampling effort") %>%
-    mutate(Parameter = str_replace(Parameter, "Wolf", "Species 1"),
-           Parameter = str_replace(Parameter, "Black bear", "Species 2"))
+    mutate(#Parameter = paste0(Parameter, ": Intercept"),
+      Parameter = str_replace(Parameter, "Wolf", "Species 1"),
+      Parameter = str_replace(Parameter, "Black bear", "Species 2"))
   det_wolf.coy <- rename_det_params(out_wolf.coy[[2]], cov2 = "Trail setup", cov3 = "Sampling effort") %>%
     mutate(Parameter = str_replace(Parameter, "Wolf", "Species 1"),
            Parameter = str_replace(Parameter, "Coyote", "Species 2"))
@@ -407,8 +411,11 @@
   det_coy.bob <- rename_det_params(out_coy.bob[[2]], cov2 = "Trail setup", cov3 = "Sampling effort") %>%
     mutate(Parameter = str_replace(Parameter, "Coyote", "Species 1"),
            Parameter = str_replace(Parameter, "Bobcat", "Species 2"))
+  det_bear.coy <- rename_det_params(out_bear.coy[[2]], cov2 = "Trail setup", cov3 = "Sampling effort") %>%
+    mutate(Parameter = str_replace(Parameter, "Black bear", "Species 1"),
+           Parameter = str_replace(Parameter, "Coyote", "Species 2"))
   
-  top_detmod_table_long <- rbind(det_wolf.bear, det_wolf.coy, det_wolf.lion, det_lion.bear, det_lion.bob, det_coy.bob) 
+  top_detmod_table_long <- rbind(det_wolf.bear, det_wolf.coy, det_wolf.lion, det_lion.bear, det_lion.bob, det_bear.coy, det_coy.bob) 
   
   #'  Reformat into a wide table
   top_detmod_table_wide <- top_detmod_table_long %>%
@@ -450,6 +457,9 @@
   det_coy.bob.px <- rename_det_params(out_coy.bob.px[[2]], cov2 = "Trail setup", cov3 = "Sampling effort") %>%
     mutate(Parameter = str_replace(Parameter, "Coyote", "Species 1"),
            Parameter = str_replace(Parameter, "Bobcat", "Species 2"))
+  det_bear.coy.px <- rename_det_params(out_bear.coy.px[[2]], cov2 = "Trail setup", cov3 = "Sampling effort") %>%
+    mutate(Parameter = str_replace(Parameter, "Black bear", "Species 1"),
+           Parameter = str_replace(Parameter, "Coyote", "Species 2"))
   
   co_detmod_table_long <- rbind(det_wolf.bear.px, det_wolf.coy.px, det_wolf.lion.px, det_lion.bear.px, det_lion.bob.px, det_coy.bob.px) %>%
     mutate(Parameter = ifelse(Parameter == "Interaction Spp12", "Interaction: Intercept", Parameter),
@@ -513,10 +523,11 @@
   mean_wolf.bear <- rename_mean_psi_p(out_wolf.bear_null[[3]])
   mean_wolf.coy <- rename_mean_psi_p(out_wolf.coy_null[[3]])
   mean_coy.bob <- rename_mean_psi_p(out_coy.bob_null[[3]])
+  mean_bear.coy <- rename_mean_psi_p(out_bear.coy_null[[3]])
   
   #'  Merge all results  
-  mean_occ_det <- rbind(mean_wolf.bear, mean_wolf.coy, mean_coy.bob, mean_wolf.lion, 
-                        mean_lion.bear, mean_lion.bob)
+  mean_occ_det <- rbind(mean_wolf.bear, mean_wolf.lion, mean_wolf.coy, mean_lion.bear, 
+                        mean_lion.bob, mean_bear.coy, mean_coy.bob)
   #'  Split by occupancy vs detection probability
   mean_occ <- filter(mean_occ_det, Parameter == "Mean occupancy") %>%
     rename("Mean Occupancy (95% CRI)" = "Mean") %>%
