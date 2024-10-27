@@ -139,15 +139,15 @@
   }
   #####  Wolf-Black bear predictions  ####
   #'  Top model
-  load("./Outputs/wolfbear_preydiv_px.RData")
-  wolf.bear.eff.ung.yr1 <- predict_detection(mod = wolf.bear.preydiv.px, ncat = 4, npoints = 500,
-                                            focal_cov = effort_eoe20s21s,
-                                            rho_cov = c(1, 0, 0), rho_cov_index = 3,
-                                            rho_inxs_cov = 0, rho_inxs_cov_index = 0)
-  wolf.bear.eff.pred.yr1 <- predict_detection(mod = wolf.bear.preydiv.px, ncat = 4, npoints = 500,
+  load("./Outputs/wolfbear_hab_px.RData")
+  wolf.bear.eff.ung.yr1 <- predict_detection(mod = wolf.bear.hab.px, ncat = 4, npoints = 500,  #### MAKE SURE EFFOR_EOE20s21s IS RIGHT INPUT
                                              focal_cov = effort_eoe20s21s,
-                                             rho_cov = c(1, 1, 0), rho_cov_index = 3,
+                                             rho_cov = c(1, 0, 0), rho_cov_index = 3,
                                              rho_inxs_cov = 0, rho_inxs_cov_index = 0)
+  wolf.bear.eff.pred.yr1 <- predict_detection(mod = wolf.bear.hab.px, ncat = 4, npoints = 500,
+                                              focal_cov = effort_eoe20s21s,
+                                              rho_cov = c(1, 1, 0), rho_cov_index = 3,
+                                              rho_inxs_cov = 0, rho_inxs_cov_index = 0)
   
   #####  Wolf-Coyote predictions  ####
   load("./Outputs/wolfcoy_hab_px.RData") 
@@ -179,32 +179,55 @@
   #####  Lion-Bobcat predictions  ####
   load("./Outputs/lionbob_null_px.RData")
   lion.bob.ung.yr1 <- predict_detection(mod = lion.bob.null.px, ncat = 4, npoints = 500,
-                                            focal_cov = effort_eoe20s21s,
-                                            rho_cov = c(1), rho_cov_index = 0,
-                                            rho_inxs_cov = c(1), rho_inxs_cov_index = 0)
+                                        focal_cov = effort_eoe20s21s,
+                                        rho_cov = c(1), rho_cov_index = 0,
+                                        rho_inxs_cov = c(1), rho_inxs_cov_index = 0)
   lion.bob.pred.yr1 <- predict_detection(mod = lion.bob.null.px, ncat = 4, npoints = 500,
-                                             focal_cov = effort_eoe20s21s,
-                                             rho_cov = c(1), rho_cov_index = 0,
-                                             rho_inxs_cov = c(1), rho_inxs_cov_index = 0)
+                                         focal_cov = effort_eoe20s21s,
+                                         rho_cov = c(1), rho_cov_index = 0,
+                                         rho_inxs_cov = c(1), rho_inxs_cov_index = 0)
   
   #####  Coyote-Bobcat predictions  ####
-  load("./Outputs/coybob_global_px.RData")
-  coy.bob.eff.ung.yr1 <- predict_detection(mod = coy.bob.global.px, ncat = 4, npoints = 500,
+  load("./Outputs/coybob_habX_px.RData")
+  coy.bob.eff.ung.yr1 <- predict_detection(mod = coy.bob.habx.px, ncat = 4, npoints = 500,
+                                           focal_cov = effort_eoe20s21s,
+                                           rho_cov = c(1, 0, 0), rho_cov_index = 3,
+                                           rho_inxs_cov = c(1), rho_inxs_cov_index = 0)
+  coy.bob.eff.pred.yr1 <- predict_detection(mod = coy.bob.habx.px, ncat = 4, npoints = 500,
                                             focal_cov = effort_eoe20s21s,
-                                            rho_cov = c(1, 0, 0), rho_cov_index = 3,
+                                            rho_cov = c(1, 1, 0), rho_cov_index = 3,
                                             rho_inxs_cov = c(1), rho_inxs_cov_index = 0)
-  coy.bob.eff.pred.yr1 <- predict_detection(mod = coy.bob.global.px, ncat = 4, npoints = 500,
-                                             focal_cov = effort_eoe20s21s,
-                                             rho_cov = c(1, 1, 0), rho_cov_index = 3,
-                                             rho_inxs_cov = c(1), rho_inxs_cov_index = 0)
-  coy.bob.ung.yr1 <- predict_detection(mod = coy.bob.global.px, ncat = 4, npoints = 500,
+  coy.bob.ung.yr1 <- predict_detection(mod = coy.bob.habx.px, ncat = 4, npoints = 500,
                                        focal_cov = effort_eoe20s21s,
                                        rho_cov = c(1, 0, 0), rho_cov_index = 0,
                                        rho_inxs_cov = c(1), rho_inxs_cov_index = 0)
-  coy.bob.pred.yr1 <- predict_detection(mod = coy.bob.global.px, ncat = 4, npoints = 500,
+  coy.bob.pred.yr1 <- predict_detection(mod = coy.bob.habx.px, ncat = 4, npoints = 500,
                                         focal_cov = effort_eoe20s21s,
                                         rho_cov = c(1, 1, 0), rho_cov_index = 0,
                                         rho_inxs_cov = c(1), rho_inxs_cov_index = 0)
+  
+  #####  Black bear-Coyote predictions  ####
+  load("./Outputs/bearcoy_habX_px.RData")
+  bear.coy.eff.ung.yr1 <- predict_detection(mod = bear.coy.habx.px, ncat = 4, npoints = 500,
+                                            focal_cov = effort_eoe20s21s,
+                                            rho_cov = c(1, 0, 0), rho_cov_index = 3,
+                                            rho_inxs_cov = c(1), rho_inxs_cov_index = 0)
+  bear.coy.eff.pred.yr1 <- predict_detection(mod = bear.coy.habx.px, ncat = 4, npoints = 500,
+                                             focal_cov = effort_eoe20s21s,
+                                             rho_cov = c(1, 1, 0), rho_cov_index = 3,
+                                             rho_inxs_cov = c(1), rho_inxs_cov_index = 0)
+  bear.coy.ung.yr1 <- predict_detection(mod = bear.coy.habx.px, ncat = 4, npoints = 500,
+                                        focal_cov = effort_eoe20s21s,
+                                        rho_cov = c(1, 0, 0), rho_cov_index = 0,
+                                        rho_inxs_cov = c(1), rho_inxs_cov_index = 0)
+  bear.coy.pred.yr1 <- predict_detection(mod = bear.coy.habx.px, ncat = 4, npoints = 500,
+                                         focal_cov = effort_eoe20s21s,
+                                         rho_cov = c(1, 1, 0), rho_cov_index = 0,
+                                         rho_inxs_cov = c(1), rho_inxs_cov_index = 0)
+  
+  #' #'  Save image of global environments if you want
+  #' save.image(file = "Predicted_rho-cov_relationships.RData")
+  
   
   #'  --------------------------------
   ####  Plot marginal Pr(detection)  ####
@@ -266,8 +289,8 @@
     return(marg_det_plot)
   }
   #####  Wolf-Bear marginal detection  ####
-  wolf.bear.marg.eff.ung <- plot_marginal_det(predicted = wolf.bear.eff.ung.yr1, spp1 = "Wolf", spp2 = "Bear", covname = "Elevation (m)", setup = "random sites", spppair = "Wolf - Black Bear")
-  wolf.bear.marg.eff.pred <- plot_marginal_det(predicted = wolf.bear.eff.pred.yr1, spp1 = "Wolf", spp2 = "Bear", covname = "Elevation (m)", setup = "trail sites", spppair = "Wolf - Black Bear")
+  wolf.bear.marg.eff.ung <- plot_marginal_det(predicted = wolf.bear.eff.ung.yr1, spp1 = "Wolf", spp2 = "Bear", covname = "Sampling Effort", setup = "random sites", spppair = "Wolf - Black Bear")
+  wolf.bear.marg.eff.pred <- plot_marginal_det(predicted = wolf.bear.eff.pred.yr1, spp1 = "Wolf", spp2 = "Bear", covname = "Sampling Effort", setup = "trail sites", spppair = "Wolf - Black Bear")
   wolf.bear.marg.plots <- list(wolf.bear.marg.eff.ung, wolf.bear.marg.eff.pred)
   
   #####  Wolf-Lion marginal detection  ####
@@ -291,6 +314,10 @@
   coy.bob.marg.eff.pred <- plot_marginal_det(predicted = coy.bob.eff.pred.yr1, spp1 = "Coyote", spp2 = "Bobcat", covname = "Sampling Effort", setup = "trail sites", spppair = "Coyote - Bobcat")
   coy.bob.marg.plots <- list(coy.bob.marg.eff.ung, coy.bob.marg.eff.pred)
   
+  #####  Black bear-Coyote marginal detection  ####
+  bear.coy.marg.eff.ung <- plot_marginal_det(predicted = bear.coy.eff.ung.yr1, spp1 = "Black bear", spp = "Coyote", covname = "Sampling Effort", setup = "random sites", spppair = "Black bear - Coyote")
+  bear.coy.marg.eff.pred <- plot_marginal_det(predicted = bear.coy.eff.pred.yr1, spp1 = "Black bear", spp = "Coyote", covname = "Sampling Effort", setup = "trail sites", spppair = "Black bear - Coyote")
+  bear.coy.marg.plots <- list(bear.coy.marg.eff.ung, bear.coy.marg.eff.pred)
   
   #'  -----------------------------------
   ####  Plot conditional Pr(detection)  ####
@@ -304,37 +331,37 @@
   #'  Function to reformat data for easier use with ggplot2 
   condish.det <- function(predicted, spp1, spp2) {
     condish.det <- as.data.frame(predicted[[2]][,,"mean"]) %>%
-    #'  Snag conditional detection for each species, convert from wide to long format, 
-    #'  and assign species name
-    pivot_longer(cols = c(Spp1.alone, Spp1.given.Spp2, Spp2.alone, Spp2.given.Spp1), 
-                 names_to = "Spp_Interaction") %>%
-    arrange(Spp_Interaction) %>%
-    #'  Make these labels meaningful with actual species names
-    mutate(Spp_Interaction = factor(Spp_Interaction, levels = c("Spp1.alone", "Spp1.given.Spp2", "Spp2.alone", "Spp2.given.Spp1")),
-           Spp_Interaction = gsub("Spp1", spp1, Spp_Interaction),
-           Spp_Interaction = gsub("Spp2", spp2, Spp_Interaction),
-           Spp_Interaction = gsub(".alone", " alone", Spp_Interaction),
-           Spp_Interaction = gsub(".given.", " given ", Spp_Interaction), 
-           Spp_Interaction = str_to_sentence(Spp_Interaction),
-           Species = sub(" .*", "", Spp_Interaction),
-           Species = ifelse(Species == "Mountain", "Mountain lion", Species)) %>%
-    relocate(Species, .before = Spp_Interaction)
-  #'  Snag lower 95% credible interval
-  lower.condish <- as.data.frame(predicted[[2]][,,"lower"]) %>%
-    pivot_longer(cols = c(Spp1.alone, Spp1.given.Spp2, Spp2.alone, Spp2.given.Spp1), names_to = "Spp_Interaction") %>%
-    arrange(Spp_Interaction)
-  #'  Snag upper 95% credible interval 
-  upper.condish <- as.data.frame(predicted[[2]][,,"upper"]) %>%
-    pivot_longer(cols = c(Spp1.alone, Spp1.given.Spp2, Spp2.alone, Spp2.given.Spp1), names_to = "Spp_Interaction") %>%
-    arrange(Spp_Interaction)
-  #'  Snag covariate values
-  covs <- c(predicted[[3]], predicted[[3]]) 
-  scaled.covs <- c(predicted[[4]], predicted[[4]])
-  #'  Create single data frame
-  predicted.conditional.det <- cbind(condish.det, lower.condish[,2], upper.condish[,2], covs, scaled.covs)
-  names(predicted.conditional.det) <- c("Species", "Species_interaction", "conditional_det", "lowerCRI", "upperCRI", "covs", "scaled_covs")
-  
-  return(predicted.conditional.det)
+      #'  Snag conditional detection for each species, convert from wide to long format, 
+      #'  and assign species name
+      pivot_longer(cols = c(Spp1.alone, Spp1.given.Spp2, Spp2.alone, Spp2.given.Spp1), 
+                   names_to = "Spp_Interaction") %>%
+      arrange(Spp_Interaction) %>%
+      #'  Make these labels meaningful with actual species names
+      mutate(Spp_Interaction = factor(Spp_Interaction, levels = c("Spp1.alone", "Spp1.given.Spp2", "Spp2.alone", "Spp2.given.Spp1")),
+             Spp_Interaction = gsub("Spp1", spp1, Spp_Interaction),
+             Spp_Interaction = gsub("Spp2", spp2, Spp_Interaction),
+             Spp_Interaction = gsub(".alone", " alone", Spp_Interaction),
+             Spp_Interaction = gsub(".given.", " given ", Spp_Interaction), 
+             Spp_Interaction = str_to_sentence(Spp_Interaction),
+             Species = sub(" .*", "", Spp_Interaction),
+             Species = ifelse(Species == "Mountain", "Mountain lion", Species)) %>%
+      relocate(Species, .before = Spp_Interaction)
+    #'  Snag lower 95% credible interval
+    lower.condish <- as.data.frame(predicted[[2]][,,"lower"]) %>%
+      pivot_longer(cols = c(Spp1.alone, Spp1.given.Spp2, Spp2.alone, Spp2.given.Spp1), names_to = "Spp_Interaction") %>%
+      arrange(Spp_Interaction)
+    #'  Snag upper 95% credible interval 
+    upper.condish <- as.data.frame(predicted[[2]][,,"upper"]) %>%
+      pivot_longer(cols = c(Spp1.alone, Spp1.given.Spp2, Spp2.alone, Spp2.given.Spp1), names_to = "Spp_Interaction") %>%
+      arrange(Spp_Interaction)
+    #'  Snag covariate values
+    covs <- c(predicted[[3]], predicted[[3]]) 
+    scaled.covs <- c(predicted[[4]], predicted[[4]])
+    #'  Create single data frame
+    predicted.conditional.det <- cbind(condish.det, lower.condish[,2], upper.condish[,2], covs, scaled.covs)
+    names(predicted.conditional.det) <- c("Species", "Species_interaction", "conditional_det", "lowerCRI", "upperCRI", "covs", "scaled_covs")
+    
+    return(predicted.conditional.det)
   }
   
   #'  Function to plot conditional detection probability across range of values of a covariate
@@ -377,8 +404,8 @@
       group_by(Species, Species_interaction) %>%
       slice(1L) %>%
       ungroup() %>%
-      mutate(Detection = ifelse(grepl("given", Species_interaction), "Competitor \nobserved", "Competitor \nnot observed"),
-             Detection = factor(Detection, levels = c("Competitor \nobserved", "Competitor \nnot observed")),
+      mutate(Detection = ifelse(grepl("given", Species_interaction), "detected", "not detected"),
+             Detection = factor(Detection, levels = c("detected", "not detected")),
              Species_detected = ifelse(Species == spp2, paste(spp1, Detection), paste(spp2, Detection)),
              Species_detected = str_to_sentence(Species_detected),
              Species_detected = factor(Species_detected, levels = spp_order))
@@ -434,6 +461,13 @@
   coy.bob.condish.pred <- plot_conditional_det_mean(predicted = coy.bob.pred.yr1, spp1 = "Coyote", spp2 = "Bobcat", x = "Competitor detection", covname = "competitor detection", setup = "trail sites", spppair = "Coyote - Bobcat", spp_order = c("Coyote not detected", "Coyote detected", "Bobcat not detected", "Bobcat detected"))
   coy.bob.condish.plots <- list(coy.bob.condish.eff.ung, coy.bob.condish.eff.pred, coy.bob.condish.ung, coy.bob.condish.pred)
   
+  #####  Black bear-Coyote conditional detection  ####
+  bear.coy.condish.eff.ung <- plot_conditional_det_over_cov(predicted = bear.coy.eff.ung.yr1, spp1 = "Black bear", spp2 = "Coyote", x = "Sampling Effort", covname = "sampling effort", setup = "random sites")
+  bear.coy.condish.eff.pred <- plot_conditional_det_over_cov(predicted = bear.coy.eff.pred.yr1, spp1 = "Black bear", spp2 = "Coyote", x = "Sampling Effort", covname = "sampling effort", setup = "trail sites")
+  bear.coy.condish.ung <- plot_conditional_det_mean(predicted = bear.coy.ung.yr1, spp1 = "Black bear", spp2 = "Coyote", x = "Competitor detection", covname = "competitor detection", setup = "random sites", spppair = "Black bear - Coyote", spp_order = c("Black bear not detected", "Black bear detected", "Coyote not detected", "Coyote detected"))
+  bear.coy.condish.pred <- plot_conditional_det_mean(predicted = bear.coy.pred.yr1, spp1 = "Black bear", spp2 = "Coyote", x = "Competitor detection", covname = "competitor detection", setup = "trail sites", spppair = "Black bear - Coyote", spp_order = c("Black bear not detected", "Black bear detected", "Coyote not detected", "Coyote detected"))
+  bear.coy.condish.plots <- list(bear.coy.condish.eff.ung, bear.coy.condish.eff.pred, bear.coy.condish.ung, bear.coy.condish.pred)
+  
   #'  Add species pair and camera placement to each data set
   add_info <- function(cond, spp_pair, cam_setup) {
     cond$Species_pair <- spp_pair
@@ -452,21 +486,25 @@
   
   #'  Plot all conditional detection probabilities covariate together
   plot_all_condish_det <- function(predicted, x, ncolor) {
+    predicted <- mutate(predicted, Species = factor(Species, levels = c("Bobcat", "Coyote", "Mountain lion", "Wolf")), 
+                        Detection = ifelse(Detection == "detected", "Detected", "Not detected"))
     cond_det_plot <- ggplot(predicted, aes(x = Detection, y = conditional_det, group = Species)) + 
       geom_errorbar(aes(ymin = lowerCRI, ymax = upperCRI, color = Species), width = 0, position = position_dodge(width = 0.4)) +
-      scale_color_manual(values = four_colors) + 
+      scale_color_manual(values = ncolor) + 
       geom_point(stat = 'identity', aes(col = Species), size = 2.5, position = position_dodge(width = 0.4)) +   
       #'  Get rid of lines and gray background
       theme_bw() +
       theme(panel.border = element_blank()) +
+      theme(text = element_text(size = 11),
+            plot.title = element_text(size = 13)) +
       theme(axis.line = element_line(color = 'black')) +
       #'  Force y-axis from 0 to 1
       ylim(0,1.0) +
       #'  Use list name as X-axis title
       xlab(x) +
-      ylab("Conditional detection probability (trail sites)") +
+      ylab("Conditional probability of detection \nfor focal species") +
       labs(title = "Co-detection probabilities for predator dyads", 
-           fill = "Focal species in predator dyad", color = "Focal species in predator dyad") +
+           fill = "Focal species", color = "Focal species") +
       facet_wrap(~Species_pair, scales = "free_y") +
       coord_cartesian(ylim = c(0, 0.70)) +
       theme(legend.position="bottom")
@@ -478,50 +516,11 @@
   condish_plot <- plot_all_condish_det(predicted = conditional_det, x = "Whether competitor was detected at same site", 
                                        ncolor = wolf.lion.coy.bob_colors)
   
-  
   #'  -----------------------------
   ####  Save all the pretty plots  ####
   #'  -----------------------------
-  #'  Marginal detection probabilities
-  ggsave("./Outputs/MultiSpp_OccMod_Outputs/Co-Occ_Plots/wolf-bear_eff_ung_marginal_det_plots.tiff", wolf.bear.marg.plots[[1]], 
-         units = "in", width = 7, height = 5, dpi = 600, device = 'tiff', compression = 'lzw')
-  ggsave("./Outputs/MultiSpp_OccMod_Outputs/Co-Occ_Plots/wolf-bear_eff_pred_marginal_det_plots.tiff", wolf.bear.marg.plots[[2]], 
-         units = "in", width = 7, height = 5, dpi = 600, device = 'tiff', compression = 'lzw')
-  ggsave("./Outputs/MultiSpp_OccMod_Outputs/Co-Occ_Plots/wolf-coy_eff_ung_marginal_det_plots.tiff", wolf.coy.marg.plots[[1]], 
-         units = "in", width = 7, height = 5, dpi = 600, device = 'tiff', compression = 'lzw')
-  ggsave("./Outputs/MultiSpp_OccMod_Outputs/Co-Occ_Plots/wolf-coy_eff_pred_marginal_det_plots.tiff", wolf.coy.marg.plots[[2]], 
-         units = "in", width = 7, height = 5, dpi = 600, device = 'tiff', compression = 'lzw')
-  ggsave("./Outputs/MultiSpp_OccMod_Outputs/Co-Occ_Plots/lion-bob_eff_ung_marginal_det_plots.tiff", lion.bob.marg.plots[[1]], 
-         units = "in", width = 7, height = 5, dpi = 600, device = 'tiff', compression = 'lzw')
-  ggsave("./Outputs/MultiSpp_OccMod_Outputs/Co-Occ_Plots/lion-bob_eff_pred_marginal_det_plots.tiff", lion.bob.marg.plots[[2]], 
-         units = "in", width = 7, height = 5, dpi = 600, device = 'tiff', compression = 'lzw')
-  ggsave("./Outputs/MultiSpp_OccMod_Outputs/Co-Occ_Plots/coy-bob_eff_ung_marginal_det_plots.tiff", coy.bob.marg.plots[[1]], 
-         units = "in", width = 7, height = 5, dpi = 600, device = 'tiff', compression = 'lzw')
-  ggsave("./Outputs/MultiSpp_OccMod_Outputs/Co-Occ_Plots/coy-bob_eff_pred_marginal_det_plots.tiff", coy.bob.marg.plots[[2]], 
-         units = "in", width = 7, height = 5, dpi = 600, device = 'tiff', compression = 'lzw')
+  ggsave("./Outputs/Figures/all_signif_pairs_mean_pred_conditional_det_plots.tiff", condish_plot, 
+         units = "in", width = 7, height = 4, dpi = 400, device = 'tiff', compression = 'lzw')
   
-  #'  Conditional detection probabilities
-  ggsave("./Outputs/MultiSpp_OccMod_Outputs/Co-Occ_Plots/coy-bob_eff_ung_conditional_det_plots.tiff", coy.bob.condish.plots[[1]], 
-         units = "in", width = 7, height = 5, dpi = 600, device = 'tiff', compression = 'lzw')
-  ggsave("./Outputs/MultiSpp_OccMod_Outputs/Co-Occ_Plots/coy-bob_eff_pred_conditional_det_plots.tiff", coy.bob.condish.plots[[2]], 
-         units = "in", width = 7, height = 5, dpi = 600, device = 'tiff', compression = 'lzw')
-  ggsave("./Outputs/MultiSpp_OccMod_Outputs/Co-Occ_Plots/coy-bob_mean_ung_conditional_det_plots.tiff", coy.bob.condish.plots[[3]], 
-         units = "in", width = 7, height = 5, dpi = 600, device = 'tiff', compression = 'lzw')
-  ggsave("./Outputs/MultiSpp_OccMod_Outputs/Co-Occ_Plots/coy-bob_mean_pred_conditional_det_plots.tiff", coy.bob.condish.plots[[4]], 
-         units = "in", width = 7, height = 5, dpi = 600, device = 'tiff', compression = 'lzw')
-  ggsave("./Outputs/MultiSpp_OccMod_Outputs/Co-Occ_Plots/wolf-coy_eff_ung_conditional_det_plots.tiff", wolf.coy.condish.plots[[1]], 
-         units = "in", width = 7, height = 5, dpi = 600, device = 'tiff', compression = 'lzw')
-  ggsave("./Outputs/MultiSpp_OccMod_Outputs/Co-Occ_Plots/wolf-coy_eff_pred_conditional_det_plots.tiff", wolf.coy.condish.plots[[2]], 
-         units = "in", width = 7, height = 5, dpi = 600, device = 'tiff', compression = 'lzw')
-  ggsave("./Outputs/MultiSpp_OccMod_Outputs/Co-Occ_Plots/wolf-coy_mean_ung_conditional_det_plots.tiff", wolf.coy.condish.plots[[3]], 
-         units = "in", width = 7, height = 5, dpi = 600, device = 'tiff', compression = 'lzw')
-  ggsave("./Outputs/MultiSpp_OccMod_Outputs/Co-Occ_Plots/wolf-coy_mean_pred_conditional_det_plots.tiff", wolf.coy.condish.plots[[4]], 
-         units = "in", width = 7, height = 5, dpi = 600, device = 'tiff', compression = 'lzw')
-  ggsave("./Outputs/MultiSpp_OccMod_Outputs/Co-Occ_Plots/lion-bob_mean_ung_conditional_det_plots.tiff", lion.bob.condish.plots[[1]], 
-         units = "in", width = 7, height = 5, dpi = 600, device = 'tiff', compression = 'lzw')
-  ggsave("./Outputs/MultiSpp_OccMod_Outputs/Co-Occ_Plots/lion-bob_mean_pred_conditional_det_plots.tiff", lion.bob.condish.plots[[2]], 
-         units = "in", width = 7, height = 5, dpi = 600, device = 'tiff', compression = 'lzw')
-  ggsave("./Outputs/MultiSpp_OccMod_Outputs/Co-Occ_Plots/all_signif_pairs_mean_pred_conditional_det_plots.tiff", condish_plot, 
-         units = "in", width = 8, height = 5, dpi = 600, device = 'tiff', compression = 'lzw')
   
   
