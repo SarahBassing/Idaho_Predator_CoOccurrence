@@ -143,49 +143,57 @@
   }
   #####  Wolf-Black bear predictions  ####
   #'  Top model
-  load("./Outputs/wolfbear_preydiv.RData")
-  wolf.bear.elev.ung.yr1 <- predict_occupancy(mod = wolf.bear.preydiv, ncat = 4, npoints = 500,
-                                               focal_cov = covs$Elev,
-                                               psi_cov = c(1, 0, 0, 0, 0, 0), psi_cov_index = 4,
-                                               psi_inxs_cov = c(0), psi_inxs_cov_index = 0)
-  wolf.bear.elev.pred.yr1 <- predict_occupancy(mod = wolf.bear.preydiv, ncat = 4, npoints = 500,
-                                                focal_cov = covs$Elev,
-                                                psi_cov = c(1, 1, 0, 0, 0, 0), psi_cov_index = 4,
-                                                psi_inxs_cov = c(0), psi_inxs_cov_index = 0)
-  wolf.bear.for.ung.yr1 <- predict_occupancy(mod = wolf.bear.preydiv, ncat = 4, npoints = 500,
+  load("./Outputs/wolfbear_hab.RData")
+  wolf.bear.for.ung.yr2 <- predict_occupancy(mod = wolf.bear.hab, ncat = 4, npoints = 500,  ### MAKE SURE COVS IS IN RIGHT ORDER!!!
+                                             focal_cov = covs$PercForest,
+                                             psi_cov = c(1, 0, 1, 0, 0, 0), psi_cov_index = 4,
+                                             psi_inxs_cov = c(0), covs = 0)
+  wolf.bear.for.pred.yr2 <- predict_occupancy(mod = wolf.bear.hab, ncat = 4, npoints = 500,
                                               focal_cov = covs$PercForest,
-                                              psi_cov = c(1, 0, 0, 0, 0, 0), psi_cov_index = 5,
+                                              psi_cov = c(1, 1, 1, 0, 0, 0), psi_cov_index = 4,
+                                              psi_inxs_cov = c(0), covs = 0)
+  wolf.bear.elev.ung.yr2 <- predict_occupancy(mod = wolf.bear.hab, ncat = 4, npoints = 500,
+                                              focal_cov = covs$Elev,
+                                              psi_cov = c(1, 0, 1, 0, 0, 0), psi_cov_index = 5,
                                               psi_inxs_cov = c(0), psi_inxs_cov_index = 0)
-  wolf.bear.for.pred.yr1 <- predict_occupancy(mod = wolf.bear.preydiv, ncat = 4, npoints = 500,
-                                               focal_cov = covs$PercForest,
-                                               psi_cov = c(1, 1, 0, 0, 0, 0), psi_cov_index = 5,
+  wolf.bear.elev.pred.yr2 <- predict_occupancy(mod = wolf.bear.hab, ncat = 4, npoints = 500,
+                                               focal_cov = covs$Elev,
+                                               psi_cov = c(1, 1, 1, 0, 0, 0), psi_cov_index = 5,
                                                psi_inxs_cov = c(0), psi_inxs_cov_index = 0)
-  wolf.bear.div.ung.yr1 <- predict_occupancy(mod = wolf.bear.preydiv, ncat = 4, npoints = 500,
-                                              focal_cov = covs$SppDiversity,
-                                              psi_cov = c(1, 0, 0, 0, 0, 0), psi_cov_index = 6,
+  wolf.bear.tri.ung.yr2 <- predict_occupancy(mod = wolf.bear.hab, ncat = 4, npoints = 500,
+                                             focal_cov = covs$TRI,
+                                             psi_cov = c(1, 0, 1, 0, 0, 0), psi_cov_index = 6,
+                                             psi_inxs_cov = c(0), covs = 0)
+  wolf.bear.tri.pred.yr2 <- predict_occupancy(mod = wolf.bear.hab, ncat = 4, npoints = 500,
+                                              focal_cov = covs$TRI,
+                                              psi_cov = c(1, 1, 1, 0, 0, 0), psi_cov_index = 6,
                                               psi_inxs_cov = c(0), psi_inxs_cov_index = 0)
-  wolf.bear.div.pred.yr1 <- predict_occupancy(mod = wolf.bear.preydiv, ncat = 4, npoints = 500,
-                                               focal_cov = covs$SppDiversity,
-                                               psi_cov = c(1, 1, 0, 0, 0, 0), psi_cov_index = 6,
-                                               psi_inxs_cov = c(0), psi_inxs_cov_index = 0)
   
   #####  Wolf-Coyote predictions  ####
   load("./Outputs/wolfcoy_hab.RData") 
-  wolf.coy.elev.ung.yr1 <- predict_occupancy(mod = wolf.coy.hab, ncat = 4, npoints = 500,
-                                             focal_cov = covs$Elev,
-                                             psi_cov = c(1, 0, 0, 0, 0), psi_cov_index = 4,
-                                             psi_inxs_cov = 0, psi_inxs_cov_index = 0)
-  wolf.coy.elev.pred.yr1 <- predict_occupancy(mod = wolf.coy.hab, ncat = 4, npoints = 500,
-                                             focal_cov = covs$Elev,
-                                             psi_cov = c(1, 1, 0, 0, 0), psi_cov_index = 4,
-                                             psi_inxs_cov = 0, psi_inxs_cov_index = 0)
-  wolf.coy.for.ung.yr1 <- predict_occupancy(mod = wolf.coy.hab, ncat = 4, npoints = 500,
-                                           focal_cov = covs$PercForest,
-                                           psi_cov = c(1, 0, 0, 0, 0), psi_cov_index = 5,
-                                           psi_inxs_cov = 0, psi_inxs_cov_index = 0)
-  wolf.coy.for.pred.yr1 <- predict_occupancy(mod = wolf.coy.hab, ncat = 4, npoints = 500,
+  wolf.coy.for.ung.yr2 <- predict_occupancy(mod = wolf.coy.hab, ncat = 4, npoints = 500,
+                                            focal_cov = covs$PercForest,
+                                            psi_cov = c(1, 0, 1, 0, 0, 0), psi_cov_index = 4,
+                                            psi_inxs_cov = 0, psi_inxs_cov_index = 0)
+  wolf.coy.for.pred.yr2 <- predict_occupancy(mod = wolf.coy.hab, ncat = 4, npoints = 500,
                                              focal_cov = covs$PercForest,
-                                             psi_cov = c(1, 1, 0, 0, 0), psi_cov_index = 5,
+                                             psi_cov = c(1, 1, 1, 0, 0, 0), psi_cov_index = 4,
+                                             psi_inxs_cov = 0, psi_inxs_cov_index = 0)
+  wolf.coy.elev.ung.yr2 <- predict_occupancy(mod = wolf.coy.hab, ncat = 4, npoints = 500,
+                                             focal_cov = covs$Elev,
+                                             psi_cov = c(1, 0, 1, 0, 0, 0), psi_cov_index = 5,
+                                             psi_inxs_cov = 0, psi_inxs_cov_index = 0)
+  wolf.coy.elev.pred.yr2 <- predict_occupancy(mod = wolf.coy.hab, ncat = 4, npoints = 500,
+                                              focal_cov = covs$Elev,
+                                              psi_cov = c(1, 1, 1, 0, 0, 0), psi_cov_index = 5,
+                                              psi_inxs_cov = 0, psi_inxs_cov_index = 0)
+  wolf.coy.tri.ung.yr2 <- predict_occupancy(mod = wolf.coy.hab, ncat = 4, npoints = 500,
+                                            focal_cov = covs$TRI,
+                                            psi_cov = c(1, 0, 1, 0, 0, 0), psi_cov_index = 6,
+                                            psi_inxs_cov = 0, psi_inxs_cov_index = 0)
+  wolf.coy.tri.pred.yr2 <- predict_occupancy(mod = wolf.coy.hab, ncat = 4, npoints = 500,
+                                             focal_cov = covs$TRI,
+                                             psi_cov = c(1, 1, 1, 0, 0, 0), psi_cov_index = 6,
                                              psi_inxs_cov = 0, psi_inxs_cov_index = 0)
   
   #####  Wolf-Lion predictions  ####
@@ -201,71 +209,62 @@
   
   
   #####  Coyote-Bobcat predictions  ####
-  load("./Outputs/coybob_global.RData")
-  coy.bob.elev.ung.yr1 <- predict_occupancy(mod = coy.bob.global, ncat = 4, npoints = 500, 
-                                            focal_cov = covs$Elev,
-                                            psi_cov = c(1, 0, 0, 0, 0, 0, 0, 0), psi_cov_index = 4,
-                                            psi_inxs_cov = c(1, 0, 0, 0, 0), psi_inxs_cov_index = 0)
-  coy.bob.elev.pred.yr1 <- predict_occupancy(mod = coy.bob.global, ncat = 4, npoints = 500,
-                                             focal_cov = covs$Elev,
-                                             psi_cov = c(1, 1, 0, 0, 0, 0, 0, 0), psi_cov_index = 4,
-                                             psi_inxs_cov = c(1, 1, 0, 0, 0), psi_inxs_cov_index = 0)
-  coy.bob.for.ung.yr1 <- predict_occupancy(mod = coy.bob.global, ncat = 4, npoints = 500,
+  load("./Outputs/coybob_habX.RData")
+  coy.bob.for.ung.yr2 <- predict_occupancy(mod = coy.bob.habx, ncat = 4, npoints = 500,
                                            focal_cov = covs$PercForest,
-                                           psi_cov = c(1, 0, 0, 0, 0, 0, 0, 0), psi_cov_index = 5,
-                                           psi_inxs_cov = c(1, 0, 0, 0, 0), psi_inxs_cov_index = 0)
-  coy.bob.for.pred.yr1 <- predict_occupancy(mod = coy.bob.global, ncat = 4, npoints = 500,
+                                           psi_cov = c(1, 0, 1, 0, 0, 0), psi_cov_index = 4,
+                                           psi_inxs_cov = c(1), psi_inxs_cov_index = 0)
+  coy.bob.for.pred.yr2 <- predict_occupancy(mod = coy.bob.habx, ncat = 4, npoints = 500,
                                             focal_cov = covs$PercForest,
-                                            psi_cov = c(1, 1, 0, 0, 0, 0, 0, 0), psi_cov_index = 5,
-                                            psi_inxs_cov = c(1, 1, 0, 0, 0), psi_inxs_cov_index = 0)
-  coy.bob.wtd.ung.yr1 <- predict_occupancy(mod = coy.bob.global, ncat = 4, npoints = 500, 
-                                            focal_cov = covs$Nwtd,
-                                            psi_cov = c(1, 0, 0, 0, 0, 0, 0, 0), psi_cov_index = 6,
-                                            psi_inxs_cov = c(1, 0, 0, 0, 0), psi_inxs_cov_index = 3) 
-  coy.bob.wtd.pred.yr1 <- predict_occupancy(mod = coy.bob.global, ncat = 4, npoints = 500,
-                                             focal_cov = covs$Nwtd,
-                                             psi_cov = c(1, 1, 0, 0, 0, 0, 0, 0), psi_cov_index = 6,
-                                             psi_inxs_cov = c(1, 1, 0, 0, 0), psi_inxs_cov_index = 3)
-  coy.bob.lago.ung.yr1 <- predict_occupancy(mod = coy.bob.global, ncat = 4, npoints = 500, 
-                                            focal_cov = covs$Nlagomorph,
-                                            psi_cov = c(1, 0, 0, 0, 0, 0, 0, 0), psi_cov_index = 7,
-                                            psi_inxs_cov = c(1, 0, 0, 0, 0), psi_inxs_cov_index = 4)
-  coy.bob.lago.pred.yr1 <- predict_occupancy(mod = coy.bob.global, ncat = 4, npoints = 500,
-                                             focal_cov = covs$Nlagomorph,
-                                             psi_cov = c(1, 1, 0, 0, 0, 0, 0, 0), psi_cov_index = 7,
-                                             psi_inxs_cov = c(1, 1, 0, 0, 0), psi_inxs_cov_index = 4)
-  coy.bob.div.ung.yr1 <- predict_occupancy(mod = coy.bob.global, ncat = 4, npoints = 500, 
-                                            focal_cov = covs$SppDiversity,
-                                            psi_cov = c(1, 0, 0, 0, 0, 0, 0, 0), psi_cov_index = 8,
-                                            psi_inxs_cov = c(1, 0, 0, 0, 0), psi_inxs_cov_index = 5)
-  coy.bob.div.pred.yr1 <- predict_occupancy(mod = coy.bob.global, ncat = 4, npoints = 500,
-                                             focal_cov = covs$SppDiversity,
-                                             psi_cov = c(1, 1, 0, 0, 0, 0, 0, 0), psi_cov_index = 8,
-                                             psi_inxs_cov = c(1, 1, 0, 0, 0), psi_inxs_cov_index = 5)
+                                            psi_cov = c(1, 1, 1, 0, 0, 0), psi_cov_index = 4,
+                                            psi_inxs_cov = c(1), psi_inxs_cov_index = 0)
+  coy.bob.elev.ung.yr2 <- predict_occupancy(mod = coy.bob.habx, ncat = 4, npoints = 500, 
+                                            focal_cov = covs$Elev,
+                                            psi_cov = c(1, 0, 1, 0, 0, 0), psi_cov_index = 5,
+                                            psi_inxs_cov = c(1), psi_inxs_cov_index = 0)
+  coy.bob.elev.pred.yr2 <- predict_occupancy(mod = coy.bob.habx, ncat = 4, npoints = 500,
+                                             focal_cov = covs$Elev,
+                                             psi_cov = c(1, 1, 1, 0, 0, 0), psi_cov_index = 5,
+                                             psi_inxs_cov = c(1), psi_inxs_cov_index = 0)
+  coy.bob.tri.ung.yr2 <- predict_occupancy(mod = coy.bob.habx, ncat = 4, npoints = 500, 
+                                           focal_cov = covs$TRI,
+                                           psi_cov = c(1, 0, 1, 0, 0, 0), psi_cov_index = 6,
+                                           psi_inxs_cov = c(1), psi_inxs_cov_index = 0)
+  coy.bob.tri.pred.yr2 <- predict_occupancy(mod = coy.bob.habx, ncat = 4, npoints = 500,
+                                            focal_cov = covs$TRI,
+                                            psi_cov = c(1, 1, 1, 0, 0, 0), psi_cov_index = 6,
+                                            psi_inxs_cov = c(1), psi_inxs_cov_index = 0)
   
+  #####  Bear-Coyote predictions  ####
+  load("./Outputs/bearcoy_habX.RData")
+  bear.coy.for.ung.yr2 <- predict_occupancy(mod = bear.coy.habx, ncat = 4, npoints = 500,
+                                            focal_cov = covs$PercForest,
+                                            psi_cov = c(1, 0, 1, 0, 0, 0), psi_cov_index = 4,
+                                            psi_inxs_cov = c(1), psi_inxs_cov_index = 0)
+  bear.coy.for.pred.yr2 <- predict_occupancy(mod = bear.coy.habx, ncat = 4, npoints = 500,
+                                             focal_cov = covs$PercForest,
+                                             psi_cov = c(1, 1, 1, 0, 0, 0), psi_cov_index = 4,
+                                             psi_inxs_cov = c(1), psi_inxs_cov_index = 0)
+  bear.coy.elev.ung.yr2 <- predict_occupancy(mod = bear.coy.habx, ncat = 4, npoints = 500, 
+                                             focal_cov = covs$Elev,
+                                             psi_cov = c(1, 0, 1, 0, 0, 0), psi_cov_index = 5,
+                                             psi_inxs_cov = c(1), psi_inxs_cov_index = 0)
+  bear.coy.elev.pred.yr2 <- predict_occupancy(mod = bear.coy.habx, ncat = 4, npoints = 500,
+                                              focal_cov = covs$Elev,
+                                              psi_cov = c(1, 1, 1, 0, 0, 0), psi_cov_index = 5,
+                                              psi_inxs_cov = c(1), psi_inxs_cov_index = 0)
+  bear.coy.tri.ung.yr2 <- predict_occupancy(mod = bear.coy.habx, ncat = 4, npoints = 500, 
+                                            focal_cov = covs$TRI,
+                                            psi_cov = c(1, 0, 1, 0, 0, 0), psi_cov_index = 6,
+                                            psi_inxs_cov = c(1), psi_inxs_cov_index = 0)
+  bear.coy.tri.pred.yr2 <- predict_occupancy(mod = bear.coy.habx, ncat = 4, npoints = 500,
+                                             focal_cov = covs$TRI,
+                                             psi_cov = c(1, 1, 1, 0, 0, 0), psi_cov_index = 6,
+                                             psi_inxs_cov = c(1), psi_inxs_cov_index = 0)
   
-  #'  Explore influence of different WTD RAI values on predicted coyote-bobcat 
-  #'  responses to lagomorph RAI
-  #'  WTD RAI values range 0 - 16 deer hours/day, mean = 0.3067603 and sd = 0.5986775
-  #'  Low wtd RAI = 0 deer hr/day, scaled value = -0.5123966
-  #'  Medium wtd RAI = 2 deer hr/day, scaled value = 2.8283 
-  #'  High wtd RAI = 6 deer hr/day, scaled value = 9.509694
-  #'  6 deer hr/day = "high" RAI because anything higher and coy conditional occ = 1.0 
-  #'  given magnitude of wtd coefficient
-  coy.bob.lago.pred.yr1_lowwtd <- predict_occupancy(mod = coy.bob.global, ncat = 4, npoints = 500,
-                                                   focal_cov = covs$Nlagomorph,
-                                                   psi_cov = c(1, 1, 0, 0, 0, -0.5123966, 0, 0), psi_cov_index = 7,
-                                                   psi_inxs_cov = c(1, 1, -0.5123966, 0, 0), psi_inxs_cov_index = 4)
-  coy.bob.lago.pred.yr1_medwtd <- predict_occupancy(mod = coy.bob.global, ncat = 4, npoints = 500,
-                                             focal_cov = covs$Nlagomorph,
-                                             psi_cov = c(1, 1, 0, 0, 0, 2.8283, 0, 0), psi_cov_index = 7,
-                                             psi_inxs_cov = c(1, 1, 2.8283, 0, 0), psi_inxs_cov_index = 4)
-  coy.bob.lago.pred.yr1_hiwtd <- predict_occupancy(mod = coy.bob.global, ncat = 4, npoints = 500,
-                                                   focal_cov = covs$Nlagomorph,
-                                                   psi_cov = c(1, 1, 0, 0, 0, 9.509694, 0, 0), psi_cov_index = 7,
-                                                   psi_inxs_cov = c(1, 1, 9.509694, 0, 0), psi_inxs_cov_index = 4)
+  #' #'  Save image of global environments if you want
+  #' save.image(file = "Predicted_psi-cov_relationships.RData")
   
-  coy.bob.lago.pred.yr1_LowHiWTD <-  list(coy.bob.lago.pred.yr1_lowwtd, coy.bob.lago.pred.yr1_medwtd, coy.bob.lago.pred.yr1_hiwtd)
   
   #'  --------------------------------
   ####  Plot marginal Pr(occupancy)  ####
@@ -317,37 +316,50 @@
       xlab(covname) +
       ylab(paste("Marginal Occupancy Probability,", setup)) +
       labs(#title = paste(spppair, "Marginal Occupancy Probabilities"), 
-           fill = "Species", color = "Species") +
+        fill = "Species", color = "Species") +
       facet_wrap(~Species, scales = "free_y") +
-    theme(legend.position="bottom")
+      theme(legend.position="bottom")
     #'  Review figure
     plot(marg_occ_plot)
     
     return(marg_occ_plot)
   }
   #####  Wolf-Bear marginal occupancy  ####
-  #'  Top model
-  wolf.bear.marg.elev.ung <- plot_marginal_occ(predicted = wolf.bear.elev.ung.yr1, spp1 = "Wolf", spp2 = "Bear", covname = "Elevation (m)", setup = "random sites", spppair = "Wolf - Black Bear")
-  wolf.bear.marg.elev.pred <- plot_marginal_occ(predicted = wolf.bear.elev.pred.yr1, spp1 = "Wolf", spp2 = "Bear", covname = "Elevation (m)", setup = "trail sites", spppair = "Wolf - Black Bear")
-  wolf.bear.marg.for.ung <- plot_marginal_occ(predicted = wolf.bear.for.ung.yr1, spp1 = "Wolf", spp2 = "Bear", covname = "Percent forest cover", setup = "random sites", spppair = "Wolf - Black Bear")
-  wolf.bear.marg.for.pred <- plot_marginal_occ(predicted = wolf.bear.for.pred.yr1, spp1 = "Wolf", spp2 = "Bear", covname = "Percent forest cover", setup = "Trail sites", spppair = "Wolf - Black Bear")
-  wolf.bear.marg.div.ung <- plot_marginal_occ(predicted = wolf.bear.div.ung.yr1, spp1 = "Wolf", spp2 = "Bear", covname = "Shannon's diversity index", setup = "random sites", spppair = "Wolf - Black Bear")
-  wolf.bear.marg.div.pred <- plot_marginal_occ(predicted = wolf.bear.div.pred.yr1, spp1 = "Wolf", spp2 = "Bear", covname = "Shannon's diversity index", setup = "trail sites", spppair = "Wolf - Black Bear")
-  wolf.bear.marg.plots <- list(wolf.bear.marg.elev.ung, wolf.bear.marg.elev.pred, wolf.bear.marg.for.ung, wolf.bear.marg.for.pred, wolf.bear.marg.div.ung, wolf.bear.marg.div.pred)
+  #'  Second best model
+  wolf.bear.marg.for.ung <- plot_marginal_occ(predicted = wolf.bear.for.ung.yr2, spp1 = "Wolf", spp2 = "Bear", covname = "Percent forest cover", setup = "random sites", spppair = "Wolf - Black Bear")
+  wolf.bear.marg.for.pred <- plot_marginal_occ(predicted = wolf.bear.for.pred.yr2, spp1 = "Wolf", spp2 = "Bear", covname = "Percent forest cover", setup = "Trail sites", spppair = "Wolf - Black Bear")
+  wolf.bear.marg.elev.ung <- plot_marginal_occ(predicted = wolf.bear.elev.ung.yr2, spp1 = "Wolf", spp2 = "Bear", covname = "Elevation (m)", setup = "random sites", spppair = "Wolf - Black Bear")
+  wolf.bear.marg.elev.pred <- plot_marginal_occ(predicted = wolf.bear.elev.pred.yr2, spp1 = "Wolf", spp2 = "Bear", covname = "Elevation (m)", setup = "trail sites", spppair = "Wolf - Black Bear")
+  wolf.bear.marg.tri.ung <- plot_marginal_occ(predicted = wolf.bear.tri.ung.yr2, spp1 = "Wolf", spp2 = "Bear", covname = "Terrain ruggedness index", setup = "random sites", spppair = "Wolf - Black Bear")
+  wolf.bear.marg.tri.pred <- plot_marginal_occ(predicted = wolf.bear.tri.pred.yr2, spp1 = "Wolf", spp2 = "Bear", covname = "Terrain ruggedness index", setup = "trail sites", spppair = "Wolf - Black Bear")
+  wolf.bear.marg.plots <- list(wolf.bear.marg.for.ung, wolf.bear.marg.for.pred, wolf.bear.marg.elev.ung, wolf.bear.marg.elev.pred, wolf.bear.marg.tri.ung, wolf.bear.marg.tri.pred)
   
   #####  Wolf-Coyote marginal occupancy  ####
-  wolf.coy.marg.elev.ung <- plot_marginal_occ(predicted = wolf.coy.elev.ung.yr1, spp1 = "Wolf", spp2 = "Coyote", covname = "Elevation (m)", setup = "random sites", spppair = "Wolf - Coyote")
-  wolf.coy.marg.elev.pred <- plot_marginal_occ(predicted = wolf.coy.elev.pred.yr1, spp1 = "Wolf", spp2 = "Coyote", covname = "Elevation (m)", setup = "trail sites", spppair = "Wolf - Coyote")
-  wolf.coy.marg.for.ung <- plot_marginal_occ(predicted = wolf.coy.for.ung.yr1, spp1 = "Wolf", spp2 = "Coyote", covname = "Percent forest cover", setup = "random sites", spppair = "Wolf - Coyote") 
-  wolf.coy.marg.for.pred <- plot_marginal_occ(predicted = wolf.coy.for.pred.yr1, spp1 = "Wolf", spp2 = "Coyote", covname = "Percent forest cover", setup = "trail sites", spppair = "Wolf - Coyote")
-  wolf.coy.marg.plots <- list(wolf.coy.marg.elev.ung, wolf.coy.marg.elev.pred, wolf.coy.marg.for.ung, wolf.coy.marg.for.pred)
+  wolf.coy.marg.for.ung <- plot_marginal_occ(predicted = wolf.coy.for.ung.yr2, spp1 = "Wolf", spp2 = "Coyote", covname = "Percent forest cover", setup = "random sites", spppair = "Wolf - Coyote") 
+  wolf.coy.marg.for.pred <- plot_marginal_occ(predicted = wolf.coy.for.pred.yr2, spp1 = "Wolf", spp2 = "Coyote", covname = "Percent forest cover", setup = "trail sites", spppair = "Wolf - Coyote")
+  wolf.coy.marg.elev.ung <- plot_marginal_occ(predicted = wolf.coy.elev.ung.yr2, spp1 = "Wolf", spp2 = "Coyote", covname = "Elevation (m)", setup = "random sites", spppair = "Wolf - Coyote")
+  wolf.coy.marg.elev.pred <- plot_marginal_occ(predicted = wolf.coy.elev.pred.yr2, spp1 = "Wolf", spp2 = "Coyote", covname = "Elevation (m)", setup = "trail sites", spppair = "Wolf - Coyote")
+  wolf.coy.marg.tri.ung <- plot_marginal_occ(predicted = wolf.coy.tri.ung.yr2, spp1 = "Wolf", spp2 = "Coyote", covname = "Terrain ruggedness index", setup = "random sites", spppair = "Wolf - Coyote") 
+  wolf.coy.marg.tri.pred <- plot_marginal_occ(predicted = wolf.coy.tri.pred.yr2, spp1 = "Wolf", spp2 = "Coyote", covname = "Terrain ruggedness index", setup = "trail sites", spppair = "Wolf - Coyote")
+  wolf.coy.marg.plots <- list(wolf.coy.marg.for.ung, wolf.coy.marg.for.pred, wolf.coy.marg.elev.ung, wolf.coy.marg.elev.pred, wolf.coy.marg.tri.ung, wolf.coy.marg.tri.pred)
   
   #####  Coyote-Bobcat marginal occupancy  ####
-  coy.bob.marg.elev.ung <- plot_marginal_occ(predicted = coy.bob.elev.ung.yr1, spp1 = "Coyote", spp2 = "Bobcat", covname = "Elevation (m)", setup = "random sites", spppair = "Coyote - Bobcat")
-  coy.bob.marg.elev.pred <- plot_marginal_occ(predicted = coy.bob.elev.pred.yr1, spp1 = "Coyote", spp2 = "Bobcat", covname = "Elevation (m)", setup = "trail sites", spppair = "Coyote - Bobcat")
-  coy.bob.marg.for.ung <- plot_marginal_occ(predicted = coy.bob.for.ung.yr1, spp1 = "Coyote", spp2 = "Bobcat", covname = "Percent forest cover", setup = "random sites", spppair = "Coyote - Bobcat")
-  coy.bob.marg.for.pred <- plot_marginal_occ(predicted = coy.bob.for.pred.yr1, spp1 = "Coyote", spp2 = "Bobcat", covname = "Percent forest cover", setup = "trail sites", spppair = "Coyote - Bobcat")
-  coy.bob.marg.plots <- list(coy.bob.marg.elev.ung, coy.bob.marg.elev.pred, coy.bob.marg.for.ung, coy.bob.marg.for.pred)
+  coy.bob.marg.for.ung <- plot_marginal_occ(predicted = coy.bob.for.ung.yr2, spp1 = "Coyote", spp2 = "Bobcat", covname = "Percent forest cover", setup = "random sites", spppair = "Coyote - Bobcat")
+  coy.bob.marg.for.pred <- plot_marginal_occ(predicted = coy.bob.for.pred.yr2, spp1 = "Coyote", spp2 = "Bobcat", covname = "Percent forest cover", setup = "trail sites", spppair = "Coyote - Bobcat")
+  coy.bob.marg.elev.ung <- plot_marginal_occ(predicted = coy.bob.elev.ung.yr2, spp1 = "Coyote", spp2 = "Bobcat", covname = "Elevation (m)", setup = "random sites", spppair = "Coyote - Bobcat")
+  coy.bob.marg.elev.pred <- plot_marginal_occ(predicted = coy.bob.elev.pred.yr2, spp1 = "Coyote", spp2 = "Bobcat", covname = "Elevation (m)", setup = "trail sites", spppair = "Coyote - Bobcat")
+  coy.bob.marg.tri.ung <- plot_marginal_occ(predicted = coy.bob.tri.ung.yr2, spp1 = "Coyote", spp2 = "Bobcat", covname = "Terrain ruggedness index", setup = "random sites", spppair = "Coyote - Bobcat")
+  coy.bob.marg.tri.pred <- plot_marginal_occ(predicted = coy.bob.tri.pred.yr2, spp1 = "Coyote", spp2 = "Bobcat", covname = "Terrain ruggedness index", setup = "trail sites", spppair = "Coyote - Bobcat")
+  coy.bob.marg.plots <- list(coy.bob.marg.for.ung, coy.bob.marg.for.pred, coy.bob.marg.elev.ung, coy.bob.marg.elev.pred, coy.bob.marg.tri.ung, coy.bob.marg.tri.pred)
+  
+  #####  Bear-Coyote marginal occupancy  ####
+  bear.coy.marg.for.ung <- plot_marginal_occ(predicted = bear.coy.for.ung.yr2, spp1 = "Bear", spp2 = "Coyote", covname = "Percent forest cover", setup = "random sites", spppair = "Black Bear - Coyote")
+  bear.coy.marg.for.pred <- plot_marginal_occ(predicted = bear.coy.for.pred.yr2, spp1 = "Bear", spp2 = "Coyote", covname = "Percent forest cover", setup = "trail sites", spppair = "Black Bear - Coyote")
+  bear.coy.marg.elev.ung <- plot_marginal_occ(predicted = bear.coy.elev.ung.yr2, spp1 = "Bear", spp2 = "Coyote", covname = "Elevation (m)", setup = "random sites", spppair = "Black Bear - Coyote")
+  bear.coy.marg.elev.pred <- plot_marginal_occ(predicted = bear.coy.elev.pred.yr2, spp1 = "Bear", spp2 = "Coyote", covname = "Elevation (m)", setup = "trail sites", spppair = "Black Bear - Coyote")
+  bear.coy.marg.tri.ung <- plot_marginal_occ(predicted = bear.coy.tri.ung.yr2, spp1 = "Bear", spp2 = "Coyote", covname = "Terrain ruggedness index", setup = "random sites", spppair = "Black Bear - Coyote")
+  bear.coy.marg.tri.pred <- plot_marginal_occ(predicted = bear.coy.tri.pred.yr2, spp1 = "Bear", spp2 = "Coyote", covname = "Terrain ruggedness index", setup = "trail sites", spppair = "Black Bear - Coyote")
+  bear.coy.marg.plots <- list(bear.coy.marg.for.ung, bear.coy.marg.for.pred, bear.coy.marg.elev.ung, bear.coy.marg.elev.pred, bear.coy.marg.tri.ung, bear.coy.marg.tri.pred) 
   
   #'  Add species pair and camera placement to each data set
   add_info <- function(marg, spp_pair, cam_setup) {
@@ -355,39 +367,63 @@
     marg$Setup <- cam_setup
     return(marg)
   }
-  wolf.bear.marg.elev.ung_new <- add_info(wolf.bear.marg.elev.ung$data, spp_pair = "wolf-bear", cam_setup = "Random sites")
-  wolf.bear.marg.elev.pred_new <- add_info(wolf.bear.marg.elev.pred$data, spp_pair = "wolf-bear", cam_setup = "Trail sites")
   wolf.bear.marg.for.ung_new <- add_info(wolf.bear.marg.for.ung$data, spp_pair = "wolf-bear", cam_setup = "Random sites")
   wolf.bear.marg.for.pred_new <- add_info(wolf.bear.marg.for.pred$data, spp_pair = "wolf-bear", cam_setup = "Trail sites")
-  wolf.bear.marg.div.ung_new <- add_info(wolf.bear.marg.div.ung$data, spp_pair = "wolf-bear", cam_setup = "Random sites")
-  wolf.bear.marg.div.pred_new <- add_info(wolf.bear.marg.div.pred$data, spp_pair = "wolf-bear", cam_setup = "Trail sites")
-  wolf.coy.marg.elev.ung_new <- add_info(wolf.coy.marg.elev.ung$data, spp_pair = "wolf-coy", cam_setup = "Random sites")
-  wolf.coy.marg.elev.pred_new <- add_info(wolf.coy.marg.elev.pred$data, spp_pair = "wolf-coy", cam_setup = "Trail sites")
+  wolf.bear.marg.elev.ung_new <- add_info(wolf.bear.marg.elev.ung$data, spp_pair = "wolf-bear", cam_setup = "Random sites")
+  wolf.bear.marg.elev.pred_new <- add_info(wolf.bear.marg.elev.pred$data, spp_pair = "wolf-bear", cam_setup = "Trail sites")
+  wolf.bear.marg.tri.ung_new <- add_info(wolf.bear.marg.tri.ung$data, spp_pair = "wolf-bear", cam_setup = "Random sites")
+  wolf.bear.marg.tri.pred_new <- add_info(wolf.bear.marg.tri.pred$data, spp_pair = "wolf-bear", cam_setup = "Trail sites")
   wolf.coy.marg.for.ung_new <- add_info(wolf.coy.marg.for.ung$data, spp_pair = "wolf-coy", cam_setup = "Random sites")
   wolf.coy.marg.for.pred_new <- add_info(wolf.coy.marg.for.pred$data, spp_pair = "wolf-coy", cam_setup = "Trail sites")
-  coy.bob.marg.elev.ung_new <- add_info(coy.bob.marg.elev.ung$data, spp_pair = "coy-bob", cam_setup = "Random sites")
-  coy.bob.marg.elev.pred_new <- add_info(coy.bob.marg.elev.pred$data, spp_pair = "coy-bob", cam_setup = "Trail sites")
+  wolf.coy.marg.elev.ung_new <- add_info(wolf.coy.marg.elev.ung$data, spp_pair = "wolf-coy", cam_setup = "Random sites")
+  wolf.coy.marg.elev.pred_new <- add_info(wolf.coy.marg.elev.pred$data, spp_pair = "wolf-coy", cam_setup = "Trail sites")
+  wolf.coy.marg.tri.ung_new <- add_info(wolf.coy.marg.tri.ung$data, spp_pair = "wolf-coy", cam_setup = "Random sites")
+  wolf.coy.marg.tri.pred_new <- add_info(wolf.coy.marg.tri.pred$data, spp_pair = "wolf-coy", cam_setup = "Trail sites")
   coy.bob.marg.for.ung_new <- add_info(coy.bob.marg.for.ung$data, spp_pair = "coy-bob", cam_setup = "Random sites")
   coy.bob.marg.for.pred_new <- add_info(coy.bob.marg.for.pred$data, spp_pair = "coy-bob", cam_setup = "Trail sites")
+  coy.bob.marg.elev.ung_new <- add_info(coy.bob.marg.elev.ung$data, spp_pair = "coy-bob", cam_setup = "Random sites")
+  coy.bob.marg.elev.pred_new <- add_info(coy.bob.marg.elev.pred$data, spp_pair = "coy-bob", cam_setup = "Trail sites")
+  coy.bob.marg.tri.ung_new <- add_info(coy.bob.marg.tri.ung$data, spp_pair = "coy-bob", cam_setup = "Random sites")
+  coy.bob.marg.tri.pred_new <- add_info(coy.bob.marg.tri.pred$data, spp_pair = "coy-bob", cam_setup = "Trail sites")
+  bear.coy.marg.for.ung_new <- add_info(bear.coy.marg.for.ung$data, spp_pair = "bear-coy", cam_setup = "Random sites")
+  bear.coy.marg.for.pred_new <- add_info(bear.coy.marg.for.pred$data, spp_pair = "bear-coy", cam_setup = "Trail sites")
+  bear.coy.marg.elev.ung_new <- add_info(bear.coy.marg.elev.ung$data, spp_pair = "bear-coy", cam_setup = "Random sites")
+  bear.coy.marg.elev.pred_new <- add_info(bear.coy.marg.elev.pred$data, spp_pair = "bear-coy", cam_setup = "Trail sites")
+  bear.coy.marg.tri.ung_new <- add_info(bear.coy.marg.tri.ung$data, spp_pair = "bear-coy", cam_setup = "Random sites")
+  bear.coy.marg.tri.pred_new <- add_info(bear.coy.marg.tri.pred$data, spp_pair = "bear-coy", cam_setup = "Trail sites")
   
-  #'  Combine all marginal probability estimates for each significant variable
-  marginal_elev <- rbind(wolf.bear.marg.elev.ung_new, wolf.bear.marg.elev.pred_new)
+  #'  Combine all marginal probability estimates for each significant variable [and marginally significant]
+  #'  wolf: elev, tri, [for]; bear: forest, tri, [elev]
+  #'  wolf: elev, tri, [for]; coy: forest, tri
+  #'  coy: forest, tri; bob: forest, [tri]
+  #'  bear: forest, tri, [elev]; coy: forest, tri
   marginal_for <- rbind(wolf.bear.marg.for.ung_new, wolf.bear.marg.for.pred_new, 
                         wolf.coy.marg.for.ung_new, wolf.coy.marg.for.pred_new, 
-                        coy.bob.marg.for.ung_new, coy.bob.marg.for.pred_new) %>%
-    #'  Drop wolf-coy results b/c already have wolf & coy results included w/ other pairings
-    filter(Species_pair != "wolf-coy")
-  marginal_div <- rbind(wolf.bear.marg.div.ung_new, wolf.bear.marg.div.pred_new) %>%
-    #'  Drop wolf results since prey diversity not a meaningful relationship
-    filter(Species != "Wolf")
+                        coy.bob.marg.for.ung_new, coy.bob.marg.for.pred_new,
+                        bear.coy.marg.for.ung_new, bear.coy.marg.for.pred_new)  %>%
+    mutate(Species = factor(Species, levels = c("Bear", "Bobcat", "Coyote", "Wolf"))) %>%
+    #'  Drop wolf-coy and bear-coy results b/c already have wolf & coy results included w/ other pairings
+    filter(Species_pair != "wolf-coy") %>%
+    filter(Species_pair != "bear-coy")
+  marginal_elev <- rbind(wolf.bear.marg.elev.ung_new, wolf.bear.marg.elev.pred_new,
+                         wolf.coy.marg.elev.ung_new, wolf.coy.marg.elev.pred_new,
+                         bear.coy.marg.elev.ung_new, bear.coy.marg.elev.pred_new) %>%
+    mutate(Species = factor(Species, levels = c("Bear", "Bobcat", "Coyote", "Wolf"))) %>%
+    #'  Keep only wolf-bear results b/c elev not important for coy and wolf/bear responses already covered by wolf-bear
+    filter(Species_pair == "wolf-bear")
+  marginal_tri <- rbind(wolf.bear.marg.tri.ung_new, wolf.bear.marg.tri.pred_new, 
+                        wolf.coy.marg.tri.ung_new, wolf.coy.marg.tri.pred_new, 
+                        coy.bob.marg.tri.ung_new, coy.bob.marg.tri.pred_new,
+                        bear.coy.marg.tri.ung_new, bear.coy.marg.tri.pred_new) %>%
+    mutate(Species = factor(Species, levels = c("Bear", "Bobcat", "Coyote", "Wolf"))) %>%
+    #'  Drop wolf-coy and bear-coy results b/c already have wolf & coy results included w/ other pairings
+    filter(Species_pair != "wolf-coy") %>%
+    filter(Species_pair != "bear-coy")
   
   #'  Set color combos for each species
-  #'  wolf = "#364B9A", bear = "#98CAE1", lion = "#FDB366", coyote = "#DD3D2D", bobcat = "#A50026"
-  bear_colors <- "#98CAE1"
-  wolf.bear_colors <- c("#364B9A", "#98CAE1")
-  wolf.bear.coy_colors <- c("#364B9A", "#98CAE1", "#FDB366")
-  wolf.bear.coy.bob_colors <- c("#364B9A", "#98CAE1", "#FDB366", "#A50026")
-  wolf.bear.lion.coy.bob_colors <- c("#364B9A", "#98CAE1", "#DD3D2D", "#FDB366", "#A50026") 
+  #'  wolf = "#364B9A", bear = "#98CAE1", lion = "#DD3D2D", coyote = "#FDB366", bobcat = "#A50026"
+  bear.wolf_colors <- c("#98CAE1", "#364B9A")
+  bear.bob.coy.wolf_colors <- c("#98CAE1", "#A50026", "#DD3D2D", "#364B9A")
   
   #'  Plot each species response to specific covariate together
   plot_margingal_occ_by_cov <- function(predicted, x, ylab, plottitle, ncolor) {
@@ -401,6 +437,7 @@
       theme_bw() +
       theme(panel.border = element_blank()) +
       theme(axis.line = element_line(color = 'black')) +
+      theme(text = element_text(size = 10)) +
       #'  Force y-axis from 0 to 1
       ylim(0,1.0) +
       #'  Use list name as X-axis title
@@ -415,29 +452,32 @@
     
     return(marg_occ_plot)
   }
-  marginal_elev_pred_plot <- plot_margingal_occ_by_cov(marginal_elev[marginal_elev$Setup == "Trail sites",], x = "Elevation (m)", ylab = "Marginal occupancy probability", plottitle = "", ncolor = wolf.bear_colors)
-  marginal_for_pred_plot <- plot_margingal_occ_by_cov(marginal_for[marginal_for$Setup == "Trail sites",], x = "Percent forest cover", ylab = "", plottitle = "", ncolor = wolf.bear.coy.bob_colors)
-  marginal_div_pred_plot <- plot_margingal_occ_by_cov(marginal_div[marginal_div$Setup == "Trail sites",], x = "Shannon's diversity index (H)", ylab = "", plottitle = "", ncolor = bear_colors)
+  marginal_for_pred_plot <- plot_margingal_occ_by_cov(marginal_for[marginal_for$Setup == "Trail sites",], x = "Percent forest cover", ylab = "", plottitle = "", ncolor = bear.bob.coy.wolf_colors)
+  marginal_elev_pred_plot <- plot_margingal_occ_by_cov(marginal_elev[marginal_elev$Setup == "Trail sites",], x = "Elevation (m)", ylab = "Marginal occupancy probability", plottitle = "", ncolor = bear.wolf_colors) 
+  marginal_tri_pred_plot <- plot_margingal_occ_by_cov(marginal_tri[marginal_tri$Setup == "Trail sites",], x = "Terrain ruggedness index", ylab = "", plottitle = "", ncolor = bear.bob.coy.wolf_colors) 
   
-  marginal_elev_ung_plot <- plot_margingal_occ_by_cov(marginal_elev[marginal_elev$Setup == "Random sites",], x = "Elevation (m)", ylab = "Marginal occupancy probability", plottitle = "", ncolor = wolf.bear_colors)
-  marginal_for_ung_plot <- plot_margingal_occ_by_cov(marginal_for[marginal_for$Setup == "Random sites",], x = "Percent forest cover", ylab = "", plottitle = "", ncolor = wolf.bear.coy.bob_colors)
-  marginal_div_ung_plot <- plot_margingal_occ_by_cov(marginal_div[marginal_div$Setup == "Random sites",], x = "Shannon's diversity index (H)", ylab = "", plottitle = "", ncolor = bear_colors)
+  marginal_for_ung_plot <- plot_margingal_occ_by_cov(marginal_for[marginal_for$Setup == "Random sites",], x = "Percent forest cover", ylab = "", plottitle = "", ncolor = bear.bob.coy.wolf_colors)
+  marginal_elev_ung_plot <- plot_margingal_occ_by_cov(marginal_elev[marginal_elev$Setup == "Random sites",], x = "Elevation (m)", ylab = "Marginal occupancy probability", plottitle = "", ncolor = bear.wolf_colors) 
+  marginal_tri_ung_plot <- plot_margingal_occ_by_cov(marginal_tri[marginal_tri$Setup == "Random sites",], x = "Terrain ruggedness index", ylab = "", plottitle = "", ncolor = bear.bob.coy.wolf_colors) 
   
-  
-  #'  remove legend from elevation and prey diversity plots
-  elev_pred_guide <- marginal_elev_pred_plot + guides(colour = "none", fill = "none")
-  div_pred_guide <- marginal_div_pred_plot + guides(colour = "none", fill = "none")
-  elev_ung_guide <- marginal_elev_ung_plot + guides(colour = "none", fill = "none")
-  div_ung_guide <- marginal_div_ung_plot + guides(colour = "none", fill = "none")
-  
-  marginal_pred_patchwork <- elev_pred_guide + marginal_for_pred_plot + div_pred_guide + 
-    plot_annotation(title = "Species-specific marginal occupancy across elevation, percent forest cover, and prey diversity gradients") +
-    plot_annotation(tag_levels = 'a') + 
-    plot_layout(guides = "collect") & theme(legend.position = "bottom")
-  marginal_ung_patchwork <- elev_ung_guide + marginal_for_ung_plot + div_ung_guide + 
-    plot_annotation(title = "Species-specific marginal occupancy across elevation, percent forest cover, and prey diversity gradients") +
-    plot_annotation(tag_levels = 'a') + 
-    plot_layout(guides = "collect") & theme(legend.position = "bottom")
+  #'  Remove legend from elevation and tri plots
+  elev_pred_guide <- marginal_elev_pred_plot + theme(legend.title = element_blank()) + guides(colour = "none", fill = "none") 
+  elev_ung_guide <- marginal_elev_ung_plot + theme(legend.title = element_blank()) + guides(colour = "none", fill = "none") 
+  tri_pred_guide <- marginal_tri_pred_plot + theme(legend.title = element_blank()) + guides(colour = "none", fill = "none")
+  tri_ung_guide <- marginal_tri_ung_plot + theme(legend.title = element_blank()) + guides(colour = "none", fill = "none")
+    
+  marginal_pred_patchwork <- marginal_for_pred_plot + elev_pred_guide + tri_pred_guide + 
+    plot_annotation(title = "Species-specific marginal occupancy across habitat gradients",
+                    theme = theme(plot.title = element_text(size = 10, vjust = -3))) +
+    plot_annotation(tag_levels = 'a') + plot_layout(axes = "collect") + 
+    plot_layout(guides = "collect") & theme(legend.position = "bottom",
+                                            plot.tag = element_text(size = 8, hjust = 0, vjust = -4))
+  marginal_ung_patchwork <- marginal_for_ung_plot + elev_ung_guide + tri_ung_guide + 
+    plot_annotation(title = "Species-specific marginal occupancy across percent habitat gradients",
+                    theme = theme(plot.title = element_text(size = 10, vjust = -3))) +
+    plot_annotation(tag_levels = 'a') + plot_layout(axes = "collect") + 
+    plot_layout(guides = "collect") & theme(legend.position = "bottom",
+                                            plot.tag = element_text(size = 8, hjust = 0, vjust = -4))
   
   
   #'  -----------------------------------
@@ -485,187 +525,101 @@
     #'  Plot species-specific conditional occupancy probabilities & 95% CRI
     condish_occ_plot <- ggplot(predicted.conditional.occ, aes(x = covs, y = conditional_occ, group = Species_interaction)) + 
       geom_line(aes(color = Species_interaction), lwd = 1.25) + 
-      scale_color_manual(values = four_colors, labels = c(paste(spp1, "absent"), paste(spp1, "present"), paste(spp2, "absent"), paste(spp2, "present"))) + 
+      scale_color_manual(values = four_colors, labels = c(paste(spp1, "\nabsent"), paste(spp1, "\npresent"), paste(spp2, "\nabsent"), paste(spp2, "\npresent"))) + 
       #'  Add confidence intervals
       geom_ribbon(aes(ymin = lowerCRI, ymax = upperCRI, fill = Species_interaction), alpha = 0.3) +
-      scale_fill_manual(values = four_colors, labels = c(paste(spp1, "absent"), paste(spp1, "present"), paste(spp2, "absent"), paste(spp2, "present"))) + 
+      scale_fill_manual(values = four_colors, labels = c(paste(spp1, "\nabsent"), paste(spp1, "\npresent"), paste(spp2, "\nabsent"), paste(spp2, "\npresent"))) + 
       #'  Get rid of lines and gray background
       theme_bw() +
       theme(panel.border = element_blank()) +
       theme(axis.line = element_line(color = 'black')) +
+      theme(text = element_text(size = 12)) +
       #'  Force y-axis from 0 to 1
       ylim(0,1.0) +
       #'  Use list name as X-axis title
       xlab(x) +
-      ylab(paste("Conditional occupancy probability,", setup)) +
-      labs(title = paste("Conditional occupancy in response to", covname),
-        fill = "Species interaction", color = "Species interaction") +
+      ylab("Conditional probability of occupancy") +
+      labs(#title = paste("Conditional occupancy in response to", covname),
+        fill = "Species \ninteraction", color = "Species \ninteraction") +
       facet_wrap(~Species, scales = "free_y") +
-      theme(legend.position="bottom")
+      theme(legend.position="bottom",
+            text = element_text(size = 12)) 
     #'  Review figure
     plot(condish_occ_plot)
     
     return(condish_occ_plot)
   }
   #####  Coyote-Bobcat conditional occupancy  ####
-  coy.bob.condish.elev.ung <- plot_conditional_occ(predicted = coy.bob.elev.ung.yr1, spp1 = "Coyote", spp2 = "Bobcat", x = "Elevation (m)", covname = "elevation", setup = "random sites", spppair = "Coyote - Bobcat")
-  coy.bob.condish.elev.pred <- plot_conditional_occ(predicted = coy.bob.elev.pred.yr1, spp1 = "Coyote", spp2 = "Bobcat", x = "Elevation (m)", covname = "elevation", setup = "trail sites", spppair = "Coyote - Bobcat")
-  coy.bob.condish.for.ung <- plot_conditional_occ(predicted = coy.bob.for.ung.yr1, spp1 = "Coyote", spp2 = "Bobcat", x = "Percent forest cover", covname = "forest cover", setup = "random sites", spppair = "Coyote - Bobcat")
-  coy.bob.condish.for.pred <- plot_conditional_occ(predicted = coy.bob.for.pred.yr1, spp1 = "Coyote", spp2 = "Bobcat", x = "Percent forest cover", covname = "forest cover", setup = "trail sites", spppair = "Coyote - Bobcat")
-  coy.bob.condish.wtd.ung <- plot_conditional_occ(predicted = coy.bob.wtd.ung.yr1, spp1 = "Coyote", spp2 = "Bobcat", x = "White-tailed deer relative abundance (RAI)", covname = "white-tailed deer relative abundance", setup = "random sites", spppair = "Coyote - Bobcat")
-  coy.bob.condish.wtd.pred <- plot_conditional_occ(predicted = coy.bob.wtd.pred.yr1, spp1 = "Coyote", spp2 = "Bobcat", x = "White-tailed deer relative abundance (RAI)", covname = "white-tailed deer relative abundance", setup = "trail sites", spppair = "Coyote - Bobcat")
-  coy.bob.condish.lago.ung <- plot_conditional_occ(predicted = coy.bob.lago.ung.yr1, spp1 = "Coyote", spp2 = "Bobcat", x = "Lagomorph relative abundance (RAI)", covname = "lagomorph relative abundance", setup = "random sites", spppair = "Coyote - Bobcat")
-  coy.bob.condish.lago.pred <- plot_conditional_occ(predicted = coy.bob.lago.pred.yr1, spp1 = "Coyote", spp2 = "Bobcat", x = "Lagomorph relative abundance (RAI) ", covname = "lagomorph relative abundance", setup = "trail sites", spppair = "Coyote - Bobcat")
-  coy.bob.condish.div.ung <- plot_conditional_occ(predicted = coy.bob.div.ung.yr1, spp1 = "Coyote", spp2 = "Bobcat", x = "Shannon's diversity index (H)", covname = "prey diversity",setup = "random sites", spppair = "Coyote - Bobcat")
-  coy.bob.condish.div.pred <- plot_conditional_occ(predicted = coy.bob.div.pred.yr1, spp1 = "Coyote", spp2 = "Bobcat", x = "Shannon's diversity index (H)", covname = "prey diversity",setup = "trail sites", spppair = "Coyote - Bobcat")
-  coy.bob.condish.plots <- list(coy.bob.condish.elev.ung, coy.bob.condish.elev.pred, coy.bob.condish.for.ung, coy.bob.condish.for.pred, coy.bob.condish.wtd.ung, coy.bob.condish.wtd.pred, 
-                                coy.bob.condish.lago.ung, coy.bob.condish.lago.pred, coy.bob.condish.div.ung, coy.bob.condish.div.pred)
+  coy.bob.condish.for.ung <- plot_conditional_occ(predicted = coy.bob.for.ung.yr2, spp1 = "Coyote", spp2 = "Bobcat", x = "Percent forest cover", covname = "forest cover", setup = "random sites", spppair = "Coyote - Bobcat")
+  coy.bob.condish.for.pred <- plot_conditional_occ(predicted = coy.bob.for.pred.yr2, spp1 = "Coyote", spp2 = "Bobcat", x = "Percent forest cover", covname = "forest cover", setup = "trail sites", spppair = "Coyote - Bobcat")
+  coy.bob.condish.elev.ung <- plot_conditional_occ(predicted = coy.bob.elev.ung.yr2, spp1 = "Coyote", spp2 = "Bobcat", x = "Elevation (m)", covname = "elevation", setup = "random sites", spppair = "Coyote - Bobcat")
+  coy.bob.condish.elev.pred <- plot_conditional_occ(predicted = coy.bob.elev.pred.yr2, spp1 = "Coyote", spp2 = "Bobcat", x = "Elevation (m)", covname = "elevation", setup = "trail sites", spppair = "Coyote - Bobcat")
+  coy.bob.condish.tri.ung <- plot_conditional_occ(predicted = coy.bob.tri.ung.yr2, spp1 = "Coyote", spp2 = "Bobcat", x = "Terrain ruggedness (TRI)", covname = "terrain ruggedness", setup = "random sites", spppair = "Coyote - Bobcat")
+  coy.bob.condish.tri.pred <- plot_conditional_occ(predicted = coy.bob.tri.pred.yr2, spp1 = "Coyote", spp2 = "Bobcat", x = "Terrain ruggedness (TRI)", covname = "terrain ruggedness", setup = "trail sites", spppair = "Coyote - Bobcat")
+  coy.bob.condish.plots <- list(coy.bob.condish.for.ung, coy.bob.condish.for.pred, coy.bob.condish.elev.ung, coy.bob.condish.elev.pred, coy.bob.condish.tri.ung, coy.bob.condish.tri.pred)
   
-  #'  Effect of low and high WTD RAI values on coyote-bobcat conditional occupancy
-  #'  with increasing lagomorph activity
-  #'  ----------------------------------------------------------------------------
-  #'  Function to reformat data for easier use with ggplot2 and plot conditional occupancy
-  plot_conditional_occ_singlespp <- function(predicted, spp1, spp2, x, ylabtitle, spppair) {
-    #'  Reformat data for ggplot
-    #'  Snag conditional occupancy, convert from wide to long format, and assign species name
-    condish.occ <- as.data.frame(predicted[[2]][,,"mean"]) %>%
-      pivot_longer(cols = c(Spp1.alone, Spp1.given.Spp2, Spp2.alone, Spp2.given.Spp1), 
-                   names_to = "Spp_Interaction") %>%
-      arrange(Spp_Interaction) %>%
-      #'  Make these labels meaningful with actual species names
-      mutate(Spp_Interaction = factor(Spp_Interaction, levels = c("Spp1.alone", "Spp1.given.Spp2", "Spp2.alone", "Spp2.given.Spp1")),
-             Spp_Interaction = gsub("Spp1", spp1, Spp_Interaction),
-             Spp_Interaction = gsub("Spp2", spp2, Spp_Interaction),
-             Spp_Interaction = gsub(".alone", " alone", Spp_Interaction),
-             Spp_Interaction = gsub(".given.", " given ", Spp_Interaction), 
-             Spp_Interaction = str_to_sentence(Spp_Interaction),
-             Species = sub(" .*", "", Spp_Interaction)) %>%
-      relocate(Species, .before = Spp_Interaction)
-    #'  Snag lower 95% credible interval
-    lower.condish <- as.data.frame(predicted[[2]][,,"lower"]) %>%
-      pivot_longer(cols = c(Spp1.alone, Spp1.given.Spp2, Spp2.alone, Spp2.given.Spp1), names_to = "Spp_Interaction") %>%
-      arrange(Spp_Interaction)
-    #'  Snag upper 95% credible interval 
-    upper.condish <- as.data.frame(predicted[[2]][,,"upper"]) %>%
-      pivot_longer(cols = c(Spp1.alone, Spp1.given.Spp2, Spp2.alone, Spp2.given.Spp1), names_to = "Spp_Interaction") %>%
-      arrange(Spp_Interaction)
-    #'  Snag covariate values
-    covs <- c(predicted[[3]], predicted[[3]]) 
-    scaled.covs <- c(predicted[[4]], predicted[[4]])
-    #'  Create single data frame
-    predicted.conditional.occ <- cbind(condish.occ, lower.condish[,2], upper.condish[,2], covs, scaled.covs)
-    names(predicted.conditional.occ) <- c("Species", "Species_interaction", "conditional_occ", "lowerCRI", "upperCRI", "covs", "scaled_covs")
-    
-    #'  Filter to single species
-    predicted.conditional.occ <- filter(predicted.conditional.occ, Species == spp1)
-    
-    #'  Plot species-specific conditional occupancy probabilities & 95% CRI
-    condish_occ_plot <- ggplot(predicted.conditional.occ, aes(x = covs, y = conditional_occ, group = Species_interaction)) + 
-      geom_line(aes(color = Species_interaction), lwd = 1.25) + 
-      scale_color_manual(values = two_colots, labels = c(paste(spp2, "absent"), paste(spp2, "present"))) + 
-      #'  Add confidence intervals
-      geom_ribbon(aes(ymin = lowerCRI, ymax = upperCRI, fill = Species_interaction), alpha = 0.3) +
-      scale_fill_manual(values = two_colots, labels = c(paste(spp2, "absent"), paste(spp2, "present"))) + 
-      #'  Get rid of lines and gray background
-      theme_bw() +
-      theme(panel.border = element_blank()) +
-      theme(axis.line = element_line(color = 'black')) +
-      #'  Force y-axis from 0 to 1
-      ylim(0,1.0) +
-      #'  Use list name as X-axis title
-      xlab(x) +
-      ylab(ylabtitle) +
-      labs(#title = paste("Conditional occupancy in response to", covname),
-           fill = "Species interaction", color = "Species interaction") +
-      theme(legend.position="bottom")
-    #'  Review figure
-    plot(condish_occ_plot)
-    
-    return(condish_occ_plot)
-  }
-  coy.bob.condish.lago.pred.lowWTD <- plot_conditional_occ_singlespp(predicted = coy.bob.lago.pred.yr1_LowHiWTD[[1]], spp1 = "Coyote", spp2 = "Bobcat", x = "Lagomorph relative abundance (RAI), \nwhite-tailed deer RAI = 0", ylabtitle = "Conditional occupancy probability, trail sites", spppair = "Coyote - Bobcat")
-  coy.bob.condish.lago.pred.medWTD <- plot_conditional_occ_singlespp(predicted = coy.bob.lago.pred.yr1_LowHiWTD[[2]], spp1 = "Coyote", spp2 = "Bobcat", x = "Lagomorph relative abundance (RAI), \nwhite-tailed deer RAI = 2", ylabtitle = "", spppair = "Coyote - Bobcat")
-  coy.bob.condish.lago.pred.hiWTD <- plot_conditional_occ_singlespp(predicted = coy.bob.lago.pred.yr1_LowHiWTD[[3]], spp1 = "Coyote", spp2 = "Bobcat", x = "Lagomorph relative abundance (RAI), \nwhite-tailed deer RAI = 6", ylabtitle = "", spppair = "Coyote - Bobcat")
+  #####  Bear-Coyote conditional occupancy  ####
+  bear.coy.condish.for.ung <- plot_conditional_occ(predicted = bear.coy.for.ung.yr2, spp1 = "Black bear", spp2 = "Coyote", x = "Percent forest cover", covname = "forest cover", setup = "random sites", spppair = "Black bear - Coyote")
+  bear.coy.condish.for.pred <- plot_conditional_occ(predicted = bear.coy.for.pred.yr2, spp1 = "Black bear", spp2 = "Coyote", x = "Percent forest cover", covname = "forest cover", setup = "trail sites", spppair = "Black bear - Coyote")
+  bear.coy.condish.elev.ung <- plot_conditional_occ(predicted = bear.coy.elev.ung.yr2, spp1 = "Black bear", spp2 = "Coyote", x = "Elevation (m)", covname = "elevation", setup = "random sites", spppair = "Black bear - Coyote")
+  bear.coy.condish.elev.pred <- plot_conditional_occ(predicted = bear.coy.elev.pred.yr2, spp1 = "Black bear", spp2 = "Coyote", x = "Elevation (m)", covname = "elevation", setup = "trail sites", spppair = "Black bear - Coyote")
+  bear.coy.condish.tri.ung <- plot_conditional_occ(predicted = bear.coy.tri.ung.yr2, spp1 = "Black bear", spp2 = "Coyote", x = "Terrain ruggedness (TRI)", covname = "terrain ruggedness", setup = "random sites", spppair = "Black bear - Coyote")
+  bear.coy.condish.tri.pred <- plot_conditional_occ(predicted = bear.coy.tri.pred.yr2, spp1 = "Black bear", spp2 = "Coyote", x = "Terrain ruggedness (TRI)", covname = "terrain ruggedness", setup = "trail sites", spppair = "Black bear - Coyote")
+  bear.coy.condish.plots <- list(bear.coy.condish.for.ung, bear.coy.condish.for.pred, bear.coy.condish.elev.ung, bear.coy.condish.elev.pred, bear.coy.condish.tri.ung, bear.coy.condish.tri.pred)
+  
+  #'  Read in predator silhoettes
+  boburl <- "https://images.phylopic.org/images/ab6cfd4f-aef7-40fa-b5a5-1b79b7d112aa/raster/1024x740.png?v=17a30c18af1.png"
+  bobimg <- readPNG(getURLContent(boburl), native = T)
+  bobgrid <- rasterGrob(bobimg, interpolate = TRUE)
+  coyurl <- "https://images.phylopic.org/images/5a0398e3-a455-4ca6-ba86-cf3f1b25977a/raster/1024x894.png?v=16fe8749858.png"
+  coyimg <- readPNG(getURLContent(coyurl), native = T) 
+  coygrid <- rasterGrob(coyimg, interpolate = TRUE)
+  coyurlGB <- "https://images.phylopic.org/images/e6a2fa4b-85df-43b4-989c-34a65ba7eee3/raster/1024x911.png?v=17f2638df97.png"
+  coyimgGB <- readPNG(getURLContent(coyurlGB), native = T)
+  coygridGB <- rasterGrob(coyimg, interpolate = TRUE)
   
   #'  Patchwork plots into single figure
-  coy.bob.condish.lago.pred.wtd <- coy.bob.condish.lago.pred.lowWTD + coy.bob.condish.lago.pred.medWTD + coy.bob.condish.lago.pred.hiWTD +
-    plot_annotation(title = "Effect of white-tailed deer on coyote site use, conditional on bobcat site use and lagomorph abundance") +
-    plot_annotation(tag_levels = 'a') + 
-    plot_layout(guides = "collect") & theme(legend.position = "bottom")
+  patchwork_conditional_coybob_pred <- coy.bob.condish.for.pred +
+    inset_element(p = bobimg, left = 0.25, bottom = 0.91, right = 0.5, top = 1.17, ignore_tag = TRUE) +
+    theme(rect = element_rect(fill = "transparent", linetype = "blank")) +
+    inset_element(p = coyimgGB, left = 0.75, bottom = 0.9, right = 1.09, top = 1.18, ignore_tag = TRUE) +
+    theme(rect = element_rect(fill = "transparent", linetype = "blank")) + #coy.bob.condish.elev.pred + 
+    coy.bob.condish.tri.pred + 
+    plot_layout(nrow = 2) + plot_annotation(tag_levels = 'a',
+                                            title = "Habitat effects on co-occurrence probabilities",
+                                            theme = theme(plot.title = element_text(size = 14, vjust = 0))) +
+    plot_layout(axes = "collect") + plot_layout(guides = "collect") & theme(legend.position = "bottom",
+                                            plot.tag = element_text(size = 12, hjust = 0, vjust = 0)) 
+  patchwork_conditional_coybob_pred
+  
+  patchwork_conditional_coybob_ung <- coy.bob.condish.for.ung +
+    inset_element(p = bobimg, left = 0.25, bottom = 0.91, right = 0.5, top = 1.17, ignore_tag = TRUE) +
+    theme(rect = element_rect(fill = "transparent", linetype = "blank")) +
+    inset_element(p = coyimgGB, left = 0.75, bottom = 0.9, right = 1.09, top = 1.18, ignore_tag = TRUE) +
+    theme(rect = element_rect(fill = "transparent", linetype = "blank")) + #coy.bob.condish.elev.ung + 
+    coy.bob.condish.tri.ung + 
+    plot_layout(nrow = 2) + plot_annotation(tag_levels = 'a',
+                                            title = "Habitat effects on co-occurrence probabilities",
+                                            theme = theme(plot.title = element_text(size = 14, vjust = 0))) +
+    plot_layout(axes = "collect") + plot_layout(guides = "collect") & theme(legend.position = "bottom",
+                                            plot.tag = element_text(size = 12, hjust = 0, vjust = 0)) 
+  patchwork_conditional_coybob_ung
   
   
   #'  -----------------------------
   ####  Save all the pretty plots  ####
   #'  -----------------------------
   #'  Marginal occupancy probabilities
-  #'  Wolf-bear
-  ggsave("./Outputs/MultiSpp_OccMod_Outputs/Co-Occ_Plots/wolf-bear_elev_ung_marginal_occ_plots.tiff", wolf.bear.marg.plots[[1]], 
-         units = "in", width = 7, height = 5, dpi = 600, device = 'tiff', compression = 'lzw')
-  ggsave("./Outputs/MultiSpp_OccMod_Outputs/Co-Occ_Plots/wolf-bear_elev_pred_marginal_occ_plots.tiff", wolf.bear.marg.plots[[2]], 
-         units = "in", width = 7, height = 5, dpi = 600, device = 'tiff', compression = 'lzw')
-  ggsave("./Outputs/MultiSpp_OccMod_Outputs/Co-Occ_Plots/wolf-bear_for_ung_marginal_occ_plots.tiff", wolf.bear.marg.plots[[3]], 
-         units = "in", width = 7, height = 5, dpi = 600, device = 'tiff', compression = 'lzw')
-  ggsave("./Outputs/MultiSpp_OccMod_Outputs/Co-Occ_Plots/wolf-bear_for_pred_marginal_occ_plots.tiff", wolf.bear.marg.plots[[4]], 
-         units = "in", width = 7, height = 5, dpi = 600, device = 'tiff', compression = 'lzw')
-  ggsave("./Outputs/MultiSpp_OccMod_Outputs/Co-Occ_Plots/wolf-bear_div_ung_marginal_occ_plots.tiff", wolf.bear.marg.plots[[5]], 
-         units = "in", width = 7, height = 5, dpi = 600, device = 'tiff', compression = 'lzw')
-  ggsave("./Outputs/MultiSpp_OccMod_Outputs/Co-Occ_Plots/wolf-bear_div_pred_marginal_occ_plots.tiff", wolf.bear.marg.plots[[6]], 
-         units = "in", width = 7, height = 5, dpi = 600, device = 'tiff', compression = 'lzw')
-  #'  Wolf-coyote
-  ggsave("./Outputs/MultiSpp_OccMod_Outputs/Co-Occ_Plots/wolf-coy_elev_ung_marginal_occ_plots.tiff", wolf.coy.marg.plots[[1]], 
-         units = "in", width = 7, height = 5, dpi = 600, device = 'tiff', compression = 'lzw')
-  ggsave("./Outputs/MultiSpp_OccMod_Outputs/Co-Occ_Plots/wolf-coy_elev_pred_marginal_occ_plots.tiff", wolf.coy.marg.plots[[2]], 
-         units = "in", width = 7, height = 5, dpi = 600, device = 'tiff', compression = 'lzw')
-  ggsave("./Outputs/MultiSpp_OccMod_Outputs/Co-Occ_Plots/wolf-coy_for_ung_marginal_occ_plots.tiff", wolf.coy.marg.plots[[3]], 
-         units = "in", width = 7, height = 5, dpi = 600, device = 'tiff', compression = 'lzw')
-  ggsave("./Outputs/MultiSpp_OccMod_Outputs/Co-Occ_Plots/wolf-coy_for_pred_marginal_occ_plots.tiff", wolf.coy.marg.plots[[4]], 
-         units = "in", width = 7, height = 5, dpi = 600, device = 'tiff', compression = 'lzw')
-  #'  Coyote-bobcat
-  ggsave("./Outputs/MultiSpp_OccMod_Outputs/Co-Occ_Plots/coy-bob_elev_ung_marginal_occ_plots.tiff", coy.bob.marg.plots[[1]], 
-         units = "in", width = 7, height = 5, dpi = 600, device = 'tiff', compression = 'lzw')
-  ggsave("./Outputs/MultiSpp_OccMod_Outputs/Co-Occ_Plots/coy-bob_elev_pred_marginal_occ_plots.tiff", coy.bob.marg.plots[[2]], 
-         units = "in", width = 7, height = 5, dpi = 600, device = 'tiff', compression = 'lzw')
-  ggsave("./Outputs/MultiSpp_OccMod_Outputs/Co-Occ_Plots/coy-bob_for_ung_marginal_occ_plots.tiff", coy.bob.marg.plots[[3]], 
-         units = "in", width = 7, height = 5, dpi = 600, device = 'tiff', compression = 'lzw')
-  ggsave("./Outputs/MultiSpp_OccMod_Outputs/Co-Occ_Plots/coy-bob_for_pred_marginal_occ_plots.tiff", coy.bob.marg.plots[[4]], 
-         units = "in", width = 7, height = 5, dpi = 600, device = 'tiff', compression = 'lzw')
-  #'  Combined by covariate
-  ggsave("./Outputs/MultiSpp_OccMod_Outputs/Co-Occ_Plots/marginal_occ_elevation_plot.tiff", marginal_elev_plot, 
-         units = "in", width = 7, height = 5, dpi = 600, device = 'tiff', compression = 'lzw')
-  ggsave("./Outputs/MultiSpp_OccMod_Outputs/Co-Occ_Plots/marginal_occ_forestcov_plot.tiff", marginal_for_plot, 
-         units = "in", width = 7, height = 5, dpi = 600, device = 'tiff', compression = 'lzw')
-  ggsave("./Outputs/MultiSpp_OccMod_Outputs/Co-Occ_Plots/marginal_occ_preydiversity_plot.tiff", marginal_dif_plot, 
-         units = "in", width = 7, height = 5, dpi = 600, device = 'tiff', compression = 'lzw')
-  ggsave("./Outputs/MultiSpp_OccMod_Outputs/Co-Occ_Plots/marginal_occ_allcov_trailsites_plot.tiff", marginal_pred_patchwork, 
-         units = "in", width = 9, height = 5, dpi = 600, device = 'tiff', compression = 'lzw')
-  ggsave("./Outputs/MultiSpp_OccMod_Outputs/Co-Occ_Plots/marginal_occ_allcov_randsites_plot.tiff", marginal_ung_patchwork, 
-         units = "in", width = 9, height = 5, dpi = 600, device = 'tiff', compression = 'lzw')
-  
+  ggsave("./Outputs/Figures/marginal_occ_plot_predcams.tiff", marginal_pred_patchwork, 
+         units = "in", width = 6, height = 3.5, dpi = 400, device = 'tiff', compression = 'lzw')
+  ggsave("./Outputs/Figures/marginal_occ_plot_ungcams.tiff", marginal_ung_patchwork, 
+         units = "in", width = 6, height = 3.5, dpi = 400, device = 'tiff', compression = 'lzw')
   
   #'  Conditional occupancy probabilities
-  #'  Coyote-bobcat 
-  ggsave("./Outputs/MultiSpp_OccMod_Outputs/Co-Occ_Plots/coy-bob_wtd_ung_conditional_occ_plots.tiff", coy.bob.condish.plots[[5]], 
-         units = "in", width = 7, height = 5, dpi = 600, device = 'tiff', compression = 'lzw')
-  ggsave("./Outputs/MultiSpp_OccMod_Outputs/Co-Occ_Plots/coy-bob_wtd_pred_conditional_occ_plots.tiff", coy.bob.condish.plots[[6]], 
-         units = "in", width = 7, height = 5, dpi = 600, device = 'tiff', compression = 'lzw')
-  ggsave("./Outputs/MultiSpp_OccMod_Outputs/Co-Occ_Plots/coy-bob_lago_ung_conditional_occ_plots.tiff", coy.bob.condish.plots[[7]], 
-         units = "in", width = 7, height = 5, dpi = 600, device = 'tiff', compression = 'lzw')
-  ggsave("./Outputs/MultiSpp_OccMod_Outputs/Co-Occ_Plots/coy-bob_lago_pred_conditional_occ_plots.tiff", coy.bob.condish.plots[[8]], 
-         units = "in", width = 7, height = 5, dpi = 600, device = 'tiff', compression = 'lzw')
-  ggsave("./Outputs/MultiSpp_OccMod_Outputs/Co-Occ_Plots/coy-bob_div_ung_conditional_occ_plots.tiff", coy.bob.condish.plots[[9]], 
-         units = "in", width = 7, height = 5, dpi = 600, device = 'tiff', compression = 'lzw')
-  ggsave("./Outputs/MultiSpp_OccMod_Outputs/Co-Occ_Plots/coy-bob_div_pred_conditional_occ_plots.tiff", coy.bob.condish.plots[[10]], 
-         units = "in", width = 7, height = 5, dpi = 600, device = 'tiff', compression = 'lzw')
-  #'  Coyote-bobcat lagomorph & white-tailed deer effect
-  ggsave("./Outputs/MultiSpp_OccMod_Outputs/Co-Occ_Plots/coy-bob_lago_pred_conditional_occ_plots_wtd0.tiff", coy.bob.condish.lago.pred.lowWTD, 
-         units = "in", width = 7, height = 5, dpi = 600, device = 'tiff', compression = 'lzw')
-  ggsave("./Outputs/MultiSpp_OccMod_Outputs/Co-Occ_Plots/coy-bob_lago_pred_conditional_occ_plots_wtd2.tiff", coy.bob.condish.lago.pred.medWTD, 
-         units = "in", width = 7, height = 5, dpi = 600, device = 'tiff', compression = 'lzw')
-  ggsave("./Outputs/MultiSpp_OccMod_Outputs/Co-Occ_Plots/coy-bob_lago_pred_conditional_occ_plots_wtd6.tiff", coy.bob.condish.lago.pred.hiWTD, 
-         units = "in", width = 7, height = 5, dpi = 600, device = 'tiff', compression = 'lzw')
-  ggsave("./Outputs/MultiSpp_OccMod_Outputs/Co-Occ_Plots/coy-bob_lago_pred_conditional_occ_plots_wtd0-6.tiff", coy.bob.condish.lago.pred.wtd, 
-         units = "in", width = 10, height = 5, dpi = 600, device = 'tiff', compression = 'lzw')
-  
+  ggsave("./Outputs/Figures/conditional_occ_plots_coybob_predcams.tiff", patchwork_conditional_coybob_pred, 
+         units = "in", width = 5, height = 6, dpi = 400, device = 'tiff', compression = 'lzw')
+  ggsave("./Outputs/Figures/conditional_occ_plots_coybob_ungcams.tiff", patchwork_conditional_coybob_ung, 
+         units = "in", width = 5, height = 6, dpi = 400, device = 'tiff', compression = 'lzw')
   
   
   #'  ----------------------------------------
@@ -683,22 +637,22 @@
   covs <- mutate(covs, Year = ifelse(Season == "Smr20", 0, 1))
   
   #'  Predict mean occupancy for Yr1 and Yr2
-  wolf.bear.mean.yr1 <- predict_occupancy(mod = wolf.bear.null, ncat = 4, npoints = 500,
+  wolf.bear.mean.yr1 <- predict_occupancy(mod = wolf.bear.hab, ncat = 4, npoints = 500,  ### MAKE SURE COVS ARE IN RIGHT ORDER!!!
                                           focal_cov = covs$Year,
-                                          psi_cov = c(1, 0), psi_cov_index = 0,
+                                          psi_cov = c(1, 1, 0, 0, 0, 0), psi_cov_index = 0,
                                           psi_inxs_cov = c(0), psi_inxs_cov_index = 0)
-  wolf.bear.mean.yr2 <- predict_occupancy(mod = wolf.bear.null, ncat = 4, npoints = 500,
+  wolf.bear.mean.yr2 <- predict_occupancy(mod = wolf.bear.hab, ncat = 4, npoints = 500,
                                           focal_cov = covs$Year,
-                                          psi_cov = c(1, 1), psi_cov_index = 0,
+                                          psi_cov = c(1, 1, 1, 0, 0, 0), psi_cov_index = 0,
                                           psi_inxs_cov = c(0), psi_inxs_cov_index = 0)
-  wolf.coy.mean.yr1 <- predict_occupancy(mod = wolf.coy.null, ncat = 4, npoints = 500,
-                                          focal_cov = covs$Year,
-                                          psi_cov = c(1, 0), psi_cov_index = 0,
-                                          psi_inxs_cov = c(0), psi_inxs_cov_index = 0)
-  wolf.coy.mean.yr2 <- predict_occupancy(mod = wolf.coy.null, ncat = 4, npoints = 500,
-                                          focal_cov = covs$Year,
-                                          psi_cov = c(1, 1), psi_cov_index = 0,
-                                          psi_inxs_cov = c(0), psi_inxs_cov_index = 0)
+  wolf.coy.mean.yr1 <- predict_occupancy(mod = wolf.coy.hab, ncat = 4, npoints = 500,
+                                         focal_cov = covs$Year,
+                                         psi_cov = c(1, 1, 0, 0, 0, 0), psi_cov_index = 0,
+                                         psi_inxs_cov = c(0), psi_inxs_cov_index = 0)
+  wolf.coy.mean.yr2 <- predict_occupancy(mod = wolf.coy.hab, ncat = 4, npoints = 500,
+                                         focal_cov = covs$Year,
+                                         psi_cov = c(1, 1, 1, 0, 0, 0), psi_cov_index = 0,
+                                         psi_inxs_cov = c(0), psi_inxs_cov_index = 0)
   wolf.lion.mean.yr1 <- predict_occupancy(mod = wolf.lion.null, ncat = 4, npoints = 500,
                                           focal_cov = covs$Year,
                                           psi_cov = c(1, 0), psi_cov_index = 0,
@@ -716,21 +670,29 @@
                                           psi_cov = c(1, 1), psi_cov_index = 0,
                                           psi_inxs_cov = c(0), psi_inxs_cov_index = 0)
   lion.bob.mean.yr1 <- predict_occupancy(mod = lion.bob.null, ncat = 4, npoints = 500,
-                                          focal_cov = covs$Year,
-                                          psi_cov = c(1, 0), psi_cov_index = 0,
-                                          psi_inxs_cov = c(0), psi_inxs_cov_index = 0)
-  lion.bob.mean.yr2 <- predict_occupancy(mod = lion.bob.null, ncat = 4, npoints = 500,
-                                          focal_cov = covs$Year,
-                                          psi_cov = c(1, 1), psi_cov_index = 0,
-                                          psi_inxs_cov = c(0), psi_inxs_cov_index = 0)
-  coy.bob.mean.yr1 <- predict_occupancy(mod = coy.bob.null, ncat = 4, npoints = 500,
                                          focal_cov = covs$Year,
                                          psi_cov = c(1, 0), psi_cov_index = 0,
                                          psi_inxs_cov = c(0), psi_inxs_cov_index = 0)
-  coy.bob.mean.yr2 <- predict_occupancy(mod = coy.bob.null, ncat = 4, npoints = 500,
+  lion.bob.mean.yr2 <- predict_occupancy(mod = lion.bob.null, ncat = 4, npoints = 500,
                                          focal_cov = covs$Year,
                                          psi_cov = c(1, 1), psi_cov_index = 0,
                                          psi_inxs_cov = c(0), psi_inxs_cov_index = 0)
+  coy.bob.mean.yr1 <- predict_occupancy(mod = coy.bob.habx, ncat = 4, npoints = 500,
+                                        focal_cov = covs$Year,
+                                        psi_cov = c(1, 1, 0, 0, 0, 0), psi_cov_index = 0,
+                                        psi_inxs_cov = c(1), psi_inxs_cov_index = 0)
+  coy.bob.mean.yr2 <- predict_occupancy(mod = coy.bob.habx, ncat = 4, npoints = 500,
+                                        focal_cov = covs$Year,
+                                        psi_cov = c(1, 1, 1, 0, 0, 0), psi_cov_index = 0,
+                                        psi_inxs_cov = c(1), psi_inxs_cov_index = 0)
+  bear.coy.mean.yr1 <- predict_occupancy(mod = bear.coy.habx, ncat = 4, npoints = 500,
+                                         focal_cov = covs$Year,
+                                         psi_cov = c(1, 1, 0, 0, 0, 0), psi_cov_index = 0,
+                                         psi_inxs_cov = c(1), psi_inxs_cov_index = 0)
+  bear.coy.mean.yr2 <- predict_occupancy(mod = bear.coy.habx, ncat = 4, npoints = 500,
+                                         focal_cov = covs$Year,
+                                         psi_cov = c(1, 1, 1, 0, 0, 0), psi_cov_index = 0,
+                                         psi_inxs_cov = c(1), psi_inxs_cov_index = 0)
   
   #'  Extract mean and 95% CRI for each observation (should be identical) and thin
   #'  to one value per species
@@ -775,12 +737,16 @@
   psimean_lion.bob.yr2 <- mean_occ_prob(lion.bob.mean.yr2, spp1 = "Mountain lion", spp2 = "Bobcat", yr = "2021")
   psimean_coy.bob.yr1 <- mean_occ_prob(coy.bob.mean.yr1, spp1 = "Coyote", spp2 = "Bobcat", yr = "2020")
   psimean_coy.bob.yr2 <- mean_occ_prob(coy.bob.mean.yr2, spp1 = "Coyote", spp2 = "Bobcat", yr = "2021")
+  psimean_bear.coy.yr1 <- mean_occ_prob(bear.coy.mean.yr1, spp1 = "Black bear", spp2 = "Coyote", yr = "2020")
+  psimean_bear.coy.yr2 <- mean_occ_prob(bear.coy.mean.yr2, spp1 = "Black bear", spp2 = "Coyote", yr = "2021")
+  
   
   #'  Bind all species and years together
-  mean_annual_psi <- rbind(psimean_wolf.bear.yr1, psimean_wolf.bear.yr2, psimean_wolf.coy.yr1, 
-                           psimean_wolf.coy.yr2, psimean_wolf.lion.yr1, psimean_wolf.lion.yr2, 
+  mean_annual_psi <- rbind(psimean_wolf.bear.yr1, psimean_wolf.bear.yr2, psimean_wolf.lion.yr1, 
+                           psimean_wolf.lion.yr2, psimean_wolf.coy.yr1, psimean_wolf.coy.yr2, 
                            psimean_lion.bear.yr1, psimean_lion.bear.yr2, psimean_lion.bob.yr1,
-                           psimean_lion.bob.yr2, psimean_coy.bob.yr1, psimean_coy.bob.yr2) %>%
+                           psimean_lion.bob.yr2, psimean_coy.bob.yr1, psimean_coy.bob.yr2,
+                           psimean_bear.coy.yr1, psimean_bear.coy.yr2) %>%
     #'  Reduce to one observation per species
     group_by(Species, Year) %>%
     slice(1L) %>%
