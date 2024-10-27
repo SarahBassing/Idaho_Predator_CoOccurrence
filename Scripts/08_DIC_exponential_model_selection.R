@@ -23,74 +23,54 @@
   #'  a different predator species.
   
   #####  Black bear models  ####
-  load("./Outputs/tbd_bear_intercept_only.RData")
+  load("./Outputs/tbd_bear_null.RData")
   load("./Outputs/tbd_bear_sppID.RData")
-  load("./Outputs/tbd_bear_preydiversity.RData")
   load("./Outputs/tbd_bear_preyRAI.RData")
-  load("./Outputs/tbd_bear_sppID_preydiv.RData")
-  load("./Outputs/tbd_bear_sppID_X_preydiv.RData")
   load("./Outputs/tbd_bear_sppID_preyRAI.RData")
   load("./Outputs/tbd_bear_sppID_X_preyRAI.RData") 
-  load("./Outputs/tbd_bear_global.RData")          
   #'  List for model selection (some models excluded owing to poor convergence)
-  bear_tbd_list <- list(tbd_bear_null, tbd_bear_sppID, tbd_bear_div, tbd_bear_preyabund, tbd_bear_sppID.div, tbd_bear_sppIDxdiv, tbd_bear_sppID.preyabund) #tbd_bear_sppIDxpreyabund, tbd_bear_global
-  bear_tbd_name <- c("tbd_bear_null", "tbd_bear_sppID", "tbd_bear_div", "tbd_bear_preyabund", "tbd_bear_sppID.div", "tbd_bear_sppIDxdiv", "tbd_bear_sppID.preyabund") #"tbd_bear_sppIDxpreyabund", "tbd_bear_global"
+  bear_tbd_list <- list(tbd_bear_null, tbd_bear_sppID, tbd_bear_preyabund, tbd_bear_sppID.preyabund) #tbd_bear_sppIDxpreyabund
+  bear_tbd_name <- c("tbd_bear_null", "tbd_bear_sppID", "tbd_bear_preyabund", "tbd_bear_sppID.preyabund") #"tbd_bear_sppIDxpreyabund"
   
   #####  Bobcat models  ####
-  load("./Outputs/tbd_bob_intercept_only.RData")
+  load("./Outputs/tbd_bob_null.RData")
   load("./Outputs/tbd_bob_sppID.RData")
-  load("./Outputs/tbd_bob_preydiversity.RData")
   load("./Outputs/tbd_bob_preyRAI.RData")
-  load("./Outputs/tbd_bob_sppID_preydiv.RData")
-  load("./Outputs/tbd_bob_sppID_X_preydiv.RData")  
   load("./Outputs/tbd_bob_sppID_preyRAI.RData")
   load("./Outputs/tbd_bob_sppID_X_preyRAI.RData")
-  load("./Outputs/tbd_bob_global.RData")           
   #'  List for model selection (some models excluded owing to poor convergence)
-  bob_tbd_list <- list(tbd_bob_null, tbd_bob_sppID, tbd_bob_div, tbd_bob_preyabund, tbd_bob_sppID.div, tbd_bob_sppID.preyabund, tbd_bob_sppIDxpreyabund) # tbd_bob_sppIDxdiv, tbd_bob_global 
-  bob_tbd_name <- c("tbd_bob_null", "tbd_bob_sppID", "tbd_bob_div", "tbd_bob_preyabund", "tbd_bob_sppID.div", "tbd_bob_sppID.preyabund", "tbd_bob_sppIDxpreyabund") # "tbd_bob_sppIDxdiv", "tbd_bob_global" 
+  bob_tbd_list <- list(tbd_bob_null, tbd_bob_sppID, tbd_bob_preyabund, tbd_bob_sppID.preyabund, tbd_bob_sppIDxpreyabund) 
+  bob_tbd_name <- c("tbd_bob_null", "tbd_bob_sppID", "tbd_bob_preyabund", "tbd_bob_sppID.preyabund", "tbd_bob_sppIDxpreyabund") 
     
   #####  Coyote models  ####
-  load("./Outputs/tbd_coy_intercept_only.RData")
+  load("./Outputs/tbd_coy_null.RData")
   load("./Outputs/tbd_coy_sppID.RData")
-  load("./Outputs/tbd_coy_preydiversity.RData")
   load("./Outputs/tbd_coy_preyRAI.RData")
-  load("./Outputs/tbd_coy_sppID_preydiv.RData")
-  load("./Outputs/tbd_coy_sppID_X_preydiv.RData")
   load("./Outputs/tbd_coy_sppID_preyRAI.RData")
   load("./Outputs/tbd_coy_sppID_X_preyRAI.RData")
-  load("./Outputs/tbd_coy_global.RData")
   #'  List for model selection (some models excluded owing to poor convergence)
-  coy_tbd_list <- list(tbd_coy_null, tbd_coy_sppID, tbd_coy_div, tbd_coy_preyabund, tbd_coy_sppID.div, tbd_coy_sppIDxdiv, tbd_coy_sppID.preyabund, tbd_coy_sppIDxpreyabund, tbd_coy_global) 
-  coy_tbd_name <- c("tbd_coy_null", "tbd_coy_sppID", "tbd_coy_div", "tbd_coy_preyabund", "tbd_coy_sppID.div", "tbd_coy_sppIDxdiv", "tbd_coy_sppID.preyabund", "tbd_coy_sppIDxpreyabund", "tbd_coy_global") 
+  coy_tbd_list <- list(tbd_coy_null, tbd_coy_sppID, tbd_coy_preyabund, tbd_coy_sppID.preyabund, tbd_coy_sppIDxpreyabund) 
+  coy_tbd_name <- c("tbd_coy_null", "tbd_coy_sppID", "tbd_coy_preyabund", "tbd_coy_sppID.preyabund", "tbd_coy_sppIDxpreyabund") 
   
   #####  Mountain lion models  ####
-  load("./Outputs/tbd_lion_intercept_only.RData")
+  load("./Outputs/tbd_lion_null.RData")
   load("./Outputs/tbd_lion_sppID.RData")
-  load("./Outputs/tbd_lion_preydiversity.RData")
   load("./Outputs/tbd_lion_preyRAI.RData")
-  load("./Outputs/tbd_lion_sppID_preydiv.RData")
-  load("./Outputs/tbd_lion_sppID_X_preydiv.RData") 
   load("./Outputs/tbd_lion_sppID_preyRAI.RData")   
   load("./Outputs/tbd_lion_sppID_X_preyRAI.RData") 
-  load("./Outputs/tbd_lion_global.RData")          
   #'  List for model selection (some models excluded owing to poor convergence)
-  lion_tbd_list <- list(tbd_lion_null, tbd_lion_sppID, tbd_lion_div, tbd_lion_preyabund, tbd_lion_sppID.div, tbd_lion_sppID.preyabund) #tbd_lion_sppIDxdiv, tbd_lion_sppIDxpreyabund, tbd_lion_global) 
-  lion_tbd_name <- c("tbd_lion_null", "tbd_lion_sppID", "tbd_lion_div", "tbd_lion_preyabund", "tbd_lion_sppID.div", "tbd_lion_sppID.preyabund") #"tbd_lion_sppIDxdiv", "tbd_lion_sppIDxpreyabund", "tbd_lion_global") 
+  lion_tbd_list <- list(tbd_lion_null, tbd_lion_sppID, tbd_lion_preyabund, tbd_lion_sppID.preyabund) #tbd_lion_sppIDxpreyabund
+  lion_tbd_name <- c("tbd_lion_null", "tbd_lion_sppID", "tbd_lion_preyabund", "tbd_lion_sppID.preyabund") #"tbd_lion_sppIDxpreyabund"
     
   #####  Wolf models  ####
-  load("./Outputs/tbd_wolf_intercept_only.RData")
+  load("./Outputs/tbd_wolf_null.RData")
   load("./Outputs/tbd_wolf_sppID.RData")
-  load("./Outputs/tbd_wolf_preydiversity.RData")
   load("./Outputs/tbd_wolf_preyRAI.RData")
-  load("./Outputs/tbd_wolf_sppID_preydiv.RData")
-  load("./Outputs/tbd_wolf_sppID_X_preydiv.RData")
   load("./Outputs/tbd_wolf_sppID_preyRAI.RData")
   load("./Outputs/tbd_wolf_sppID_X_preyRAI.RData") 
-  load("./Outputs/tbd_wolf_global.RData")          
   #'  List for model selection (some models excluded owing to poor convergence)
-  wolf_tbd_list <- list(tbd_wolf_null, tbd_wolf_sppID, tbd_wolf_div, tbd_wolf_preyabund, tbd_wolf_sppID.div, tbd_wolf_sppIDxdiv, tbd_wolf_sppID.preyabund) #, tbd_wolf_sppIDxpreyabund, tbd_wolf_global) 
-  wolf_tbd_name <- c("tbd_wolf_null", "tbd_wolf_sppID", "tbd_wolf_div", "tbd_wolf_preyabund", "tbd_wolf_sppID.div", "tbd_wolf_sppIDxdiv", "tbd_wolf_sppID.preyabund") #, "tbd_wolf_sppIDxpreyabund", "tbd_wolf_global") 
+  wolf_tbd_list <- list(tbd_wolf_null, tbd_wolf_sppID, tbd_wolf_preyabund, tbd_wolf_sppID.preyabund) #, tbd_wolf_sppIDxpreyabund
+  wolf_tbd_name <- c("tbd_wolf_null", "tbd_wolf_sppID", "tbd_wolf_preyabund", "tbd_wolf_sppID.preyabund") #, "tbd_wolf_sppIDxpreyabund"
     
   #####  Model selection using DIC  ####
   (topmod_beartbd <- dictab(cand.set = bear_tbd_list, modnames = bear_tbd_name, sort = TRUE)) 
@@ -100,8 +80,9 @@
   (topmod_wolftbd <- dictab(cand.set = wolf_tbd_list, modnames = wolf_tbd_name, sort = TRUE)) 
   
   #'  Best supported model per species
-  (topmodels <- rbind(topmod_beartbd[1,], topmod_bobtbd[2,], topmod_coytbd[1,], topmod_liontbd[1,], topmod_wolftbd[1,])) #topmod_bobtbd[1,], 
-  #'  Note: currently using 2nd most supported model for bobcat since w/in 0.65 deltaDIC of top model 
+  (topmodels <- rbind(topmod_beartbd[2,], topmod_bobtbd[2,], topmod_coytbd[1,], topmod_liontbd[1,], topmod_wolftbd[1,])) 
+  #'  Note: currently using 2nd most supported model for black bear since 0.23 deltaDIC from top model (null) and 95% CRI for elk effect just slightly overlaps 0
+  #'  currently using 2nd most supported model for bobcat since w/in 0.90 deltaDIC of top model (preyabund)
   
   
   #'  ------------------------
@@ -110,54 +91,44 @@
   #'  Model selection for models estimating time between detections of prey followed by predators
   
   #####  Black bear models  ####
-  load("./Outputs/tbd_nontarget.bear_intercept_only.RData")
+  load("./Outputs/tbd_nontarget.bear_null.RData")
   load("./Outputs/tbd_nontarget.bear_sppID.RData")
-  load("./Outputs/tbd_nontarget.bear_preydiversity.RData")
   load("./Outputs/tbd_nontarget.bear_preyRAI.RData")
-  load("./Outputs/tbd_nontarget.bear_global.RData")          
   #'  List for model selection
-  bear_nt_tbd_list <- list(tbd_nt_bear_null, tbd_nt_bear_sppID, tbd_nt_bear_div, tbd_nt_bear_preyabund, tbd_nt_bear_global) 
-  bear_nt_tbd_name <- c("tbd_nt_bear_null", "tbd_nt_bear_sppID", "tbd_nt_bear_div", "tbd_nt_bear_preyabund", "tbd_nt_bear_global") 
+  bear_nt_tbd_list <- list(tbd_nt_bear_null, tbd_nt_bear_sppID, tbd_nt_bear_preyabund) 
+  bear_nt_tbd_name <- c("tbd_nt_bear_null", "tbd_nt_bear_sppID", "tbd_nt_bear_preyabund") 
   
   #####  Bobcat models  ####
-  load("./Outputs/tbd_nontarget.bob_intercept_only.RData")
+  load("./Outputs/tbd_nontarget.bob_null.RData")
   load("./Outputs/tbd_nontarget.bob_sppID.RData")
-  load("./Outputs/tbd_nontarget.bob_preydiversity.RData")
   load("./Outputs/tbd_nontarget.bob_preyRAI.RData")
-  load("./Outputs/tbd_nontarget.bob_global.RData")           
   #'  List for model selection
-  bob_nt_tbd_list <- list(tbd_nt_bob_null, tbd_nt_bob_sppID, tbd_nt_bob_div, tbd_nt_bob_preyabund, tbd_nt_bob_global)  
-  bob_nt_tbd_name <- c("tbd_nt_bob_null", "tbd_nt_bob_sppID", "tbd_nt_bob_div", "tbd_nt_bob_preyabund", "tbd_nt_bob_global")  
+  bob_nt_tbd_list <- list(tbd_nt_bob_null, tbd_nt_bob_sppID, tbd_nt_bob_preyabund)  
+  bob_nt_tbd_name <- c("tbd_nt_bob_null", "tbd_nt_bob_sppID", "tbd_nt_bob_preyabund")  
   
   #####  Coyote models  ####
-  load("./Outputs/tbd_nontarget.coy_intercept_only.RData")
+  load("./Outputs/tbd_nontarget.coy_null.RData")
   load("./Outputs/tbd_nontarget.coy_sppID.RData")
-  load("./Outputs/tbd_nontarget.coy_preydiversity.RData")
   load("./Outputs/tbd_nontarget.coy_preyRAI.RData")
-  load("./Outputs/tbd_nontarget.coy_global.RData")
   #'  List for model selection
-  coy_nt_tbd_list <- list(tbd_nt_coy_null, tbd_nt_coy_sppID, tbd_nt_coy_div, tbd_nt_coy_preyabund, tbd_nt_coy_global) 
-  coy_nt_tbd_name <- c("tbd_nt_coy_null", "tbd_nt_coy_sppID", "tbd_nt_coy_div", "tbd_nt_coy_preyabund", "tbd_nt_coy_global") 
+  coy_nt_tbd_list <- list(tbd_nt_coy_null, tbd_nt_coy_sppID, tbd_nt_coy_preyabund) 
+  coy_nt_tbd_name <- c("tbd_nt_coy_null", "tbd_nt_coy_sppID", "tbd_nt_coy_preyabund") 
   
   #####  Mountain lion models  ####
-  load("./Outputs/tbd_nontarget.lion_intercept_only.RData")
+  load("./Outputs/tbd_nontarget.lion_null.RData")
   load("./Outputs/tbd_nontarget.lion_sppID.RData")
-  load("./Outputs/tbd_nontarget.lion_preydiversity.RData")
   load("./Outputs/tbd_nontarget.lion_preyRAI.RData")
-  load("./Outputs/tbd_nontarget.lion_global.RData")          
   #'  List for model selection
-  lion_nt_tbd_list <- list(tbd_nt_lion_null, tbd_nt_lion_sppID, tbd_nt_lion_div, tbd_nt_lion_preyabund, tbd_nt_lion_global) 
-  lion_nt_tbd_name <- c("tbd_nt_lion_null", "tbd_nt_lion_sppID", "tbd_nt_lion_div", "tbd_nt_lion_preyabund", "tbd_nt_lion_global") 
+  lion_nt_tbd_list <- list(tbd_nt_lion_null, tbd_nt_lion_sppID, tbd_nt_lion_preyabund) 
+  lion_nt_tbd_name <- c("tbd_nt_lion_null", "tbd_nt_lion_sppID", "tbd_nt_lion_preyabund") 
   
   #####  Wolf models  ####
-  load("./Outputs/tbd_nontarget.wolf_intercept_only.RData")
+  load("./Outputs/tbd_nontarget.wolf_null.RData")
   load("./Outputs/tbd_nontarget.wolf_sppID.RData")
-  load("./Outputs/tbd_nontarget.wolf_preydiversity.RData")
   load("./Outputs/tbd_nontarget.wolf_preyRAI.RData")
-  load("./Outputs/tbd_nontarget.wolf_global.RData")          
   #'  List for model selection
-  wolf_nt_tbd_list <- list(tbd_nt_wolf_null, tbd_nt_wolf_sppID, tbd_nt_wolf_div, tbd_nt_wolf_preyabund, tbd_nt_wolf_global) 
-  wolf_nt_tbd_name <- c("tbd_nt_wolf_null", "tbd_nt_wolf_sppID", "tbd_nt_wolf_div", "tbd_nt_wolf_preyabund", "tbd_nt_wolf_global") 
+  wolf_nt_tbd_list <- list(tbd_nt_wolf_null, tbd_nt_wolf_sppID, tbd_nt_wolf_preyabund) 
+  wolf_nt_tbd_name <- c("tbd_nt_wolf_null", "tbd_nt_wolf_sppID", "tbd_nt_wolf_preyabund") 
   
   #####  Model selection using DIC  ####
   (topmod_nt_beartbd <- dictab(cand.set = bear_nt_tbd_list, modnames = bear_nt_tbd_name, sort = TRUE)) 
@@ -189,24 +160,16 @@
            Species = str_replace(Species, "wolf", "Wolf"),
            Model_name = sub("(^[^.]+[.][^.]+)(.+$)", "\\2", Modnames),
            Model_name = str_replace(Model_name, ".", ""),
-           Model = gsub("null", "Model 1", Model_name),           
-           Model = gsub("sppIDxdiv", "Model 6", Model),
-           Model = gsub("sppIDxpreyabund", "Model 8", Model),
-           Model = gsub("sppID.div", "Model 5", Model),
-           Model = gsub("sppID.preyabund", "Model 7", Model),
+           Model = gsub("null", "Model 1", Model_name), 
+           Model = gsub("sppIDxpreyabund", "Model 5", Model),
+           Model = gsub("sppID.preyabund", "Model 4", Model),
            Model = gsub("sppID", "Model 2", Model),
-           Model = gsub("div", "Model 3", Model),
-           Model = gsub("preyabund", "Model 4", Model),
-           Model = gsub("global", "Model 9", Model),
+           Model = gsub("preyabund", "Model 3", Model),
            Model_name = gsub("null", "Null", Model_name),
-           Model_name = gsub("sppIDxdiv", "Competitor ID * prey diversity", Model_name),
            Model_name = gsub("sppIDxpreyabund", "Competitor ID * prey abundance", Model_name),
-           Model_name = gsub("sppID.div", "Competitor ID + prey diversity", Model_name),
            Model_name = gsub("sppID.preyabund", "Competitor ID + prey abundance", Model_name),
            Model_name = gsub("sppID", "Competitor ID", Model_name),
-           Model_name = gsub("div", "Prey diversity", Model_name),
-           Model_name = gsub("preyabund", "Prey abundance", Model_name),
-           Model_name = gsub("global", "Global", Model_name)) %>%
+           Model_name = gsub("preyabund", "Prey abundance", Model_name)) %>%
     relocate(Species, .before = DIC) %>%
     relocate(Model, .after = Species) %>%
     relocate(Model_name, .after = Model) %>%
@@ -229,16 +192,11 @@
            Model_name = gsub("^.*\\.", "", Modnames),
            Model = gsub("null", "Model 1", Model_name),           
            Model = gsub("sppID", "Model 2", Model),
-           Model = gsub("div", "Model 3", Model),
-           Model = gsub("preyabund", "Model 4", Model),
-           Model = gsub("global", "Model 5", Model),
+           Model = gsub("preyabund", "Model 3", Model),
            Model_name = gsub("null", "Null", Model_name),
-           Model_name = gsub("sppID.div", "Species ID + prey diversity", Model_name),
            Model_name = gsub("sppID.preyabund", "Species ID + prey abundance", Model_name),
            Model_name = gsub("sppID", "Species ID", Model_name),
-           Model_name = gsub("div", "Prey diversity", Model_name),
-           Model_name = gsub("preyabund", "Prey abundance", Model_name),
-           Model_name = gsub("global", "Global", Model_name)) %>%
+           Model_name = gsub("preyabund", "Prey abundance", Model_name)) %>%
     relocate(Species, .before = DIC) %>%
     relocate(Model, .after = Species) %>%
     relocate(Model_name, .after = Model) %>%
