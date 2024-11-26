@@ -128,11 +128,11 @@
   effort_summary <- c("Sampling effort (n days/week)", effort_summary) 
   
   #'  Append to covariate summary table
-  cov_summary <- rbind(cov_summary, effort_summary) %>%
+  (cov_summary <- rbind(cov_summary, effort_summary) %>%
     mutate(Mean = as.numeric(Mean),
            SE = as.numeric(SE),
            Min = as.numeric(Min),
-           Max = as.numeric(Max))
+           Max = as.numeric(Max)))
   
   #' #'  Save covariate summary tables
   #' write.csv(cov_summary, "./Outputs/Summary_table_covariates.csv")
