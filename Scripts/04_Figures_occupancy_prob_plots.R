@@ -18,6 +18,9 @@
   library(khroma)
   library(stringr)
   library(patchwork)
+  library(grid)
+  library(png)
+  library(RCurl)
   library(rphylopic)
   library(tidyverse)
   
@@ -144,14 +147,14 @@
   #####  Wolf-Black bear predictions  ####
   #'  Top model
   load("./Outputs/wolfbear_hab.RData")
-  wolf.bear.for.ung.yr2 <- predict_occupancy(mod = wolf.bear.hab, ncat = 4, npoints = 500,  ### MAKE SURE COVS IS IN RIGHT ORDER!!!
+  wolf.bear.for.ung.yr2 <- predict_occupancy(mod = wolf.bear.hab, ncat = 4, npoints = 500,  
                                              focal_cov = covs$PercForest,
                                              psi_cov = c(1, 0, 1, 0, 0, 0), psi_cov_index = 4,
-                                             psi_inxs_cov = c(0), covs = 0)
+                                             psi_inxs_cov = c(0), psi_inxs_cov_index = 0)
   wolf.bear.for.pred.yr2 <- predict_occupancy(mod = wolf.bear.hab, ncat = 4, npoints = 500,
                                               focal_cov = covs$PercForest,
                                               psi_cov = c(1, 1, 1, 0, 0, 0), psi_cov_index = 4,
-                                              psi_inxs_cov = c(0), covs = 0)
+                                              psi_inxs_cov = c(0), psi_inxs_cov_index = 0)
   wolf.bear.elev.ung.yr2 <- predict_occupancy(mod = wolf.bear.hab, ncat = 4, npoints = 500,
                                               focal_cov = covs$Elev,
                                               psi_cov = c(1, 0, 1, 0, 0, 0), psi_cov_index = 5,
@@ -163,7 +166,7 @@
   wolf.bear.tri.ung.yr2 <- predict_occupancy(mod = wolf.bear.hab, ncat = 4, npoints = 500,
                                              focal_cov = covs$TRI,
                                              psi_cov = c(1, 0, 1, 0, 0, 0), psi_cov_index = 6,
-                                             psi_inxs_cov = c(0), covs = 0)
+                                             psi_inxs_cov = c(0), psi_inxs_cov_index = 0)
   wolf.bear.tri.pred.yr2 <- predict_occupancy(mod = wolf.bear.hab, ncat = 4, npoints = 500,
                                               focal_cov = covs$TRI,
                                               psi_cov = c(1, 1, 1, 0, 0, 0), psi_cov_index = 6,
@@ -625,19 +628,20 @@
   #'  ----------------------------------------
   ####  Predict mean occupancy for Yr1 & Yr2  ####
   #'  ----------------------------------------
-  #'  Load null models (includes year effect on marginal occupancy)
-  load("./Outputs/wolfbear_null.RData")
-  load("./Outputs/wolfcoy_null.RData")
+  #'  Load top models (includes year effect on marginal occupancy)
+  load("./Outputs/wolfbear_hab.RData")
+  load("./Outputs/wolfcoy_hab.RData")
   load("./Outputs/wolflion_null.RData")
   load("./Outputs/lionbear_null.RData")
   load("./Outputs/lionbob_null.RData")
-  load("./Outputs/coybob_null.RData")
+  load("./Outputs/coybob_habX.RData")
+  load("./Outputs/bearcoy_habX.RData")
   
   #'  Add binary Year variable to covariate data fram
   covs <- mutate(covs, Year = ifelse(Season == "Smr20", 0, 1))
   
   #'  Predict mean occupancy for Yr1 and Yr2
-  wolf.bear.mean.yr1 <- predict_occupancy(mod = wolf.bear.hab, ncat = 4, npoints = 500,  ### MAKE SURE COVS ARE IN RIGHT ORDER!!!
+  wolf.bear.mean.yr1 <- predict_occupancy(mod = wolf.bear.hab, ncat = 4, npoints = 500,
                                           focal_cov = covs$Year,
                                           psi_cov = c(1, 1, 0, 0, 0, 0), psi_cov_index = 0,
                                           psi_inxs_cov = c(0), psi_inxs_cov_index = 0)
