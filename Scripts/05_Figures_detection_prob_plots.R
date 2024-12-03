@@ -141,30 +141,30 @@
   #'  Top model
   load("./Outputs/wolfbear_hab_px.RData")
   wolf.bear.eff.ung.yr1 <- predict_detection(mod = wolf.bear.hab.px, ncat = 4, npoints = 500,  #### MAKE SURE EFFOR_EOE20s21s IS RIGHT INPUT
-                                             focal_cov = effort_eoe20s21s,
+                                             focal_cov = zeffort,
                                              rho_cov = c(1, 0, 0), rho_cov_index = 3,
                                              rho_inxs_cov = 0, rho_inxs_cov_index = 0)
   wolf.bear.eff.pred.yr1 <- predict_detection(mod = wolf.bear.hab.px, ncat = 4, npoints = 500,
-                                              focal_cov = effort_eoe20s21s,
+                                              focal_cov = zeffort,
                                               rho_cov = c(1, 1, 0), rho_cov_index = 3,
                                               rho_inxs_cov = 0, rho_inxs_cov_index = 0)
   
   #####  Wolf-Coyote predictions  ####
   load("./Outputs/wolfcoy_hab_px.RData") 
   wolf.coy.eff.ung.yr1 <- predict_detection(mod = wolf.coy.hab.px, ncat = 4, npoints = 500,
-                                            focal_cov = effort_eoe20s21s,
+                                            focal_cov = zeffort,
                                             rho_cov = c(1, 0, 0), rho_cov_index = 3,
                                             rho_inxs_cov = c(1), rho_inxs_cov_index = 0)
   wolf.coy.eff.pred.yr1 <- predict_detection(mod = wolf.coy.hab.px, ncat = 4, npoints = 500,
-                                             focal_cov = effort_eoe20s21s,
+                                             focal_cov = zeffort,
                                              rho_cov = c(1, 1, 0), rho_cov_index = 3,
                                              rho_inxs_cov = c(1), rho_inxs_cov_index = 0)
   wolf.coy.ung.yr1 <- predict_detection(mod = wolf.coy.hab.px, ncat = 4, npoints = 500,
-                                        focal_cov = effort_eoe20s21s,
+                                        focal_cov = zeffort,
                                         rho_cov = c(1, 0, 0), rho_cov_index = 0,
                                         rho_inxs_cov = c(1), rho_inxs_cov_index = 0)
   wolf.coy.pred.yr1 <- predict_detection(mod = wolf.coy.hab.px, ncat = 4, npoints = 500,
-                                         focal_cov = effort_eoe20s21s,
+                                         focal_cov = zeffort,
                                          rho_cov = c(1, 1, 0), rho_cov_index = 0,
                                          rho_inxs_cov = c(1), rho_inxs_cov_index = 0)
   
@@ -179,49 +179,49 @@
   #####  Lion-Bobcat predictions  ####
   load("./Outputs/lionbob_null_px.RData")
   lion.bob.ung.yr1 <- predict_detection(mod = lion.bob.null.px, ncat = 4, npoints = 500,
-                                        focal_cov = effort_eoe20s21s,
+                                        focal_cov = zeffort,
                                         rho_cov = c(1), rho_cov_index = 0,
                                         rho_inxs_cov = c(1), rho_inxs_cov_index = 0)
   lion.bob.pred.yr1 <- predict_detection(mod = lion.bob.null.px, ncat = 4, npoints = 500,
-                                         focal_cov = effort_eoe20s21s,
+                                         focal_cov = zeffort,
                                          rho_cov = c(1), rho_cov_index = 0,
                                          rho_inxs_cov = c(1), rho_inxs_cov_index = 0)
   
   #####  Coyote-Bobcat predictions  ####
   load("./Outputs/coybob_habX_px.RData")
   coy.bob.eff.ung.yr1 <- predict_detection(mod = coy.bob.habx.px, ncat = 4, npoints = 500,
-                                           focal_cov = effort_eoe20s21s,
+                                           focal_cov = zeffort,
                                            rho_cov = c(1, 0, 0), rho_cov_index = 3,
                                            rho_inxs_cov = c(1), rho_inxs_cov_index = 0)
   coy.bob.eff.pred.yr1 <- predict_detection(mod = coy.bob.habx.px, ncat = 4, npoints = 500,
-                                            focal_cov = effort_eoe20s21s,
+                                            focal_cov = zeffort,
                                             rho_cov = c(1, 1, 0), rho_cov_index = 3,
                                             rho_inxs_cov = c(1), rho_inxs_cov_index = 0)
   coy.bob.ung.yr1 <- predict_detection(mod = coy.bob.habx.px, ncat = 4, npoints = 500,
-                                       focal_cov = effort_eoe20s21s,
+                                       focal_cov = zeffort,
                                        rho_cov = c(1, 0, 0), rho_cov_index = 0,
                                        rho_inxs_cov = c(1), rho_inxs_cov_index = 0)
   coy.bob.pred.yr1 <- predict_detection(mod = coy.bob.habx.px, ncat = 4, npoints = 500,
-                                        focal_cov = effort_eoe20s21s,
+                                        focal_cov = zeffort,
                                         rho_cov = c(1, 1, 0), rho_cov_index = 0,
                                         rho_inxs_cov = c(1), rho_inxs_cov_index = 0)
   
   #####  Black bear-Coyote predictions  ####
   load("./Outputs/bearcoy_habX_px.RData")
   bear.coy.eff.ung.yr1 <- predict_detection(mod = bear.coy.habx.px, ncat = 4, npoints = 500,
-                                            focal_cov = effort_eoe20s21s,
+                                            focal_cov = zeffort,
                                             rho_cov = c(1, 0, 0), rho_cov_index = 3,
                                             rho_inxs_cov = c(1), rho_inxs_cov_index = 0)
   bear.coy.eff.pred.yr1 <- predict_detection(mod = bear.coy.habx.px, ncat = 4, npoints = 500,
-                                             focal_cov = effort_eoe20s21s,
+                                             focal_cov = zeffort,
                                              rho_cov = c(1, 1, 0), rho_cov_index = 3,
                                              rho_inxs_cov = c(1), rho_inxs_cov_index = 0)
   bear.coy.ung.yr1 <- predict_detection(mod = bear.coy.habx.px, ncat = 4, npoints = 500,
-                                        focal_cov = effort_eoe20s21s,
+                                        focal_cov = zeffort,
                                         rho_cov = c(1, 0, 0), rho_cov_index = 0,
                                         rho_inxs_cov = c(1), rho_inxs_cov_index = 0)
   bear.coy.pred.yr1 <- predict_detection(mod = bear.coy.habx.px, ncat = 4, npoints = 500,
-                                         focal_cov = effort_eoe20s21s,
+                                         focal_cov = zeffort,
                                          rho_cov = c(1, 1, 0), rho_cov_index = 0,
                                          rho_inxs_cov = c(1), rho_inxs_cov_index = 0)
   
