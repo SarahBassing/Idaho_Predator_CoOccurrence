@@ -38,7 +38,7 @@
   load("./Outputs/tbd_bob_preyRAI.RData")
   load("./Outputs/tbd_bob_sppID_preyRAI.RData")
   load("./Outputs/tbd_bob_sppID_X_preyRAI.RData")
-  #'  List for model selection (some models excluded owing to poor convergence)
+  #'  List for model selection 
   bob_tbd_list <- list(tbd.bob.null, tbd.bob.sppID, tbd.bob.preyabund, tbd.bob.sppID.preyabund, tbd.bob.sppIDxpreyabund) 
   bob_tbd_name <- c("tbd.bob.null", "tbd.bob.sppID", "tbd.bob.preyabund", "tbd.bob.sppID.preyabund", "tbd.bob.sppIDxpreyabund")
   
@@ -48,7 +48,7 @@
   load("./Outputs/tbd_coy_preyRAI.RData")
   load("./Outputs/tbd_coy_sppID_preyRAI.RData")
   load("./Outputs/tbd_coy_sppID_X_preyRAI.RData")
-  #'  List for model selection (some models excluded owing to poor convergence)
+  #'  List for model selection 
   coy_tbd_list <- list(tbd.coy.null, tbd.coy.sppID, tbd.coy.preyabund, tbd.coy.sppID.preyabund, tbd.coy.sppIDxpreyabund)   
   coy_tbd_name <- c("tbd.coy.null", "tbd.coy.sppID", "tbd.coy.preyabund", "tbd.coy.sppID.preyabund", "tbd.coy.sppIDxpreyabund") 
   
