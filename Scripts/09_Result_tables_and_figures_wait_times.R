@@ -78,9 +78,6 @@
   boburl <- "https://images.phylopic.org/images/ab6cfd4f-aef7-40fa-b5a5-1b79b7d112aa/raster/1024x740.png?v=17a30c18af1.png"
   bobimg <- readPNG(getURLContent(boburl), native = T)
   bobgrid <- rasterGrob(bobimg, interpolate = TRUE)
-  coyurl <- "https://images.phylopic.org/images/5a0398e3-a455-4ca6-ba86-cf3f1b25977a/raster/1024x894.png?v=16fe8749858.png"
-  coyimg <- readPNG(getURLContent(coyurl), native = T) 
-  coygrid <- rasterGrob(coyimg, interpolate = TRUE)
   coyurlGB <- "https://images.phylopic.org/images/e6a2fa4b-85df-43b4-989c-34a65ba7eee3/raster/1024x911.png?v=17f2638df97.png"
   coyimgGB <- readPNG(getURLContent(coyurlGB), native = T)
   coygridGB <- rasterGrob(coyimg, interpolate = TRUE)
