@@ -37,6 +37,8 @@
   library(jagsUI)
   library(mcmcplots)
   library(AICcmodavg)
+  library(ggplot2)
+  library(patchwork)
   library(tidyverse)
   
   #'  Read in wait times and covariate data
