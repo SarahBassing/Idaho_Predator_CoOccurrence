@@ -91,7 +91,6 @@
     Estimate <- round(unlist(mod_out$mean), 2)
     lci <- round(unlist(mod_out$q2.5), 2)
     uci <- round(unlist(mod_out$q97.5), 2)
-    # CI <- paste(" ", lci, "-", uci) # need that extra space in front b/c excel thinks this is an equation otherwise
     overlap0 <- unlist(mod_out$overlap0)
     out <- as.data.frame(cbind(Species, Estimate, lci, uci, overlap0))
     out <- tibble::rownames_to_column(out, "row_names") %>%
