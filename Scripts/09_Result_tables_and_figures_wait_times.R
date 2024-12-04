@@ -69,18 +69,22 @@
   ####  Species silhouettes  ####
   #'  ------------------------
   #'  Silhouettes for each species from PhyloPic in two different formats (PNG & rastergrob)
-  #'  White-tailed deer silhouettes created by the talented Gabriela Palomo-Munoz and uploaded to http://phylopic.org/
-  wtdurlGB1 <- "https://images.phylopic.org/images/8569838c-c725-4772-b0a3-b5eb04baaada/raster/1024x850.png?v=17cfdbaf920.png"
-  wtdimgGB1 <- readPNG(getURLContent(wtdurlGB1), native = T)
-  wtdgrid <- rasterGrob(wtdimgGB1, interpolate = TRUE)
-  wtdurlGB2 <- "https://images.phylopic.org/images/6038e80c-398d-47b2-9a69-2b9edf436f64/raster/1023x1024.png?v=17cfdb9f8b6.png"
-  wtdimgGB2 <- readPNG(getURLContent(wtdurlGB2), native = T)
-  wtdgridGB2 <- rasterGrob(wtdimgGB2, interpolate = TRUE)
-  bunnyurl <- "https://images.phylopic.org/images/f69eb95b-3d0d-491d-9a7f-acddd419afed/raster/925x1024.png?v=177f427b3d8.png"
-  bunnyimg <- readPNG(getURLContent(bunnyurl), native = T)
-  bunnygrid <- rasterGrob(bunnyimg, interpolate = TRUE, scales::alpha("black", 0.5))
+  cougurlGB <- "https://images.phylopic.org/images/cbe2a3c9-2c11-4f36-a51f-8a6c8de6a420/raster/1024x489.png?v=17cfd978c92.png"
+  cougimgGB <- readPNG(getURLContent(cougurlGB), native = T)
+  couggrid <- rasterGrob(cougimgGB, interpolate = TRUE)
+  wolfurl <- "https://images.phylopic.org/images/8cad2b22-30d3-4cbd-86a3-a6d2d004b201/raster/1024x797.png?v=16ff245cc7c.png"
+  wolfimg <- readPNG(getURLContent(wolfurl), native = T)
+  wolfgrid <- rasterGrob(wolfimg, interpolate = TRUE)
+  boburl <- "https://images.phylopic.org/images/ab6cfd4f-aef7-40fa-b5a5-1b79b7d112aa/raster/1024x740.png?v=17a30c18af1.png"
+  bobimg <- readPNG(getURLContent(boburl), native = T)
+  bobgrid <- rasterGrob(bobimg, interpolate = TRUE)
+  coyurl <- "https://images.phylopic.org/images/5a0398e3-a455-4ca6-ba86-cf3f1b25977a/raster/1024x894.png?v=16fe8749858.png"
+  coyimg <- readPNG(getURLContent(coyurl), native = T) 
+  coygrid <- rasterGrob(coyimg, interpolate = TRUE)
+  coyurlGB <- "https://images.phylopic.org/images/e6a2fa4b-85df-43b4-989c-34a65ba7eee3/raster/1024x911.png?v=17f2638df97.png"
+  coyimgGB <- readPNG(getURLContent(coyurlGB), native = T)
+  coygridGB <- rasterGrob(coyimg, interpolate = TRUE)
  
-  
   #'  ------------------
   ####  Format results  ####
   #'  ------------------
@@ -90,17 +94,18 @@
     Estimate <- round(unlist(mod_out$mean), 2)
     lci <- round(unlist(mod_out$q2.5), 2)
     uci <- round(unlist(mod_out$q97.5), 2)
-    CI <- paste(" ", lci, "-", uci) # need that extra space in front b/c excel thinks this is an equation otherwise
+    # CI <- paste(" ", lci, "-", uci) # need that extra space in front b/c excel thinks this is an equation otherwise
     overlap0 <- unlist(mod_out$overlap0)
-    out <- as.data.frame(cbind(Species, Estimate, CI, lci, uci, overlap0))
+    out <- as.data.frame(cbind(Species, Estimate, lci, uci, overlap0))
     out <- tibble::rownames_to_column(out, "row_names") %>%
       relocate(row_names, .after = Species)
-    colnames(out) <- c("Species", "Parameter", "Estimate", "95% CI", "lci", "uci", "overlap0")
+    colnames(out) <- c("Species", "Parameter", "Estimate", "lci", "uci", "overlap0")
     renamed_out <- out %>%
       mutate(Parameter = ifelse(Parameter == "alpha0", "Intercept", Parameter),
              Parameter = ifelse(Parameter == "beta.prey1", paste("Prey RAI:", prey1), Parameter),
              Parameter = ifelse(Parameter == "beta.prey2", paste("Prey RAI:", prey2), Parameter),
              Parameter = ifelse(Parameter == "beta.prey3", paste("Prey RAI:", prey3), Parameter),
+             Parameter = ifelse(Parameter == "beta.div", paste("Prey diversity"), Parameter),
              Parameter = ifelse(Parameter == "beta.sppID1", paste("Competitor:", comp1), Parameter), 
              Parameter = ifelse(Parameter == "beta.sppID2", paste("Competitor:", comp2), Parameter), 
              Parameter = ifelse(Parameter == "beta.sppID3", paste("Competitor:", comp3), Parameter), 
@@ -384,108 +389,97 @@
            lci = as.numeric(lci),
            uci = as.numeric(uci)) 
  
-  #' #'  Choose colorblind-friendly scheme
-  #' plot_scheme(colour("sunset")(11))
-  #' colour("sunset")(11)
-  #' any.bear.bob.coy.lion.wolf_colors <- c("black", "#98CAE1", "#A50026", "#DD3D2D", "#FDB366", "#364B9A")
-  #' bear.coy.lion.wolf_colors <- c("#98CAE1", "#DD3D2D", "#FDB366", "#364B9A")
-  #' any.bear.coy_colors <- c("black", "#98CAE1", "#DD3D2D")
-  #' bear.wolf <- c("#98CAE1", "#364B9A")
+  #'  Choose colorblind-friendly scheme
+  plot_scheme(colour("sunset")(11))
+  colour("sunset")(11)
+  any.bear.bob.coy.lion.wolf_colors <- c("black", "#98CAE1", "#A50026", "#FDB366", "#DD3D2D", "#364B9A")
+  bear.bob.wolf_colors <- c("#98CAE1", "#A50026", "#364B9A")
+  any.bear.coy.lion_colors <- c("black", "#98CAE1", "#FDB366", "#DD3D2D")
+
   
   #####  Competitor ID effect  #####
-  #'  Effect of previous competitor detection on latency of site use
-  competitorID_plot <- ggplot(tbd_by_competitorID, aes(x = Previous_Species, y = (Estimate), group = Species)) +
-    geom_errorbar(aes(ymin = (lci), ymax = (uci), color = Previous_Species), width = 0, position = position_dodge(width = 0.4)) +
-    geom_point(stat = "identity", aes(col = Previous_Species), size = 2.5, position = position_dodge(width = 0.4)) +
-    theme_bw() +
-    guides(color = guide_legend(title = "Previously detected species")) +
-    facet_wrap(~Species, scales = "free_y") + 
-    theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1)) +
-    theme(legend.position.inside = c(1, 0), legend.justification = c(1, 0)) +
-    xlab("Previously detected species") +
-    ylab("Mean number of hours between detections") +
-    ggtitle("Effect of recent competitor detection on wait time until site use")
-  competitorID_plot
-  
   competitorID_and_meanprey_plot <- ggplot(tbd_meanPrey_and_competitorID, aes(x = Previous_Species, y = (Estimate), group = Species)) +
-    geom_errorbar(aes(ymin = (lci), ymax = (uci), color = Previous_Species), width = 0, position = position_dodge(width = 0.4)) +
-    geom_point(stat = "identity", aes(col = Previous_Species), size = 2.5, position = position_dodge(width = 0.4)) +
+    geom_errorbar(aes(ymin = (lci), ymax = (uci), color = Previous_Species), width = 0, size = 0.4, position = position_dodge(width = 0.4)) +
+    geom_point(stat = "identity", aes(col = Previous_Species), size = 2.15, position = position_dodge(width = 0.4)) +
     theme_bw() +
     scale_color_manual(values = any.bear.bob.coy.lion.wolf_colors) +
     guides(color = guide_legend(title = "Previously detected \nspecies")) +
     facet_wrap(~Species, scales = "free_y") + 
     theme(axis.text.x = element_text(angle = 60, hjust = 1, vjust = 1)) +
-    theme(text = element_text(size = 14)) +
+    theme(text = element_text(size = 10, family = "serif"),
+          plot.title = element_text(size = 11, vjust = 1.25, family = "serif")) +
     theme(legend.position="none") +
     xlab("Previously detected species") +
     ylab("Mean number of hours between detections") +
-    ggtitle("Effect of recent species detection on wait time")
+    ggtitle("Effect of recent species detection on wait time") 
   competitorID_and_meanprey_plot
-  
-  competitorID_and_preyID_plot <- ggplot(tbd_by_PreyID_and_competitorID, aes(x = Previous_Species, y = (Estimate), group = Species)) +
-    geom_errorbar(aes(ymin = (lci), ymax = (uci), color = Previous_Species), width = 0, position = position_dodge(width = 0.4)) +
-    geom_point(stat = "identity", aes(col = Previous_Species), size = 2.5, position = position_dodge(width = 0.4)) +
-    theme_bw() +
-    guides(color = guide_legend(title = "Previously detected species")) +
-    facet_wrap(~Species, scales = "free_y") + 
-    theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1)) +
-    theme(legend.position = c(1, 0), legend.justification = c(1, 0)) +
-    xlab("Previously detected species") +
-    ylab("Mean number of hours between detections") +
-    ggtitle("Effect of recent species detection on wait time")
-  competitorID_and_preyID_plot
-  
-  preyID_plot <- ggplot(tbd_by_preyID, aes(x = Previous_Species, y = (Estimate), group = Species)) +
-    geom_errorbar(aes(ymin = (lci), ymax = (uci), color = Previous_Species), width = 0, position = position_dodge(width = 0.4)) +
-    geom_point(stat = "identity", aes(col = Previous_Species), size = 2.5, position = position_dodge(width = 0.4)) +
-    theme_bw() +
-    guides(color = guide_legend(title = "Previously detected species")) +
-    facet_wrap(~Species, scales = "free_y") + 
-    theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1)) +
-    theme(legend.position = c(1, 0), legend.justification = c(1, 0)) +
-    xlab("Previously detected species") +
-    ylab("Mean number of hours between detections") +
-    ggtitle("Effect of recent prey detection on wait time until site use")
-  preyID_plot
-  
+
   
   #####  Prey relative abundance effects  ####
   tbd_wtdRAI_plot <- filter(tbd_prey_prediction, Prey_RAI == "wtd") %>%
     ggplot(aes(x = cov, y = (Estimate), group = Competitor_ID)) +
-    geom_line(aes(color = Competitor_ID), lwd = 1.25) + 
+    geom_line(aes(color = Competitor_ID), lwd = 1) + 
     scale_color_manual(values = any.bear.bob.coy.lion.wolf_colors) +
     #'  Add confidence intervals
     geom_ribbon(aes(ymin = (lci), ymax = (uci), fill = Competitor_ID), alpha = 0.3) +
     scale_fill_manual(values = any.bear.bob.coy.lion.wolf_colors) + 
+    # theme_bw() +
     theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-          panel.background = element_blank(), axis.line = element_line(colour = "black")) + 
-    theme(text = element_text(size = 12)) +
+          panel.background = element_blank(), 
+          axis.line = element_line(colour = "black", linewidth = 0.25),
+          axis.ticks = element_line(colour = "black", linewidth = 0.25)) + 
+    theme(text = element_text(size = 10, family = "serif")) +
     xlab("White-tailed deer relative abundance (standardized)") +
     ylab("Mean number of hours between detections") +
     guides(color = guide_legend(title = "Previously detected\ncompetitor"),
            fill = guide_legend(title = "Previously detected\ncompetitor")) +
     theme(legend.position = "left",
-          text = element_text(size = 12)) +
+          text = element_text(size = 10, family = "serif")) +
     facet_wrap(~Species, scale = "free_y") + 
     inset_element(p = bobimg, left = 0.30, bottom = 0.88, right = 0.45, top = 0.98) +
     inset_element(p = cougimgGB, left = 0.28, bottom = 0.30, right = 0.48, top = 0.45) +
     inset_element(p = coyimgGB, left = 0.82, bottom = 0.88, right = 0.97, top = 0.98) +
     theme(rect = element_rect(fill = "transparent", linetype = "blank")) +
-    inset_element(p = wolfimg, left = 0.80, bottom = 0.32, right = 0.97, top = 0.45) 
+    inset_element(p = wolfimg, left = 0.80, bottom = 0.32, right = 0.97, top = 0.45)
   tbd_wtdRAI_plot
+  
+  tbd_lagoRAI_plot <- filter(tbd_prey_prediction, Prey_RAI == "lago") %>%
+    filter(Species == "Coyote") %>%
+    ggplot(aes(x = cov, y = (Estimate), group = Competitor_ID)) +
+    geom_line(aes(color = Competitor_ID), lwd = 1) + 
+    scale_color_manual(values = bear.bob.wolf_colors) +
+    #'  Add confidence intervals
+    geom_ribbon(aes(ymin = (lci), ymax = (uci), fill = Competitor_ID), alpha = 0.3) +
+    scale_fill_manual(values = bear.bob.wolf_colors) + 
+    theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+          panel.background = element_blank(), 
+          axis.line = element_line(colour = "black", linewidth = 0.25),
+          axis.ticks = element_line(colour = "black", linewidth = 0.25)) +
+    theme(legend.position = "left") +
+    theme(text = element_text(size = 10, family = "serif")) +
+    xlab("Lagomorph relative abundance \n(standardized)") +
+    ylab("Mean number of hours between detections") +
+    guides(color = guide_legend(title = "Previously detected\ncompetitor"),
+           fill = guide_legend(title = "Previously detected\ncompetitor")) +
+    facet_wrap(~Species, ncol = 1, scale = "free_y") +
+    inset_element(p = coyimgGB, left = 0.77, bottom = 0.80, right = 0.97, top = 0.98) +
+    theme(rect = element_rect(fill = "transparent", linetype = "blank")) 
+  tbd_lagoRAI_plot
   
   tbd_elkRAI_plot <- filter(tbd_prey_prediction, Prey_RAI == "elk") %>%
     filter(Species == "Mountain lion") %>%
     ggplot(aes(x = cov, y = (Estimate), group = Competitor_ID)) +
-    geom_line(aes(color = Competitor_ID), lwd = 1.25) + 
+    geom_line(aes(color = Competitor_ID), lwd = 1) + 
     scale_color_manual(values = any.bear.coy.lion_colors) +
     #'  Add confidence intervals
     geom_ribbon(aes(ymin = (lci), ymax = (uci), fill = Competitor_ID), alpha = 0.3) +
     scale_fill_manual(values = any.bear.coy.lion_colors) + 
     theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-          panel.background = element_blank(), axis.line = element_line(colour = "black")) +
+          panel.background = element_blank(), 
+          axis.line = element_line(colour = "black", linewidth = 0.25),
+          axis.ticks = element_line(colour = "black", linewidth = 0.25)) +
     theme(legend.position = "right") +
-    theme(text = element_text(size = 12)) +
+    theme(text = element_text(size = 10, family = "serif")) +
     theme(axis.title.y = element_blank()) +
     xlab("Relative abundance of elk \n(standardized)") +
     theme(legend.title=element_blank()) +
@@ -493,24 +487,22 @@
     inset_element(p = cougimgGB, left = 0.65, bottom = 0.78, right = 0.98, top = 1) +
     theme(rect = element_rect(fill = "transparent", linetype = "blank"))
   tbd_elkRAI_plot
-
-  #'  Combine species-specific effects into a single plot for publication
+  
+  #'  Combine lagomorph and white-tailed deer effects into a single plot for publication
+  (tbd_lagoRAI_elkRAI_wtdRAI_patchwork <- tbd_wtdRAI_plot + (tbd_lagoRAI_plot / tbd_elkRAI_plot)  + 
+      plot_layout(widths = c(2,1)))
+  
   (tbd_lagoRAI_elkRAI_patchwork <- tbd_lagoRAI_plot + tbd_elkRAI_plot + plot_layout(guides = 'collect'))
   
  
   #'  Save
-  ggsave("./Outputs/Figures/Mean_TBD_by_competitorID.tiff", competitorID_plot, 
-         units = "in", width = 8, height = 6, dpi = 400, device = 'tiff', compression = 'lzw')
-  ggsave("./Outputs/Figures/Mean_TBD_by_preyID.tiff", preyID_plot, 
-         units = "in", width = 8, height = 6, dpi = 400, device = 'tiff', compression = 'lzw')
-  ggsave("./Outputs/Figures/Mean_TBD_by_meanprey_competitorID.tiff", competitorID_and_meanprey_plot, 
-         units = "in", width = 7, height = 5, dpi = 400, device = 'tiff', compression = 'lzw')
-  ggsave("./Outputs/Figures/Mean_TBD_by_preyID_competitorID.tiff", competitorID_and_preyID_plot, 
-         units = "in", width = 8, height = 8, dpi = 400, device = 'tiff', compression = 'lzw')
-  ggsave("./Outputs/Figures/Predicted_TBD_by_wtdRAI.tiff", tbd_wtdRAI_plot,
-         units = "in", width = 7, height = 5, dpi = 400, device = 'tiff', compression = 'lzw')
-  ggsave("./Outputs/Figures/Predicted_TBD_by_lagoRAI_&_elkRAI.tiff", tbd_lagoRAI_elkRAI_patchwork,
-         units = "in", width = 7, height = 4, dpi = 400, device = 'tiff', compression = 'lzw')
+  ggsave("./Outputs/Time_btwn_Detections/Figures/Mean_TBD_by_meanprey_competitorID.tiff", competitorID_and_meanprey_plot, 
+         units = "cm", width = 18, height = 13, dpi = 600, device = 'tiff', compression = 'lzw')
+  ggsave("./Outputs/Time_btwn_Detections/Figures/Predicted_TBD_by_wtdRAI.tiff", tbd_wtdRAI_plot,
+         units = "cm", width = 18, height = 15, dpi = 600, device = 'tiff', compression = 'lzw')
+  ggsave("./Outputs/Time_btwn_Detections/Figures/Predicted_TBD_by_lagoRAI_&_elkRAI.tiff", tbd_lagoRAI_elkRAI_patchwork,
+         units = "cm", width = 18, height = 8, dpi = 600, device = 'tiff', compression = 'lzw')
+  
   
 
   
