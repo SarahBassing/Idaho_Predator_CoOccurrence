@@ -41,13 +41,10 @@
   
   #'  Read in wait times and covariate data
   load("./Data/TBD_all_pairs.RData")
-  # load("./Data/covs.RData")
   covs_smr20 <- read.csv("./Data/Covariates_Smr20.csv")
   covs_smr21 <- read.csv("./Data/Covariates_Smr21.csv")
 
   #'  Join wait times & covariate data together
-  # tbd_w_covs_20s <- left_join(tbd_spp_pairs_all[tbd_spp_pairs_all$Year == "Smr20",], covs[covs$Season == "Smr20",], by = c("NewLocationID", "GMU", "Year" = "Season")) 
-  # tbd_w_covs_21s <- left_join(tbd_spp_pairs_all[tbd_spp_pairs_all$Year == "Smr21",], covs[covs$Season == "Smr21",], by = c("NewLocationID", "GMU", "Year" = "Season")) 
   tbd_w_covs_20s <- left_join(tbd_spp_pairs_all[tbd_spp_pairs_all$Year == "Smr20",], covs_smr20, by = c("NewLocationID", "GMU")) 
   tbd_w_covs_21s <- left_join(tbd_spp_pairs_all[tbd_spp_pairs_all$Year == "Smr21",], covs_smr21, by = c("NewLocationID", "GMU")) 
   tbd_w_covs <- rbind(tbd_w_covs_20s, tbd_w_covs_21s)
