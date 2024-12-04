@@ -24,7 +24,7 @@
   library(rphylopic)
   library(tidyverse)
   
-  #'  Load covariate data
+  #'  Load covariate data (generated in Format_data_mulitspp_occupancy.R script)
   load("./Data/covs.RData")
   
   #'  Identify top models
