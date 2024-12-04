@@ -205,6 +205,6 @@
                         covs_yr1 = covs_smr20, covs_yr2 = covs_smr21, 
                         rm_rows_yr1 = rm_rows_smr20, rm_rows_yr2 = rm_rows_smr21)
   
-  #' #'  Save for later use
-  #' save(covs, file = "./Data/covs.RData")
+  #'  Save for later use
+  save(covs, file = "./Data/covs.RData")
   
