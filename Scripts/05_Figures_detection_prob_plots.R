@@ -21,7 +21,6 @@
   library(tidyverse)
   
   #'  Load covariate data
-  # load("./Data/covs.RData")
   source("./Scripts/Sourced_Scripts__Multispecies_OccMod/Format_data_multispp_occupancy.R")
   
   #'  -------------------------------------------------
@@ -140,7 +139,7 @@
   #####  Wolf-Black bear predictions  ####
   #'  Top model
   load("./Outputs/wolfbear_hab_px.RData")
-  wolf.bear.eff.ung.yr1 <- predict_detection(mod = wolf.bear.hab.px, ncat = 4, npoints = 500,  #### MAKE SURE EFFOR_EOE20s21s IS RIGHT INPUT
+  wolf.bear.eff.ung.yr1 <- predict_detection(mod = wolf.bear.hab.px, ncat = 4, npoints = 500,  
                                              focal_cov = zeffort,
                                              rho_cov = c(1, 0, 0), rho_cov_index = 3,
                                              rho_inxs_cov = 0, rho_inxs_cov_index = 0)
