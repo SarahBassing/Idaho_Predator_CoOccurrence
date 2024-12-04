@@ -313,18 +313,10 @@
     mutate(Species_pair = gsub("_", " ", Species_pair))
   # write.csv(avg_tbd_focal_pairs, "./Outputs/Summary_stats_TBD.csv")
   
-  #'  Visualize an example of the tbd data 
-  (coy_bob_his <- ggplot(coybob, aes(x=HoursSinceLastDet, fill=Species_pair)) +
-    geom_histogram(color="#e9ecef", alpha=0.6, position = 'identity', binwidth = 5) +
-    scale_fill_manual(values=c("#69b3a2", "#404080"))) 
-  (wolf_coy_his <- ggplot(wolfcoy, aes(x=HoursSinceLastDet, fill=Species_pair)) +
-    geom_histogram(color="#e9ecef", alpha=0.6, position = 'identity', binwidth = 5) +
-    scale_fill_manual(values=c("#69b3a2", "#404080")))
-  
   #'  Add summary data to each observation
   focal_pairs <- full_join(focal_pairs, avg_tbd_focal_pairs, by = "Species_pair") 
   
-  #'  Boxplots of all data, organized by sample size
+  #'  Visualize boxplots of all data, organized by sample size
   (pred_pair_box <- ggplot(focal_pairs, aes(x = reorder(Species_pair, total_obs), y=HoursSinceLastDet, fill=Species_pair)) +
     geom_boxplot() +
     theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) +
