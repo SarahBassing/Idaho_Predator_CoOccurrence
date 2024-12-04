@@ -203,16 +203,11 @@
     dplyr::select(-Modnames)
   colnames(model_nt_list_DIC) <- c("Species", "Model", "Model description", "DIC", "Delta DIC", "DIC Weight")
   
-  #'  Save
-  write.csv(topmodels, file = "./Outputs/DIC_TBD_top_models.csv")
-  write.csv(model_list_DIC, file = "./Outputs/DIC_TBD_model_selection_results.csv")
-  save(topmodels, file = "./Outputs/DIC_TBD_top_models.RData")
-  save(model_list_DIC, file = "./Outputs/DIC_TBD_model_selection_results.RData")
-  
-  write.csv(topmodels_nt, file = "./Outputs/DIC_TBD_top_nt_models.csv")
-  write.csv(model_nt_list_DIC, file = "./Outputs/DIC_TBD_nt_model_selection_results.csv")
-  save(topmodels_nt, file = "./Outputs/DIC_TBD_top_nt_models.RData")
-  save(model_nt_list_DIC, file = "./Outputs/DIC_TBD_nt_model_selection_results.RData")
+  #' #'  Save
+  #' write.csv(topmodels, file = "./Outputs/DIC_TBD_top_models.csv")
+  #' write.csv(model_list_DIC, file = "./Outputs/DIC_TBD_model_selection_results.csv")
+  #' write.csv(topmodels_nt, file = "./Outputs/DIC_TBD_top_nt_models.csv")
+  #' write.csv(model_nt_list_DIC, file = "./Outputs/DIC_TBD_nt_model_selection_results.csv")
   
   
   #'  Next, create figures to visualize results in 09_Result_tables_and_figures_wait_times.R
