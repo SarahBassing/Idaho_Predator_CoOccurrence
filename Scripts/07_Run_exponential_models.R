@@ -252,18 +252,18 @@
   lion_bundled_nontarget <- bundle_dat_data(prey_pred_tbd_short[[4]][prey_pred_tbd_short[[4]]$Previous_Spp == "elk" | prey_pred_tbd_short[[4]]$Previous_Spp == "whitetaileddeer",], npreyspp = 2, species_order = c("elk", "whitetaileddeer"))
   wolf_bundled_nontarget <- bundle_dat_data(prey_pred_tbd_short[[5]][prey_pred_tbd_short[[5]]$Previous_Spp != "lagomorph",], npreyspp = 3, species_order = c("elk", "moose", "whitetaileddeer"))
   
-  #' #'  Save for making figures later
-  #' save(bear_bundled, file = "./Data/bear_bundled.RData")
-  #' save(bob_bundled, file = "./Data/bob_bundled.RData")
-  #' save(coy_bundled, file = "./Data/coy_bundled.RData")
-  #' save(lion_bundled, file = "./Data/lion_bundled.RData")
-  #' save(wolf_bundled, file = "./Data/wolf_bundled.RData")
-  #' 
-  # save(bear_bundled_nontarget, file = "./Data/bear_bundled_nontarget.RData")
-  # save(bob_bundled_nontarget, file = "./Data/bob_bundled_nontarget.RData")
-  # save(coy_bundled_nontarget, file = "./Data/coy_bundled_nontarget.RData")
-  # save(lion_bundled_nontarget, file = "./Data/lion_bundled_nontarget.RData")
-  # save(wolf_bundled_nontarget, file = "./Data/wolf_bundled_nontarget.RData")
+  #'  Save for making figures later
+  save(bear_bundled, file = "./Data/bear_bundled.RData")
+  save(bob_bundled, file = "./Data/bob_bundled.RData")
+  save(coy_bundled, file = "./Data/coy_bundled.RData")
+  save(lion_bundled, file = "./Data/lion_bundled.RData")
+  save(wolf_bundled, file = "./Data/wolf_bundled.RData")
+
+  save(bear_bundled_nontarget, file = "./Data/bear_bundled_nontarget.RData")
+  save(bob_bundled_nontarget, file = "./Data/bob_bundled_nontarget.RData")
+  save(coy_bundled_nontarget, file = "./Data/coy_bundled_nontarget.RData")
+  save(lion_bundled_nontarget, file = "./Data/lion_bundled_nontarget.RData")
+  save(wolf_bundled_nontarget, file = "./Data/wolf_bundled_nontarget.RData")
 
   #'  MCMC settings
   nc <- 3
